@@ -1,5 +1,5 @@
 if [[ ! -d $HOME/.dotfiles ]] {
-    if [[ -x ${which git} ]] {
+    if [[ -x $(which git) ]] {
         git clone --separate-git-dir=$HOME/.dotfiles git@github.com:bnwa/dotfiles-next.git $HOME/.dotfiles-tmp
         rm -r $HOME/.dotfiles-tmp
     } else {
