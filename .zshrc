@@ -8,5 +8,6 @@ if [[ ! -d $HOME/.dotfiles ]] {
 }
 
 [[ -d $HOME/.dotfiles ]] && alias config='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+alias ls='ls --color=always'
 
 export PS1="%F{blue}%1~%f%F{green} λ%f "
