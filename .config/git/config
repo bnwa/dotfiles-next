@@ -1,0 +1,23 @@
+[core]
+        autocrlf = input
+        safecrlf = true
+[user]
+        name = Benoît Barberousse
+[stash]
+        showPatch = true
+[alias]
+        a   = add --patch
+        b   = branch
+        c   = commit
+        ch  = checkout
+        d   = diff
+        fnd = grep --line-number --break --heading
+        l   = log --oneline --decorate
+        la  = log --oneline --decorate --all
+        m   = merge
+        p   = push
+        r   = remote -v
+        st  = status --branch --short
+        sv  = stash save -u
+        svs = stash list
+        opn = stash apply
