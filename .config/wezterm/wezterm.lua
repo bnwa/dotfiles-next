@@ -9,6 +9,11 @@ local function modal_color_scheme(mode)
 	end
 end
 
+w.on('window-focus-changed', function(win, pane)
+	w.reload_configuration() -- re-evaluate color_scheme
+	end
+)
+
 return {
 	color_scheme = modal_color_scheme(gui.get_appearance()),
 	font = w.font {
