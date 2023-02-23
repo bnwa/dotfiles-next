@@ -1,6 +1,8 @@
 local cmd = vim.cmd
 local fn = vim.fn
 local opt = vim.opt
+local new_cmd = vim.api.nvim_create_user_rommand
+local autocmd = vim.api.nvim_create_autocmd
 
 
 -- OPTIONS
@@ -30,6 +32,21 @@ opt.updatetime = 100
 opt.visualbell = false
 
 vim.g.mapleader = ' '
+
+--UTILS
+local function toggle_night_shift()
+  local date_str = os.date()
+  --TODO When day component is single digit, produces a space entry in
+  --resulting table so hour entry is at index 5
+  local date_parts = vim.split(date_str, '[%s%p]+')
+  local date_hour = fn.str2nr(date_parts[4])
+
+  if date_hour >= 17 or date_hour < 7 then
+    opt.background = 'dark'
+  else
+    opt.background = 'light'
+  end
+end
 
 -- NEOVIDE
 if vim.g.neovide then
@@ -171,17 +188,8 @@ require('lazy').setup {
 
 
 -- COLORS
-local date_str = os.date()
---TODO When day component is single digit, produces a space entry in
---resulting table so hour entry is at index 5
-local date_parts = vim.split(date_str, '[%s%p]+')
-local date_hour = fn.str2nr(date_parts[4])
-
-if date_hour >= 17 or date_hour < 7 then
-  opt.background = 'dark'
-end
-
 cmd.colorscheme 'mellifluous'
+toggle_night_shift()
 
 
 -- KEYMAP
@@ -197,4 +205,20 @@ map('n', [[<space>f]], function()
   else
     picker.find_files {}
   end
+end)
+
+
+-- EVENTS
+local function on(match, events, listener)
+  autocmd(events, {
+    callback = listener,
+    group = vim.api.nvim_create_augroup('User', { clear = true }),
+    pattern = match,
+  })
+end
+
+on('*', { 'FocusGained', 'FocusLost' }, toggle_night_shift)
+on('*', { 'TermOpen' }, function()
+  vim.wo.number = false
+  vim.wo.relativenumber = false
 end)
