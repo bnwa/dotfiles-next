@@ -165,12 +165,12 @@ require('lazy').setup {
   { 'mtoohey31/cmp-fish', ft = 'fish' },
   { 'ray-x/cmp-treesitter' },
   { 'saadparwaiz1/cmp_luasnip' },
-  { 'L3MON4D3/LuaSnip', version = [[<CurrentMajor>.*]] },
+  { 'L3MON4D3/LuaSnip', version = '1.x.x' },
 
 
   -- PICKER
   -- https://github.com/nvim-telescope/telescope.nvim
-  { 'nvim-telescope/telescope.nvim', tag = '0.1.1', dependencies = { 'nvim-lua/plenary.nvim' } },
+  { 'nvim-telescope/telescope.nvim', tag = '0.1.1', config = setup_telescope, dependencies = { 'nvim-lua/plenary.nvim' } },
   -- https://github.com/nvim-telescope/telescope-fzf-native.nvim
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
   -- https://github.com/nvim-telescope/telescope-file-browser.nvim
