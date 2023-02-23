@@ -128,6 +128,45 @@ local setup_telescope = function()
   scope.load_extension('fzf')
   scope.load_extension('lazy')
 end
+
+local function setup_treesitter()
+  local tsitter = require 'nvim-treesitter.configs'
+  tsitter.setup {
+    ensure_installed = {
+      'css',
+      'dockerfile',
+      'fish',
+      'help',
+      'html',
+      'java',
+      'javascript',
+      'jsdoc',
+      'json',
+      'lua',
+      'markdown',
+      'scss',
+      'sql',
+      'toml',
+      'typescript',
+      'vim',
+      'yaml',
+    },
+    highlight = {
+      additional_vim_regex_highlighting = false,
+      enable = true,
+    },
+    incremental_selection = {
+      enable = true,
+      keymaps = {
+        init_selection = "gnn", -- set to `false` to disable one of the mappings
+        node_incremental = "grn",
+        scope_incremental = "grc",
+        node_decremental = "grm",
+      },
+    },
+  }
+end
+
 local function setup_devicons()
   require('nvim-web-devicons').setup {}
 end
@@ -147,7 +186,7 @@ opt.rtp:prepend(lazypath)
 
 require('lazy').setup {
   -- TEXT OBJECTS
-  { 'nvim-treesitter/nvim-treesitter', build = ":TSUpdate" },
+  { 'nvim-treesitter/nvim-treesitter', config = setup_treesitter, build = ":TSUpdate" },
   { 'nvim-treesitter/nvim-treesitter-textobjects' },
   { 'tpope/vim-surround' },
 
