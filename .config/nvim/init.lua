@@ -48,22 +48,17 @@ local function toggle_night_shift()
   end
 end
 
--- NEOVIDE
-if vim.g.neovide then
-  opt.guifont = { 'FiraCode Nerd Font:h16',  }
-  vim.g.neovide_remember_window_size = true
-  cmd.cd '~'
-end
-
 
 -- PLUGINS
 local lazypath = fn.stdpath("data") .. "/lazy/lazy.nvim"
+
 local setup_toggleterm = function()
   require('toggleterm').setup {
     direction = 'float',
     open_mapping = [[<C-\>]],
   }
 end
+
 local setup_cmp = function()
   local cmp = require('cmp')
   cmp.setup {
@@ -106,16 +101,6 @@ local setup_cmp = function()
   })
 end
 
-if not vim.loop.fs_stat(lazypath) then
-  fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
-end
 local setup_telescope = function()
   local scope = require 'telescope'
   scope.setup {
@@ -145,6 +130,17 @@ local setup_telescope = function()
 end
 local function setup_devicons()
   require('nvim-web-devicons').setup {}
+end
+
+if not vim.loop.fs_stat(lazypath) then
+  fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
 
 opt.rtp:prepend(lazypath)
@@ -179,19 +175,26 @@ require('lazy').setup {
   { 'tsakirist/telescope-lazy.nvim' },
 
   -- COLORSCHEMES
-  { 'ramojus/mellifluous.nvim',  dependencies = { 'rktjmp/lush.nvim' }, lazy = false, priority = 1000  },
-  { 'rose-pine/neovim', name = 'rose-pine', lazy = false, priority = 1000   },
-  { 'savq/melange', lazy = false, priority = 1000   },
+  { 'ramojus/mellifluous.nvim',  dependencies = { 'rktjmp/lush.nvim' }, priority = 1000, lazy = false  },
+  { 'rose-pine/neovim', name = 'rose-pine', priority = 1000, lazy = false   },
+  { 'savq/melange', priority = 1000, lazy = false   },
 
   -- ICONS
   { 'nvim-tree/nvim-web-devicons', config = setup_devicons }
 }
 
 
-
 -- COLORS
-cmd.colorscheme 'mellifluous'
 toggle_night_shift()
+
+
+-- NEOVIDE
+if vim.g.neovide then
+  opt.guifont = { 'FiraCode Nerd Font:h16',  }
+  vim.g.neovide_remember_window_size = true
+  cmd.colorscheme 'mellifluous'
+  cmd.cd '~'
+end
 
 
 -- KEYMAP
