@@ -6,7 +6,7 @@ local autocmd = vim.api.nvim_create_autocmd
 
 
 -- OPTIONS
-opt.background = 'light'
+opt.background = 'dark'
 opt.expandtab = true
 opt.gdefault = true
 opt.laststatus = 2
