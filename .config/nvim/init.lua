@@ -215,6 +215,10 @@ if fn.system({'which', 'ripgrep' }) then
   end)
 end
 
+map('n', [[<space>y]], function()
+  require('telescope.builtin').treesitter {}
+end)
+
 
 -- EVENTS
 local function on(match, events, listener)
