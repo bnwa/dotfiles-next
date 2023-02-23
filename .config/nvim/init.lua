@@ -167,6 +167,7 @@ require('lazy').setup {
   { 'saadparwaiz1/cmp_luasnip' },
   { 'L3MON4D3/LuaSnip', version = [[<CurrentMajor>.*]] },
 
+
   -- PICKER
   -- https://github.com/nvim-telescope/telescope.nvim
   { 'nvim-telescope/telescope.nvim', tag = '0.1.1', dependencies = { 'nvim-lua/plenary.nvim' } },
@@ -207,6 +208,12 @@ map('n', [[<space>f]], function()
     picker.find_files {}
   end
 end)
+
+if fn.system({'which', 'ripgrep' }) then
+  map('n', [[<space>s]], function()
+    require('telescope.builtin').live_grep {}
+  end)
+end
 
 
 -- EVENTS
