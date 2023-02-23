@@ -1,5 +1,5 @@
 {
-  "LuaSnip": { "branch": "master", "commit": "d33cf7de14eea209b8ed4a7edaed72f0b8cedb30" },
+  "LuaSnip": { "branch": "master", "commit": "500981ff6cefc7343e3959ef0f939bd0bfd49ba9" },
   "cmp-cmdline": { "branch": "main", "commit": "8fcc934a52af96120fe26358985c10c035984b53" },
   "cmp-fish": { "branch": "main", "commit": "8ae7bfb1b3251d433c4adf4e64396ef929fbd91f" },
   "cmp-path": { "branch": "main", "commit": "91ff86cd9c29299a64f968ebb45846c485725f23" },
@@ -10,14 +10,15 @@
   "melange": { "branch": "master", "commit": "2c8250c435279638b5a244acfaf9fcdb702a45cc" },
   "mellifluous.nvim": { "branch": "main", "commit": "d88a83afd349a78e577ab39c0d30b95c6da42664" },
   "nvim-cmp": { "branch": "main", "commit": "7cd39409e7378fa711624687d3b430b8a56c3af9" },
-  "nvim-treesitter": { "branch": "master", "commit": "ba35d094c1dfffa652e9c20971c51bd5271c1d25" },
+  "nvim-treesitter": { "branch": "master", "commit": "83e2e22d9e25d739093c38f0663d547dfea00cf4" },
   "nvim-treesitter-textobjects": { "branch": "master", "commit": "2f3583001e2bf793480f38cf0d055571787b0259" },
   "nvim-web-devicons": { "branch": "master", "commit": "4709a504d2cd2680fb511675e64ef2790d491d36" },
   "plenary.nvim": { "branch": "master", "commit": "253d34830709d690f013daf2853a9d21ad7accab" },
-  "rose-pine": { "branch": "main", "commit": "4eac261d575d4662c4c4ee12e3ea44571d75f095" },
+  "rose-pine": { "branch": "main", "commit": "51a16de235f891debff937eaa3bc7e8155c6c8be" },
   "telescope-file-browser.nvim": { "branch": "master", "commit": "6eb6bb45b7a9bed94a464a3e1dadfe870459628c" },
   "telescope-fzf-native.nvim": { "branch": "main", "commit": "580b6c48651cabb63455e97d7e131ed557b8c7e2" },
   "telescope-lazy.nvim": { "branch": "main", "commit": "62b325696f33e338a820abe623bebc92ebf1786b" },
   "telescope.nvim": { "branch": "master", "commit": "c1a2af0af69e80e14e6b226d3957a064cd080805" },
-  "toggleterm.nvim": { "branch": "main", "commit": "1f47ea9cda973af3f1742a71841f3914f5b1469f" }
+  "toggleterm.nvim": { "branch": "main", "commit": "1f47ea9cda973af3f1742a71841f3914f5b1469f" },
+  "vim-surround": { "branch": "master", "commit": "3d188ed2113431cf8dac77be61b842acb64433d9" }
 }
