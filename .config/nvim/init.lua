@@ -188,6 +188,7 @@ require('lazy').setup {
   -- TEXT OBJECTS
   { 'nvim-treesitter/nvim-treesitter', config = setup_treesitter, build = ":TSUpdate" },
   { 'nvim-treesitter/nvim-treesitter-textobjects' },
+  { 'mfussenegger/nvim-treehopper' },
   { 'tpope/vim-surround' },
 
   -- TERMINAL

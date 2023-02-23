@@ -10,6 +10,7 @@
   "melange": { "branch": "master", "commit": "2c8250c435279638b5a244acfaf9fcdb702a45cc" },
   "mellifluous.nvim": { "branch": "main", "commit": "d88a83afd349a78e577ab39c0d30b95c6da42664" },
   "nvim-cmp": { "branch": "main", "commit": "7cd39409e7378fa711624687d3b430b8a56c3af9" },
+  "nvim-treehopper": { "branch": "master", "commit": "017d23259d16c10f6c28d628841c74fa7b000ed8" },
   "nvim-treesitter": { "branch": "master", "commit": "83e2e22d9e25d739093c38f0663d547dfea00cf4" },
   "nvim-treesitter-textobjects": { "branch": "master", "commit": "2f3583001e2bf793480f38cf0d055571787b0259" },
   "nvim-web-devicons": { "branch": "master", "commit": "4709a504d2cd2680fb511675e64ef2790d491d36" },
