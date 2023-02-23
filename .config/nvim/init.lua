@@ -262,6 +262,14 @@ map('n', [[<space>y]], function()
   require('telescope.builtin').treesitter {}
 end)
 
+map({ 'o', 'x' }, [[m]], function()
+  require('tsht').nodes()
+end)
+
+map('n', [[<space>,]], function()
+  cmd.nohl()
+end)
+
 
 -- EVENTS
 local function on(match, events, listener)
