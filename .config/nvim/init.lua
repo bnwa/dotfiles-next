@@ -150,9 +150,10 @@ end
 opt.rtp:prepend(lazypath)
 
 require('lazy').setup {
-  -- TREESITTER
+  -- TEXT OBJECTS
   { 'nvim-treesitter/nvim-treesitter', build = ":TSUpdate" },
   { 'nvim-treesitter/nvim-treesitter-textobjects' },
+  { 'tpope/vim-surround' },
 
   -- TERMINAL
   { 'akinsho/toggleterm.nvim', config = setup_toggleterm },
