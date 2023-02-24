@@ -275,7 +275,7 @@ end)
 local function on(match, events, listener)
   autocmd(events, {
     callback = listener,
-    group = vim.api.nvim_create_augroup('User', { clear = true }),
+    group = vim.api.nvim_create_augroup('Base', { clear = true }),
     pattern = match,
   })
 end
