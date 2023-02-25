@@ -1,10 +1,16 @@
+local cmp_lsp = require 'cmp_nvim_lsp'
+local lsp = vim.lsp
 local opt = vim.opt
 
 opt.shiftwidth = 2
 opt.softtabstop = 2
 opt.tabstop = 2
+opt.wildignore:append '*/node_modules/*'
 
 vim.lsp.start({
+  capabilities = vim.tbl_deep_extend('force',
+    lsp.protocol.make_client_capabilities(),
+    cmp_lsp.default_capabilities()),
   cmd = { 'typescript-language-server', '--stdio' },
   init_options = {
     host_info = "neovim",

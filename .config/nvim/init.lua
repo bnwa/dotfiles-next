@@ -74,6 +74,9 @@ local setup_cmp = function()
       end,
     },
     sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'nvim_lsp_document_symbol' },
+      { name = 'nvim_lsp_signature_help' },
       { name = 'luasnip' },
       { name = 'treesitter' },
     }, {
@@ -207,6 +210,9 @@ require('lazy').setup {
   { 'ray-x/cmp-treesitter' },
   { 'saadparwaiz1/cmp_luasnip' },
   { 'L3MON4D3/LuaSnip', version = '1.x.x' },
+  { 'hrsh7th/cmp-nvim-lsp' },
+  { 'hrsh7th/cmp-nvim-lsp-document-symbol' },
+  { 'hrsh7th/cmp-nvim-lsp-signature-help' },
 
 
   -- PICKER
