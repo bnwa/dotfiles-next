@@ -106,7 +106,13 @@ local setup_telescope = function()
   scope.setup {
     defaults = {
       dynamic_preview_title = true,
+      entry_prefix = '○ ',
+      layout_config = {
+        preview_cutoff = 20,
+      },
       layout_strategy = 'vertical',
+      selection_caret = '➞ ',
+      wrap_results = true,
     },
     extensions = {
       file_browser = {
