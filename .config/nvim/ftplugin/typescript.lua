@@ -1,10 +1,12 @@
 local cmp_lsp = require 'cmp_nvim_lsp'
 local lsp = vim.lsp
 local opt = vim.opt
+local bo = vim.bo
 
-opt.shiftwidth = 2
-opt.softtabstop = 2
-opt.tabstop = 2
+
+bo.shiftwidth = 2
+bo.softtabstop = 2
+bo.tabstop = 2
 opt.wildignore:append '*/node_modules/*'
 
 vim.lsp.start({
@@ -39,12 +41,12 @@ vim.lsp.start({
       useLabelDetailsInCompletionEntries = true,
     },
     settings = {
-      ['typescript.format.baseIndentSize'] = opt.tabstop:get(),
-      ['typescript.format.indentSize'] = opt.tabstop:get(),
+      ['typescript.format.baseIndentSize'] = bo.tabstop,
+      ['typescript.format.indentSize'] = bo.tabstop,
       ['typescript.format.trimTrailingWhitespace'] = true,
       ['typescript.format.convertTabsToSpaces'] = true,
       ['typescript.format.semicolons'] = 'remove',
-      ['typescript.format.tabSize'] = opt.tabstop:get(),
+      ['typescript.format.tabSize'] = bo.tabstop,
       ['typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions'] = true,
       ['typescript.format.insertSpaceAfterKeywordsInControlFlowStatements'] = true,
       ['typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces'] = true,
