@@ -130,11 +130,15 @@ local setup_telescope = function()
       lazy = {
         show_icon = true,
       },
+      ['ui-select'] = {
+        require('telescope.themes').get_dropdown {},
+      }
     },
   }
   scope.load_extension('file_browser')
   scope.load_extension('fzf')
   scope.load_extension('lazy')
+  scope.load_extension('ui-select')
 end
 
 local function setup_treesitter()
@@ -222,6 +226,8 @@ require('lazy').setup {
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
   -- https://github.com/nvim-telescope/telescope-file-browser.nvim
   { 'nvim-telescope/telescope-file-browser.nvim', dependencies = { 'nvim-lua/plenary.nvim'  } },
+  -- https://github.com/nvim-telescope/telescope-ui-select.nvim
+  { 'nvim-telescope/telescope-ui-select.nvim' },
   -- https://github.com/tsakirist/telescope-lazy.nvim
   { 'tsakirist/telescope-lazy.nvim' },
 
