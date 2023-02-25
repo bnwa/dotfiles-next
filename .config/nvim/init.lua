@@ -23,7 +23,6 @@ opt.swapfile = false
 opt.tabstop = 2
 opt.termguicolors = true
 opt.timeoutlen = 500
-opt.wildignore:append '*/node_modules/*'
 opt.wildignore:append '/.git'
 opt.wrap = false
 opt.writebackup = false
