@@ -9,6 +9,20 @@ bo.softtabstop = 2
 bo.tabstop = 2
 opt.wildignore:append '*/node_modules/*'
 
+vim.api.nvim_create_autocmd({ 'LspAttach' }, {
+  pattern = '*.ts',
+  callback = function(args)
+    local buf = args.buf
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    local server = client.server_capabilities
+
+    -- N.B. workaround formatexpr getting set to vim default
+    if server.documentRangeFormattingProvider then
+      bo[buf].formatexpr = 'v:lua.vim.lsp.formatexpr()'
+    end
+  end
+})
+
 vim.lsp.start({
   capabilities = vim.tbl_deep_extend('force',
     lsp.protocol.make_client_capabilities(),
