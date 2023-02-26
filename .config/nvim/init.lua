@@ -261,8 +261,8 @@ end
 
 
 -- COLORS
+cmd.colorscheme 'default'
 toggle_night_shift()
-cmd.colorscheme 'rose-pine'
 
 
 -- KEYMAP
