@@ -180,6 +180,12 @@ local function setup_treesitter()
   }
 end
 
+local function setup_luapad()
+  require('luapad').setup {
+    eval_on_change = false
+  }
+end
+
 local function setup_devicons()
   require('nvim-web-devicons').setup {}
 end
@@ -238,7 +244,10 @@ require('lazy').setup {
   { 'savq/melange', priority = 1000, lazy = false   },
 
   -- ICONS
-  { 'nvim-tree/nvim-web-devicons', config = setup_devicons }
+  { 'nvim-tree/nvim-web-devicons', config = setup_devicons },
+
+  --REPL
+  { 'rafcamlet/nvim-luapad', config = setup_luapad }
 }
 
 
