@@ -3,7 +3,6 @@ local lsp = vim.lsp
 local opt = vim.opt
 local bo = vim.bo
 
-
 bo.shiftwidth = 2
 bo.softtabstop = 2
 bo.tabstop = 2
@@ -23,6 +22,24 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
   end
 })
 
+local settings = {
+  ['typescript.format.baseIndentSize'] = bo.tabstop,
+  ['typescript.format.indentSize'] = bo.tabstop,
+  ['typescript.format.trimTrailingWhitespace'] = true,
+  ['typescript.format.convertTabsToSpaces'] = true,
+  ['typescript.format.semicolons'] = 'remove',
+  ['typescript.format.tabSize'] = bo.tabstop,
+  ['typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions'] = true,
+  ['typescript.format.insertSpaceAfterKeywordsInControlFlowStatements'] = true,
+  ['typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces'] = true,
+  ['typescript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces'] = true,
+  ['typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces'] = true,
+  ['typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets'] = true,
+  ['typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis'] = true,
+  ['typescript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces'] = true,
+  ['typescript.format.insertSpaceAfterSemicolonInForStatements'] = true,
+}
+
 vim.lsp.start({
   capabilities = vim.tbl_deep_extend('force',
     lsp.protocol.make_client_capabilities(),
@@ -31,11 +48,14 @@ vim.lsp.start({
   init_options = {
     host_info = "neovim",
     preferences = {
+      autoImportFileExcludePatterns = {},
       allowIncompleteCompletions = true,
       allowRenameOfImportPath = true,
       allowTextChangesInNewFiles = true,
+      disableSuggestions = false,
       displayPartsForJSDoc = true,
       generateReturnInDocTemplate = true,
+      importModuleSpecifierEnding = 'minimal',
       includeAutomaticOptionalChainCompletions = true,
       includeCompletionsForImportStatements = true,
       includeCompletionsForModuleExports = true,
@@ -54,26 +74,12 @@ vim.lsp.start({
       quotePreference = 'double',
       useLabelDetailsInCompletionEntries = true,
     },
-    settings = {
-      ['typescript.format.baseIndentSize'] = bo.tabstop,
-      ['typescript.format.indentSize'] = bo.tabstop,
-      ['typescript.format.trimTrailingWhitespace'] = true,
-      ['typescript.format.convertTabsToSpaces'] = true,
-      ['typescript.format.semicolons'] = 'remove',
-      ['typescript.format.tabSize'] = bo.tabstop,
-      ['typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions'] = true,
-      ['typescript.format.insertSpaceAfterKeywordsInControlFlowStatements'] = true,
-      ['typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces'] = true,
-      ['typescript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces'] = true,
-      ['typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces'] = true,
-      ['typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets'] = true,
-      ['typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis'] = true,
-      ['typescript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces'] = true,
-      ['typescript.format.insertSpaceAfterSemicolonInForStatements'] = true,
-    },
   },
   name = 'tsserver',
+  on_init = function(client, _)
+    client.notify('workspace/didChangeConfiguration', { settings = settings })
+  end,
   root_dir = vim.fs.dirname(vim.fs.find(
     {'tsconfig.json', 'package.json', 'index.ts', 'main.ts' },
-    { upward = true })[1]),
+    { upward = true, stop = os.getenv('HOME') })[1]),
 })
