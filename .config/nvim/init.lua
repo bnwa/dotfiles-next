@@ -1,6 +1,7 @@
 local cmd = vim.cmd
 local fn = vim.fn
 local opt = vim.opt
+local group = vim.api.nvim_create_augroup('Config', { clear = true })
 local new_cmd = vim.api.nvim_create_user_rommand
 local autocmd = vim.api.nvim_create_autocmd
 
@@ -293,7 +294,7 @@ end)
 local function on(match, events, listener)
   autocmd(events, {
     callback = listener,
-    group = vim.api.nvim_create_augroup('Base', { clear = true }),
+    group = group,
     pattern = match,
   })
 end
