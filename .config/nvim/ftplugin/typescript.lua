@@ -23,21 +23,34 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
 })
 
 local settings = {
-  ['typescript.format.baseIndentSize'] = bo.tabstop,
-  ['typescript.format.indentSize'] = bo.tabstop,
-  ['typescript.format.trimTrailingWhitespace'] = true,
-  ['typescript.format.convertTabsToSpaces'] = true,
-  ['typescript.format.semicolons'] = 'remove',
-  ['typescript.format.tabSize'] = bo.tabstop,
-  ['typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions'] = true,
-  ['typescript.format.insertSpaceAfterKeywordsInControlFlowStatements'] = true,
-  ['typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces'] = true,
-  ['typescript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces'] = true,
-  ['typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces'] = true,
-  ['typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets'] = true,
-  ['typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis'] = true,
-  ['typescript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces'] = true,
-  ['typescript.format.insertSpaceAfterSemicolonInForStatements'] = true,
+  typescript = {
+    format = {
+      baseIndentSize = 0,
+      indentSize = bo.tabstop,
+      trimTrailingWhitespace = true,
+      convertTabsToSpaces = true,
+      semicolons = 'remove',
+      tabSize = bo.tabstop,
+      insertSpaceAfterFunctionKeywordForAnonymousFunctions = true,
+      insertSpaceAfterKeywordsInControlFlowStatements = true,
+      insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = true,
+      insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces = true,
+      insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces = true,
+      insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets = true,
+      insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis = true,
+      insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces = true,
+      insertSpaceAfterSemicolonInForStatements = true,
+    },
+    inlayHints = {
+      includeInlayParameterNameHints = 'all',
+      includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+      includeInlayFunctionParameterTypeHints = true,
+      includeInlayVariableTypeHints = true,
+      includeInlayPropertyDeclarationTypeHints = true,
+      includeInlayFunctionLikeReturnTypeHints = true,
+      includeInlayEnumMemberValueHints = true,
+    },
+  },
 }
 
 vim.lsp.start({
