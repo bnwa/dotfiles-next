@@ -33,7 +33,6 @@ opt.undofile = true
 opt.updatetime = 100
 opt.visualbell = false
 
-vim.g.mapleader = ' '
 
 --UTILS
 local function toggle_night_shift()
@@ -329,7 +328,9 @@ local function map(modes, lhs, rhs, opts)
   vim.keymap.set(modes, lhs, rhs, opts)
 end
 
-map('n', [[<space>f]], function()
+vim.g.mapleader = ' '
+
+map('n', [[<leader>f]], function()
   local picker = require 'telescope.builtin'
   if vim.loop.fs_stat('./.git') then
     picker.git_files { show_untracked = true }
@@ -339,12 +340,12 @@ map('n', [[<space>f]], function()
 end)
 
 if fn.system({'which', 'ripgrep' }) then
-  map('n', [[<space>s]], function()
+  map('n', [[<leader>s]], function()
     require('telescope.builtin').live_grep {}
   end)
 end
 
-map('n', [[<space>y]], function()
+map('n', [[<leader>y]], function()
   require('telescope.builtin').treesitter {}
 end)
 
@@ -352,7 +353,7 @@ map({ 'o', 'x' }, [[m]], function()
   require('tsht').nodes()
 end)
 
-map('n', [[<space>,]], function()
+map('n', [[<leader>,]], function()
   cmd.nohl()
 end)
 
