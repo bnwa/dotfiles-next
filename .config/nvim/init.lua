@@ -196,6 +196,12 @@ local function setup_luapad()
   }
 end
 
+local function setup_tokyonight()
+  require('tokyonight').setup {
+    style = 'night'
+  }
+end
+
 local function setup_devicons()
   require('nvim-web-devicons').setup {}
 end
@@ -252,6 +258,7 @@ require('lazy').setup {
   { 'ramojus/mellifluous.nvim',  dependencies = { 'rktjmp/lush.nvim' }, priority = 1000, lazy = false  },
   { 'rose-pine/neovim', name = 'rose-pine', priority = 1000, lazy = false   },
   { 'savq/melange', priority = 1000, lazy = false   },
+  { 'folke/tokyonight.nvim', config = setup_tokyonight },
 
   -- ICONS
   { 'nvim-tree/nvim-web-devicons', config = setup_devicons },
@@ -262,7 +269,7 @@ require('lazy').setup {
 
 
 -- COLORS
-cmd.colorscheme 'default'
+cmd.colorscheme 'tokyonight'
 toggle_night_shift()
 
 
