@@ -261,6 +261,11 @@ require('lazy').setup {
 }
 
 
+-- COLORS
+cmd.colorscheme 'default'
+toggle_night_shift()
+
+
 -- NEOVIDE
 if vim.g.neovide then
   opt.guifont = { 'FiraCode Nerd Font:h16',  }
@@ -268,11 +273,6 @@ if vim.g.neovide then
   cmd.colorscheme 'mellifluous'
   cmd.cd '~'
 end
-
-
--- COLORS
-cmd.colorscheme 'default'
-toggle_night_shift()
 
 
 -- COMMANDS
