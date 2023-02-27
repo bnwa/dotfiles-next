@@ -1,8 +1,10 @@
 local cmd = vim.cmd
 local fn = vim.fn
+local fs = vim.fs
 local opt = vim.opt
 local group = vim.api.nvim_create_augroup('Config', { clear = true })
-local new_cmd = vim.api.nvim_create_user_rommand
+local notify = vim.notify
+local new_cmd = vim.api.nvim_create_user_command
 local autocmd = vim.api.nvim_create_autocmd
 
 
@@ -45,6 +47,14 @@ local function toggle_night_shift()
     opt.background = 'dark'
   else
     opt.background = 'light'
+  end
+end
+
+local function file_readable(path)
+  if fn.filereadable(fn.expand(path)) == 1 then
+    return true
+  else
+    return false
   end
 end
 
@@ -263,6 +273,47 @@ end
 -- COLORS
 cmd.colorscheme 'default'
 toggle_night_shift()
+
+
+-- COMMANDS
+local session_path = fn.stdpath('data') .. '/session'
+
+local function persist_session()
+  local cwd = fn.getcwd()
+  local dir = vim.fs.basename(cwd)
+  cmd('mksession! ' .. session_path ..'/' .. dir .. '.vim')
+  notify('Session saved for current directory')
+end
+
+local function restore_session(meta)
+  local args = meta.fargs
+  local arg = args[1]
+  local name = '' ~= arg and arg or vim.fs.basename(fn.getcwd())
+  local session = '' ~= name and session_path .. '/' .. name .. '.vim' or nil
+
+  if not session then return end
+
+  if file_readable(session) then
+    cmd.wall()
+    cmd.bdelete('%') 
+    cmd.source(session)
+  else
+    notify('No Session to open for this directory - ' .. name .. ' - session file not found at path: ' .. session)
+  end
+end
+
+local function list_sessions(arg_lead, cmd_line, cursor_pos)
+  local session_files = vim.fn.filter(vim.fn.readdir(session_path), function (_, file)
+    return file:find('.vim', -4) > 0
+  end)
+  local session_names = vim.fn.map(session_files, function (_, filename)
+    return filename:gsub('.vim', '')
+  end)
+  return session_names
+end
+
+new_cmd("Save", persist_session, { desc = "Save project session" })
+new_cmd("Open", restore_session, { desc = "Load project session", nargs = "?", complete = list_sessions })
 
 
 -- KEYMAP
