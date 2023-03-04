@@ -319,8 +319,28 @@ local function list_sessions(arg_lead, cmd_line, cursor_pos)
   return session_names
 end
 
+local function remove_session(meta)
+  local args = meta.fargs
+  local arg = args[1]
+  local name = '' ~= arg and arg or vim.fs.basename(fn.getcwd())
+  local session = '' ~= name and session_path .. '/' .. name .. '.vim' or nil
+
+  if not session then return end
+
+  if file_readable(session) then
+    if fn.delete(session) == 0 then
+      notify('Removed session at path: ' .. session)
+    else
+      notify('Failed to remove session at path: ' .. session)
+    end
+  else
+    notify('No session to remove for this directory - ' .. name .. ' - session file not found at path: ' .. session)
+  end
+end
+
 new_cmd("Save", persist_session, { desc = "Save project session" })
 new_cmd("Open", restore_session, { desc = "Load project session", nargs = "?", complete = list_sessions })
+new_cmd("Remove", remove_session, { desc = "Remove project session", nargs = "?", complete = list_sessions })
 
 
 -- KEYMAP
@@ -356,6 +376,12 @@ end)
 
 map('n', [[<leader>,]], function()
   cmd.nohl()
+end)
+
+map('n', [[<leader>o]], function()
+  vim.ui.select(list_sessions(), { prompt = 'Open existing session', kind = 'path' }, function(session)
+    cmd('Open ' .. session)
+  end)
 end)
 
 
