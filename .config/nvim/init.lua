@@ -313,7 +313,8 @@ local function list_sessions(arg_lead, cmd_line, cursor_pos)
     return file:find('.vim', -4) > 0
   end)
   local session_names = vim.fn.map(session_files, function (_, filename)
-    return filename:gsub('.vim', '')
+    local len = #filename
+    return filename:sub(-len, -5)
   end)
   return session_names
 end
