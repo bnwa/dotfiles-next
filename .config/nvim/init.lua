@@ -284,6 +284,20 @@ end
 -- COMMANDS
 local session_path = fn.stdpath('data') .. '/session'
 
+local function make_session_path(filename)
+  return session_path .. '/' .. filename
+end
+
+local function cwd_has_session()
+  local current = vim.fs.basename(fn.getcwd())
+  local session = make_session_path(current)
+  if file_readable(session) then
+    return true
+  else
+    return false
+  end
+end
+
 local function persist_session()
   local cwd = fn.getcwd()
   local dir = vim.fs.basename(cwd)
@@ -292,16 +306,15 @@ local function persist_session()
 end
 
 local function restore_session(meta)
-  local args = meta.fargs
-  local arg = args[1]
-  local name = '' ~= arg and arg or vim.fs.basename(fn.getcwd())
-  local session = '' ~= name and session_path .. '/' .. name .. '.vim' or nil
-
-  if not session then return end
+  local name = meta.fargs[1]
+  local current = fs.basename(fn.getcwd())
+  local session = session_path .. '/' .. name .. '.vim'
 
   if file_readable(session) then
-    cmd.wall()
-    cmd.bdelete('%') 
+    if current ~= name and cwd_has_session() then
+      persist_session()
+    end
+    if #fn.getwininfo() > 1 then cmd.hide('%') end
     cmd.source(session)
   else
     notify('No Session to open for this directory - ' .. name .. ' - session file not found at path: ' .. session)
@@ -339,7 +352,7 @@ local function remove_session(meta)
 end
 
 new_cmd("Save", persist_session, { desc = "Save project session" })
-new_cmd("Open", restore_session, { desc = "Load project session", nargs = "?", complete = list_sessions })
+new_cmd("Open", restore_session, { desc = "Load project session", nargs = 1, complete = list_sessions })
 new_cmd("Remove", remove_session, { desc = "Remove project session", nargs = "?", complete = list_sessions })
 
 
@@ -398,4 +411,9 @@ on('*', { 'FocusGained', 'FocusLost' }, toggle_night_shift)
 on('*', { 'TermOpen' }, function()
   vim.wo.number = false
   vim.wo.relativenumber = false
+end)
+on('*', { 'QuitPre' }, function()
+  if cwd_has_session() then
+    persist_session()
+  end
 end)
