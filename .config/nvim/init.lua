@@ -42,7 +42,8 @@ local function toggle_night_shift()
   local date_parts = vim.split(date_str, '[%s%p]+')
   local date_hour = fn.str2nr(date_parts[4])
 
-  if date_hour >= 17 or date_hour < 7 then
+  --TODO How to auto adjust for daylight savings?
+  if date_hour >= 18 or date_hour < 7 then
     opt.background = 'dark'
   else
     opt.background = 'light'
