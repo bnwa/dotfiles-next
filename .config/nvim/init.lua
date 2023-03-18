@@ -291,81 +291,6 @@ if vim.g.neovide then
 end
 
 
--- COMMANDS
-local session_path = fn.stdpath('data') .. '/session'
-
-local function make_session_path(filename)
-  return session_path .. '/' .. filename
-end
-
-local function cwd_has_session()
-  local current = vim.fs.basename(fn.getcwd())
-  local session = make_session_path(current)
-  if file_readable(session) then
-    return true
-  else
-    return false
-  end
-end
-
-local function persist_session()
-  local cwd = fn.getcwd()
-  local dir = vim.fs.basename(cwd)
-  cmd('mksession! ' .. session_path ..'/' .. dir .. '.vim')
-  notify('Session saved for current directory')
-end
-
-local function restore_session(meta)
-  local name = meta.fargs[1]
-  local current = fs.basename(fn.getcwd())
-  local session = session_path .. '/' .. name .. '.vim'
-
-  if file_readable(session) then
-    if current ~= name and cwd_has_session() then
-      persist_session()
-    end
-    if #fn.getwininfo() > 1 then cmd.hide('%') end
-    cmd.source(session)
-  else
-    notify('No Session to open for this directory - ' .. name .. ' - session file not found at path: ' .. session)
-  end
-end
-
-local function list_sessions(arg_lead, cmd_line, cursor_pos)
-  local session_files = vim.fn.filter(vim.fn.readdir(session_path), function (_, file)
-    return file:find('.vim', -4) > 0
-  end)
-  local session_names = vim.fn.map(session_files, function (_, filename)
-    local len = #filename
-    return filename:sub(-len, -5)
-  end)
-  return session_names
-end
-
-local function remove_session(meta)
-  local args = meta.fargs
-  local arg = args[1]
-  local name = '' ~= arg and arg or vim.fs.basename(fn.getcwd())
-  local session = '' ~= name and session_path .. '/' .. name .. '.vim' or nil
-
-  if not session then return end
-
-  if file_readable(session) then
-    if fn.delete(session) == 0 then
-      notify('Removed session at path: ' .. session)
-    else
-      notify('Failed to remove session at path: ' .. session)
-    end
-  else
-    notify('No session to remove for this directory - ' .. name .. ' - session file not found at path: ' .. session)
-  end
-end
-
-new_cmd("Save", persist_session, { desc = "Save project session" })
-new_cmd("Open", restore_session, { desc = "Load project session", nargs = 1, complete = list_sessions })
-new_cmd("Remove", remove_session, { desc = "Remove project session", nargs = "?", complete = list_sessions })
-
-
 -- KEYMAP
 local function map(modes, lhs, rhs, opts)
   opts = opts and extend('force', { silent = true }, opts) or { silent = true }
@@ -401,12 +326,6 @@ map('n', [[<leader>,]], function()
   cmd.nohl()
 end)
 
-map('n', [[<leader>o]], function()
-  vim.ui.select(list_sessions(), { prompt = 'Open existing session', kind = 'path' }, function(session)
-    cmd('Open ' .. session)
-  end)
-end)
-
 
 -- EVENTS
 local function on(match, events, listener)
@@ -421,9 +340,4 @@ on('*', { 'FocusGained', 'FocusLost' }, toggle_night_shift)
 on('*', { 'TermOpen' }, function()
   vim.wo.number = false
   vim.wo.relativenumber = false
-end)
-on('*', { 'QuitPre' }, function()
-  if cwd_has_session() then
-    persist_session()
-  end
 end)
