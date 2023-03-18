@@ -206,6 +206,17 @@ local function setup_devicons()
   require('nvim-web-devicons').setup {}
 end
 
+local function setup_mason()
+  require('mason').setup {
+    border = 'shadow',
+    icons = {
+      package_installed = "✓",
+      package_pending = "➜",
+      package_uninstalled = "✗",
+    }
+  }
+end
+
 if not vim.loop.fs_stat(lazypath) then
   fn.system({
     "git",
@@ -264,7 +275,10 @@ require('lazy').setup {
   { 'nvim-tree/nvim-web-devicons', config = setup_devicons },
 
   --REPL
-  { 'rafcamlet/nvim-luapad', config = setup_luapad }
+  { 'rafcamlet/nvim-luapad', config = setup_luapad },
+
+  -- LANGUAGE TOOLING
+  { 'williamboman/mason.nvim', config = setup_mason }
 }
 
 
