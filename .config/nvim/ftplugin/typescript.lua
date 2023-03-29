@@ -19,6 +19,10 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
     if server.documentRangeFormattingProvider then
       bo[buf].formatexpr = 'v:lua.vim.lsp.formatexpr()'
     end
+
+    vim.diagnostic.config {
+      virtual_text = false,
+    }
   end
 })
 

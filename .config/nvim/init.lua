@@ -217,6 +217,10 @@ local function setup_mason()
   }
 end
 
+local function setup_lsp_lines()
+  require('lsp_lines').setup {}
+end
+
 if not vim.loop.fs_stat(lazypath) then
   fn.system({
     "git",
@@ -272,7 +276,8 @@ require('lazy').setup {
   { 'rafcamlet/nvim-luapad', config = setup_luapad },
 
   -- LANGUAGE TOOLING
-  { 'williamboman/mason.nvim', config = setup_mason }
+  { 'williamboman/mason.nvim', config = setup_mason },
+  { 'https://git.sr.ht/~whynothugo/lsp_lines.nvim', config = setup_lsp_lines }
 }
 
 
