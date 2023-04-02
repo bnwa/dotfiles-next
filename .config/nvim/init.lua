@@ -350,6 +350,11 @@ map('n', { desc = "View undo tree and apply changes" }, [[<leader>fu]], function
   picker.extensions.undo.undo()
 end)
 
+map('n', { desc = "List registers and paste selected" }, [[<leader>f"]], function()
+  local picker = require 'telescope.builtin'
+  picker.registers {}
+end)
+
 
 -- EVENTS
 local function on(match, events, listener)
