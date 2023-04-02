@@ -1,10 +1,8 @@
 local cmd = vim.cmd
 local fn = vim.fn
-local fs = vim.fs
 local opt = vim.opt
+local extend = vim.tbl_extend
 local group = vim.api.nvim_create_augroup('Config', { clear = true })
-local notify = vim.notify
-local new_cmd = vim.api.nvim_create_user_command
 local autocmd = vim.api.nvim_create_autocmd
 
 --[[
@@ -54,14 +52,6 @@ local function toggle_night_shift()
     opt.background = 'dark'
   else
     opt.background = 'light'
-  end
-end
-
-local function file_readable(path)
-  if fn.filereadable(fn.expand(path)) == 1 then
-    return true
-  else
-    return false
   end
 end
 
@@ -233,7 +223,7 @@ local function setup_mason()
 end
 
 local function setup_lsp_lines()
-  require('lsp_lines').setup {}
+  require('lsp_lines').setup()
 end
 
 if not vim.loop.fs_stat(lazypath) then
@@ -316,14 +306,15 @@ end
 
 
 -- KEYMAP
-local function map(modes, lhs, rhs, opts)
-  opts = opts and extend('force', { silent = true }, opts) or { silent = true }
+local function map(modes, opts, lhs, rhs)
+  local defaults = { noremap = true, silent = true }
+  opts = opts and extend('force', defaults, opts) or defaults
   vim.keymap.set(modes, lhs, rhs, opts)
 end
 
 vim.g.mapleader = ' '
 
-map('n', [[<leader>ff]], function()
+map('n', { desc = "Find files under current working directory" }, [[<leader>ff]], function()
   local picker = require 'telescope.builtin'
   if vim.loop.fs_stat('./.git') then
     picker.git_files { show_untracked = true }
@@ -333,20 +324,20 @@ map('n', [[<leader>ff]], function()
 end)
 
 if fn.system({'which', 'ripgrep' }) then
-  map('n', [[<leader>s]], function()
+  map('n', { desc = "Live grep if ripgrep installed" }, [[<leader>s]], function()
     require('telescope.builtin').live_grep {}
   end)
 end
 
-map('n', [[<leader>y]], function()
+map('n', { desc = "Find symbol in buffer via treesitter" }, [[<leader>y]], function()
   require('telescope.builtin').treesitter {}
 end)
 
-map('n', [[<leader>,]], function()
+map('n', { desc = "Cease search highlight" }, [[<leader>,]], function()
   cmd.nohl()
 end)
 
-map('n', [[<leader>fl]], function()
+map('n', { desc = "Select buffer from buffer list" }, [[<leader>fl]], function()
   local picker = require 'telescope.builtin'
   picker.buffers {
     ignore_current_buffer = true,
@@ -354,7 +345,7 @@ map('n', [[<leader>fl]], function()
   }
 end)
 
-map('n', [[<leader>fu]], function()
+map('n', { desc = "View undo tree and apply changes" }, [[<leader>fu]], function()
   local picker = require 'telescope'
   picker.extensions.undo.undo()
 end)
