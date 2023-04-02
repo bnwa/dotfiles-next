@@ -303,7 +303,7 @@ end
 
 vim.g.mapleader = ' '
 
-map('n', [[<leader>f]], function()
+map('n', [[<leader>ff]], function()
   local picker = require 'telescope.builtin'
   if vim.loop.fs_stat('./.git') then
     picker.git_files { show_untracked = true }
@@ -326,6 +326,13 @@ map('n', [[<leader>,]], function()
   cmd.nohl()
 end)
 
+map('n', [[<leader>fl]], function()
+  local picker = require 'telescope.builtin'
+  picker.buffers {
+    ignore_current_buffer = true,
+    sort_mru = true,
+  }
+end)
 
 -- EVENTS
 local function on(match, events, listener)
