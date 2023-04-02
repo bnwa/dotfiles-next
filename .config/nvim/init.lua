@@ -1,5 +1,5 @@
-local cmd = vim.cmd
 local fn = vim.fn
+local cmd = vim.cmd
 local opt = vim.opt
 local extend = vim.tbl_extend
 local group = vim.api.nvim_create_augroup('Config', { clear = true })
@@ -212,7 +212,13 @@ local function setup_devicons()
 end
 
 local function setup_mason()
-  require('mason').setup {
+  local mason = require 'mason'
+  local registry = require 'mason-registry'
+  local ensure_installed = {
+    'lua-language-server',
+  }
+
+  mason.setup {
     border = 'shadow',
     icons = {
       package_installed = "✓",
@@ -220,6 +226,18 @@ local function setup_mason()
       package_uninstalled = "✗",
     }
   }
+
+  -- Install servers that're ensured and reload ftplugin
+  -- if no LSP client attached to current buffer
+  for _, server in ipairs(ensure_installed) do
+    if not registry.is_installed(server) then
+      cmd { cmd = 'MasonInstall' , args = { server } }
+    end
+  end
+
+  if #vim.lsp.get_active_clients({ buffer = 0 }) == 0 then
+    cmd { cmd = 'filetype', args = { 'detect' } }
+  end
 end
 
 local function setup_lsp_lines()
