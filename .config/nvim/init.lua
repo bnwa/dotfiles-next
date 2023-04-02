@@ -7,6 +7,13 @@ local notify = vim.notify
 local new_cmd = vim.api.nvim_create_user_command
 local autocmd = vim.api.nvim_create_autocmd
 
+--[[
+TODO Rebind motions/text objects meant for
+prose for more appropriate uses in coding
+context, see :h object-motions, specifically
+sentence/paragraph/section types
+--]]
+
 
 -- OPTIONS
 opt.background = 'dark'
