@@ -1,4 +1,6 @@
 local lsp = vim.lsp
+local api = vim.api
+local fs = vim.fs
 local bo = vim.bo
 local ok, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
 
@@ -8,8 +10,19 @@ bo.tabstop = 2
 
 if not ok then return end
 
+local root_dir = fs.find('nvim', {
+  path = fs.dirname(api.nvim_buf_get_name(0)),
+  stop = vim.loop.os_homedir(),
+  type = 'directory',
+  upward = true,
+})[1]
+
 -- TODO When not working w/ nvim config, should add predicates
 local libraries = vim.api.nvim_get_runtime_file("", true)
+
+local capabilities = vim.tbl_deep_extend('force',
+lsp.protocol.make_client_capabilities(),
+cmp_lsp.default_capabilities())
 
 local settings = {
   Lua = {
@@ -61,16 +74,10 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
 })
 
 vim.lsp.start({
-  capabilities = vim.tbl_deep_extend('force',
-    lsp.protocol.make_client_capabilities(),
-    cmp_lsp.default_capabilities()),
+  before_init = require('neodev.lsp').before_init,
+  capabilities = capabilities,
   cmd = { 'lua-language-server' },
-  name = "lua_ls",
-  on_init = function(client, _)
-    client.notify('workspace/didChangeConfiguration', { settings = settings })
-  end,
-  root_dir = vim.fs.dirname(vim.fs.find(
-    { 'init.lua' },
-    { upward = true, stop = vim.env.HOME })[1]),
+  name = 'lua-language-server',
+  root_dir = root_dir,
   settings = settings,
 })

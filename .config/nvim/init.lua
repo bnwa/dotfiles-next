@@ -5,6 +5,7 @@ local extend = vim.tbl_extend
 local group = vim.api.nvim_create_augroup('Config', { clear = true })
 local autocmd = vim.api.nvim_create_autocmd
 
+
 --[[
 TODO Rebind motions/text objects meant for
 prose for more appropriate uses in coding
@@ -244,6 +245,13 @@ local function setup_lsp_lines()
   require('lsp_lines').setup()
 end
 
+local function setup_neodev()
+  require('neodev').setup {
+    lspconfig = false,
+    setup_jsonls = false,
+  }
+end
+
 if not vim.loop.fs_stat(lazypath) then
   fn.system({
     "git",
@@ -305,7 +313,8 @@ require('lazy').setup {
 
   -- LANGUAGE TOOLING
   { 'williamboman/mason.nvim', config = setup_mason },
-  { 'https://git.sr.ht/~whynothugo/lsp_lines.nvim', config = setup_lsp_lines }
+  { 'https://git.sr.ht/~whynothugo/lsp_lines.nvim', config = setup_lsp_lines },
+  { 'folke/neodev.nvim', config = setup_neodev },
 }
 
 
