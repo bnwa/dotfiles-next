@@ -50,6 +50,7 @@ local settings = {
       enable = false,
     },
     workspace = {
+      checkThirdParty = false,
       library = libraries,
     },
   }
