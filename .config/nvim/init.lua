@@ -165,7 +165,6 @@ local function setup_treesitter()
       'css',
       'dockerfile',
       'fish',
-      'help',
       'html',
       'java',
       'javascript',
@@ -178,6 +177,7 @@ local function setup_treesitter()
       'toml',
       'typescript',
       'vim',
+      'vimdoc',
       'yaml',
     },
     highlight = {
