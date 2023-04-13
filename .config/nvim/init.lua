@@ -178,6 +178,7 @@ local function setup_treesitter()
       'toml',
       'typescript',
       'vim',
+      'vimdoc',
       'yaml',
     },
     highlight = {
