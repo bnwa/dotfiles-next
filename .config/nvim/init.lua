@@ -39,6 +39,8 @@ opt.undofile = true
 opt.updatetime = 100
 opt.visualbell = false
 
+vim.g.mapleader = ' '
+
 
 --UTILS
 local function toggle_night_shift()
@@ -55,6 +57,22 @@ local function toggle_night_shift()
     opt.background = 'light'
   end
 end
+
+local function on(match, events, listener)
+  autocmd(events, {
+    callback = listener,
+    group = group,
+    pattern = match,
+  })
+end
+
+
+-- EVENTS
+on('*', { 'FocusGained', 'FocusLost' }, toggle_night_shift)
+on('*', { 'TermOpen' }, function()
+  vim.wo.number = false
+  vim.wo.relativenumber = false
+end)
 
 
 -- PLUGINS
@@ -253,6 +271,125 @@ local function setup_neodev()
   }
 end
 
+local function setup_which_key()
+  local which_key = require 'which-key'
+  which_key.setup {
+    marks = false,
+    registers = false,
+    window = {
+      winblend = 5,
+    },
+  }
+
+  which_key.register {
+    ['`'] = {
+      function()
+        local picker = require 'telescope.builtin'
+        picker.marks {}
+      end,
+      "List marks and jump on selection"
+    },
+    ['"'] = {
+      function()
+        local picker = require 'telescope.builtin'
+        picker.registers {}
+      end,
+      "List registers and paste on selection"
+    },
+    ['<leader>'] = {
+      [','] = {
+        function()
+          cmd.nohl()
+        end,
+        "Clear search highlight"
+      },
+      a = {
+        function()
+          vim.lsp.buf.code_action()
+        end,
+        "Select available code action"
+      },
+      d = {
+        function()
+          vim.lsp.buf.hover()
+        end,
+        "Show LSP type information for symbol under cursor"
+      },
+      f = {
+        name = 'Find',
+        f =  {
+          function()
+            local picker = require 'telescope.builtin'
+            if vim.loop.fs_stat('./.git') then
+              picker.git_files { show_untracked = true }
+            else
+              picker.find_files {}
+            end
+          end,
+          "Find files under current working directory",
+        },
+        l =  {
+          function()
+            local picker = require 'telescope.builtin'
+            picker.buffers {
+              sort_mru = true,
+            }
+          end,
+          "Find buffer",
+        },
+        O =  {
+          function()
+            local picker = require 'telescope.builtin'
+            picker.lsp_dynamic_workspace_symbols {}
+          end,
+          "Find symbol in the current workspace",
+        },
+        o =  {
+          function()
+            local picker = require 'telescope.builtin'
+            if vim.lsp.buf.server_ready() then
+              picker.lsp_document_symbols {}
+            else
+              picker.treesitter {}
+            end
+          end,
+          "Find symbol in current buffer",
+        },
+        r =  {
+          function()
+            local picker = require 'telescope.builtin'
+            picker.lsp_references {}
+          end,
+          "find references to the symbol under cursor",
+        },
+        u =  {
+          function()
+            local picker = require 'telescope'
+            picker.extensions.undo.undo()
+          end,
+          "View undo tree and apply changes",
+        },
+        s = {
+          function()
+            if fn.system({'which', 'ripgrep' }) then
+              require('telescope.builtin').live_grep {}
+            else
+              vim.notify('Install ripgrep to use live grep')
+            end
+          end,
+          "Live grep workspace if ripgrep installed",
+        },
+      },
+      r = {
+        function()
+          vim.lsp.buf.rename()
+        end,
+        "Rename symbol under cursor"
+      },
+    }
+  }
+end
+
 if not vim.loop.fs_stat(lazypath) then
   fn.system({
     "git",
@@ -316,6 +453,8 @@ require('lazy').setup {
   { 'williamboman/mason.nvim', config = setup_mason },
   { 'https://git.sr.ht/~whynothugo/lsp_lines.nvim', config = setup_lsp_lines },
   { 'folke/neodev.nvim', config = setup_neodev },
+
+  { 'folke/which-key.nvim', config = setup_which_key, },
 }
 
 
@@ -332,100 +471,3 @@ if vim.g.neovide then
   cmd.cd '~'
 end
 
-
--- KEYMAP
-local function map(modes, opts, lhs, rhs)
-  local defaults = { noremap = true, silent = true }
-  opts = opts and extend('force', defaults, opts) or defaults
-  vim.keymap.set(modes, lhs, rhs, opts)
-end
-
-vim.g.mapleader = ' '
-
-map('n', { desc = "Find files under current working directory" }, [[<leader>ff]], function()
-  local picker = require 'telescope.builtin'
-  if vim.loop.fs_stat('./.git') then
-    picker.git_files { show_untracked = true }
-  else
-    picker.find_files {}
-  end
-end)
-
-map('n', { desc = "Cease search highlight" }, [[<leader>,]], function()
-  cmd.nohl()
-end)
-
-map('n', { desc = "List registers and paste selected on <CR>" }, [["]], function()
-  local picker = require 'telescope.builtin'
-  picker.registers {}
-end)
-
-map('n', { desc = "List registers and paste selected on <CR>" }, [[`]], function()
-  local picker = require 'telescope.builtin'
-  picker.marks {}
-end)
-
-map('n', { desc = "Show type information in floating window relative to cursor" }, [[<leader>d]], function()
-  vim.lsp.buf.hover()
-end)
-
-map('n', { desc = "Rename symbol under cursor" }, [[<leader>r]], function()
-  vim.lsp.buf.rename()
-end)
-
-map('n', { desc = "Select from listed code actions", }, [[<leader>a]], function()
-  vim.lsp.buf.code_action()
-end)
-
-map('n', { desc = "Select buffer from buffer list" }, [[<leader>fl]], function()
-  local picker = require 'telescope.builtin'
-  picker.buffers {
-    sort_mru = true,
-  }
-end)
-
-if fn.system({'which', 'ripgrep' }) then
-  map('n', { desc = "Live grep if ripgrep installed" }, [[<leader>fs]], function()
-    require('telescope.builtin').live_grep {}
-  end)
-end
-
-map('n', { desc = "View undo tree and apply changes" }, [[<leader>fu]], function()
-  local picker = require 'telescope'
-  picker.extensions.undo.undo()
-end)
-
-map('n', { desc = "List and select references to the symbol under cursor", }, [[<leader>fr]], function()
-  local picker = require 'telescope.builtin'
-  picker.lsp_references {}
-end)
-
-map('n', { desc = "List symbols in the current buffer", }, [[<leader>fo]], function()
-  local picker = require 'telescope.builtin'
-  if vim.lsp.buf.server_ready() then
-    picker.lsp_document_symbols {}
-  else
-    picker.treesitter {}
-  end
-end)
-
-map('n', { desc = "List symbols in the current buffer", }, [[<leader>fO]], function()
-  local picker = require 'telescope.builtin'
-  picker.lsp_dynamic_workspace_symbols {}
-end)
-
-
--- EVENTS
-local function on(match, events, listener)
-  autocmd(events, {
-    callback = listener,
-    group = group,
-    pattern = match,
-  })
-end
-
-on('*', { 'FocusGained', 'FocusLost' }, toggle_night_shift)
-on('*', { 'TermOpen' }, function()
-  vim.wo.number = false
-  vim.wo.relativenumber = false
-end)
