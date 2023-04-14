@@ -351,49 +351,70 @@ map('n', { desc = "Find files under current working directory" }, [[<leader>ff]]
   end
 end)
 
-if fn.system({'which', 'ripgrep' }) then
-  map('n', { desc = "Live grep if ripgrep installed" }, [[<leader>fg]], function()
-    require('telescope.builtin').live_grep {}
-  end)
-end
-
-map('n', { desc = "Find symbol in buffer via treesitter" }, [[<leader>fs]], function()
-  require('telescope.builtin').treesitter {}
-end)
-
 map('n', { desc = "Cease search highlight" }, [[<leader>,]], function()
   cmd.nohl()
 end)
 
-map('n', { desc = "Select buffer from buffer list" }, [[<leader>fl]], function()
-  local picker = require 'telescope.builtin'
-  picker.buffers {
-    ignore_current_buffer = true,
-    sort_mru = true,
-  }
-end)
-
-map('n', { desc = "View undo tree and apply changes" }, [[<leader>fu]], function()
-  local picker = require 'telescope'
-  picker.extensions.undo.undo()
-end)
-
-map('n', { desc = "List registers and paste selected" }, [[<leader>f"]], function()
+map('n', { desc = "List registers and paste selected on <CR>" }, [["]], function()
   local picker = require 'telescope.builtin'
   picker.registers {}
+end)
+
+map('n', { desc = "List registers and paste selected on <CR>" }, [[`]], function()
+  local picker = require 'telescope.builtin'
+  picker.marks {}
 end)
 
 map('n', { desc = "Show type information in floating window relative to cursor" }, [[<leader>d]], function()
   vim.lsp.buf.hover()
 end)
 
-map('n', { desc = "Rename symbol under cursor" }, [[<leader>sr]], function()
+map('n', { desc = "Rename symbol under cursor" }, [[<leader>r]], function()
   vim.lsp.buf.rename()
 end)
 
-map('n', { desc = "Select from listed code actions", }, [[<leader>sa]], function()
+map('n', { desc = "Select from listed code actions", }, [[<leader>a]], function()
   vim.lsp.buf.code_action()
 end)
+
+map('n', { desc = "Select buffer from buffer list" }, [[<leader>fl]], function()
+  local picker = require 'telescope.builtin'
+  picker.buffers {
+    sort_mru = true,
+  }
+end)
+
+if fn.system({'which', 'ripgrep' }) then
+  map('n', { desc = "Live grep if ripgrep installed" }, [[<leader>fs]], function()
+    require('telescope.builtin').live_grep {}
+  end)
+end
+
+map('n', { desc = "View undo tree and apply changes" }, [[<leader>fu]], function()
+  local picker = require 'telescope'
+  picker.extensions.undo.undo()
+end)
+
+map('n', { desc = "List and select references to the symbol under cursor", }, [[<leader>fr]], function()
+  local picker = require 'telescope.builtin'
+  picker.lsp_references {}
+end)
+
+map('n', { desc = "List symbols in the current buffer", }, [[<leader>fo]], function()
+  local picker = require 'telescope.builtin'
+  if vim.lsp.buf.server_ready() then
+    picker.lsp_document_symbols {}
+  else
+    picker.treesitter {}
+  end
+end)
+
+map('n', { desc = "List symbols in the current buffer", }, [[<leader>fO]], function()
+  local picker = require 'telescope.builtin'
+  picker.lsp_dynamic_workspace_symbols {}
+end)
+
+
 -- EVENTS
 local function on(match, events, listener)
   autocmd(events, {
