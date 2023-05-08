@@ -1,4 +1,6 @@
 local cmp_lsp = require 'cmp_nvim_lsp'
+local new_cmd = vim.api.nvim_create_user_command
+local utils = require 'user.utils'
 local lsp = vim.lsp
 local opt = vim.opt
 local bo = vim.bo
@@ -26,6 +28,25 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
       },
       virtual_text = false,
     }
+
+    local function renameFile(meta)
+      local src = meta.fargs[1] or vim.api.nvim_buf_get_name(0)
+      local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+      for _, client in ipairs(clients) do
+        if client.name == 'tsserver' then
+          return vim.ui.input({ prompt = "New Path", default = src }, function(input)
+            if input == nil then return end
+            utils.lspRenameFile(client, src, input)
+          end)
+        end
+      end
+
+    end
+
+    new_cmd('RenameFile', renameFile, {
+      desc = "Specify new file path for a buffer supported by typescript-language-server",
+      nargs = '?',
+    })
   end
 })
 
