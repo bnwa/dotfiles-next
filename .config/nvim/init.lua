@@ -97,7 +97,7 @@ local setup_cmp = function()
     },
     snippet = {
       expand = function(args)
-        require('luasnip').lsp_expand(args)
+        require('luasnip').lsp_expand(args.body)
       end,
     },
     sources = cmp.config.sources({
