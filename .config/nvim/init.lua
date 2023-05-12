@@ -390,6 +390,15 @@ local function setup_which_key()
   }
 end
 
+function setup_rosepine()
+  require('rose-pine').setup {
+    variant = 'auto',
+    dark_variant = 'moon',
+    bold_vert_split = true,
+    disable_italics = true,
+  }
+end
+
 if not vim.loop.fs_stat(lazypath) then
   fn.system({
     "git",
@@ -438,9 +447,9 @@ require('lazy').setup {
   },
 
   -- COLORSCHEMES
-  { 'ramojus/mellifluous.nvim',  dependencies = { 'rktjmp/lush.nvim' }, priority = 1000, lazy = false  },
-  { 'rose-pine/neovim', name = 'rose-pine', priority = 1000, lazy = false   },
-  { 'savq/melange', priority = 1000, lazy = false   },
+  { 'ramojus/mellifluous.nvim',  dependencies = { 'rktjmp/lush.nvim' } },
+  { 'rose-pine/neovim', name = 'rose-pine', config = setup_rosepine },
+  { 'savq/melange' },
   { 'folke/tokyonight.nvim', config = setup_tokyonight },
 
   -- ICONS
@@ -459,7 +468,7 @@ require('lazy').setup {
 
 
 -- COLORS
-cmd.colorscheme 'tokyonight'
+cmd.colorscheme 'rose-pine'
 toggle_night_shift()
 
 

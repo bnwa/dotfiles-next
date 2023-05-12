@@ -7,9 +7,9 @@ local color_scheme_dirs = {
 
 local function modal_color_scheme(mode)
   if mode:find 'Dark' then
-    return 'tokyonight_night'
+    return 'rose-pine-moon'
   else
-    return 'tokyonight_day'
+    return 'rose-pine-dawn'
   end
 end
 
