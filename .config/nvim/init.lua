@@ -474,7 +474,7 @@ require('lazy').setup {
 
 
 -- COLORS
-cmd.colorscheme 'rose-pine'
+cmd.colorscheme 'tokyonight'
 toggle_night_shift()
 
 
