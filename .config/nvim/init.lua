@@ -308,6 +308,12 @@ local function setup_which_key()
         end,
         "Show LSP type information for symbol under cursor"
       },
+      e = {
+        function()
+          vim.diagnostic.setqflist()
+        end,
+        "Show LSP diagnostics in quickfix list"
+      },
       f = {
         name = 'Find',
         ['"'] = {
