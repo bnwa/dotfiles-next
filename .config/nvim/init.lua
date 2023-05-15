@@ -282,21 +282,14 @@ local function setup_which_key()
   }
 
   which_key.register {
-    ['`'] = {
-      function()
-        local picker = require 'telescope.builtin'
-        picker.marks {}
-      end,
-      "List marks and jump on selection"
-    },
-    ['"'] = {
-      function()
-        local picker = require 'telescope.builtin'
-        picker.registers {}
-      end,
-      "List registers and paste on selection"
-    },
     ['<leader>'] = {
+      ['`'] = {
+        function()
+          local picker = require 'telescope.builtin'
+          picker.marks {}
+        end,
+        "List marks and jump on selection"
+      },
       [','] = {
         function()
           cmd.nohl()
@@ -317,6 +310,13 @@ local function setup_which_key()
       },
       f = {
         name = 'Find',
+        ['"'] = {
+          function()
+            local picker = require 'telescope.builtin'
+            picker.registers {}
+          end,
+          "List registers and paste on selection"
+        },
         f =  {
           function()
             local picker = require 'telescope.builtin'
