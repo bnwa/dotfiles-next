@@ -31,16 +31,10 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
 
     local function renameFile(meta)
       local src = meta.fargs[1] or vim.api.nvim_buf_get_name(0)
-      local clients = vim.lsp.get_active_clients({ bufnr = 0 })
-      for _, client in ipairs(clients) do
-        if client.name == 'tsserver' then
-          return vim.ui.input({ prompt = "New Path", default = src }, function(input)
-            if input == nil then return end
-            utils.lspRenameFile(client, src, input)
-          end)
-        end
-      end
-
+      vim.ui.input({ prompt = "New Path", default = src }, function(input)
+        if input == nil then return end
+        utils.lspRenameFile(client, src, input)
+      end)
     end
 
     new_cmd('RenameFile', renameFile, {
