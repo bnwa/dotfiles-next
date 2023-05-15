@@ -4,6 +4,15 @@ local api = vim.api
 local cmd = vim.cmd
 local loop = vim.loop
 
+function M.lspFindClient(bufnr, serverName)
+  local clients = vim.lsp.get_active_clients { bufnr = bufnr }
+  for _, client in ipairs(clients) do
+    if client.name == serverName then
+      return client
+    end
+  end
+end
+
 -- GUI interface even better for spec'ing dest
 function M.lspRenameFile(client, src, dest)
   local srcId = fn.bufadd(src)
