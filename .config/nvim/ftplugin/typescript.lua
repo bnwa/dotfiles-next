@@ -105,7 +105,7 @@ vim.lsp.start({
       includeInlayPropertyDeclarationTypeHints = true,
       includeInlayVariableTypeHints = true,
       jsxAttributeCompletionStyle = 'auto',
-      providePrefixAndSuffixTextForRename = true,
+      providePrefixAndSuffixTextForRename = false,
       quotePreference = 'double',
       useLabelDetailsInCompletionEntries = true,
     },
