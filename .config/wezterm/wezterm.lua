@@ -21,6 +21,7 @@ end
 return {
   color_scheme = modal_color_scheme(gui.get_appearance()),
   color_scheme_dirs = color_scheme_dirs,
+  default_prog = { '/opt/homebrew/bin/fish', '-l' },
   font = w.font {
     family = 'FiraCode Nerd Font',
     weight = 450, -- Retina

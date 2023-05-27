@@ -25,6 +25,7 @@ opt.listchars.extends = "»"
 opt.relativenumber = true
 opt.shiftwidth = 2
 opt.softtabstop = 2
+opt.shell = "/opt/homebrew/bin/fish -l"
 opt.shortmess:append "c"
 opt.splitbelow = false
 opt.splitright = false
