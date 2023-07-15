@@ -1,15 +1,12 @@
 local w = require 'wezterm'
 local gui = w.gui
 local home = os.getenv('HOME')
-local color_scheme_dirs = {
-  home .. '/.local/share/nvim/lazy/tokyonight.nvim/extras/wezterm',
-}
 
 local function modal_color_scheme(mode)
   if mode:find 'Dark' then
-    return 'tokyonight'
+    return 'Tokyo Night Storm'
   else
-    return 'tokyonight-day'
+    return 'Tokyo Night Day'
   end
 end
 
@@ -19,6 +16,7 @@ end
 )
 
 return {
+  check_for_updates = false, -- Managed by Homebrew
   color_scheme = modal_color_scheme(gui.get_appearance()),
   color_scheme_dirs = color_scheme_dirs,
   default_prog = { '/opt/homebrew/bin/fish', '-l' },
