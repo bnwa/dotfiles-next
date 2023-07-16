@@ -1,4 +1,3 @@
-set -gx ASDF_CONFIG_FILE $HOME/.config/asdf/asdfrc
 set -gx EDITOR nvim
 set -gx HOMEBREW_NO_ANALYTICS 1
 set -gx HOMEBREW_NO_AUTO_UPDATE 1
