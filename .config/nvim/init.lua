@@ -23,14 +23,11 @@ opt.number = true
 opt.listchars.precedes = "«"
 opt.listchars.extends = "»"
 opt.relativenumber = true
-opt.shiftwidth = 2
-opt.softtabstop = 2
 opt.shell = "/opt/homebrew/bin/fish -l"
 opt.shortmess:append "c"
 opt.splitbelow = false
 opt.splitright = false
 opt.swapfile = false
-opt.tabstop = 2
 opt.termguicolors = true
 opt.timeoutlen = 500
 opt.wildignore:append '/.git'
