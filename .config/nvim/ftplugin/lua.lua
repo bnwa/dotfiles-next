@@ -4,8 +4,8 @@ local fs = vim.fs
 local bo = vim.bo
 local ok, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
 
+bo.expandtab = true
 bo.shiftwidth = 2
-bo.softtabstop = 2
 bo.tabstop = 2
 
 if not ok then return end
