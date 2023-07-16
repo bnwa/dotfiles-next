@@ -1,6 +1,6 @@
 local cmp_lsp = require 'cmp_nvim_lsp'
 local new_cmd = vim.api.nvim_create_user_command
-local utils = require 'user.utils'
+local utils = require 'usr.utils'
 local lsp = vim.lsp
 local opt = vim.opt
 local bo = vim.bo
