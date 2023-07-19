@@ -50,7 +50,7 @@ local function toggle_night_shift()
   local date_hour = fn.str2nr(date_parts[4])
 
   --TODO How to auto adjust for daylight savings?
-  if date_hour >= 19 or date_hour < 7 then
+  if date_hour >= 20 or date_hour < 7 then
     opt.background = 'dark'
   else
     opt.background = 'light'
