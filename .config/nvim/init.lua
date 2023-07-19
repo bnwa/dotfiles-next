@@ -484,6 +484,7 @@ require('lazy').setup {
   { 'williamboman/mason.nvim', config = setup_mason },
   { 'https://git.sr.ht/~whynothugo/lsp_lines.nvim', config = setup_lsp_lines },
   { 'folke/neodev.nvim', config = setup_neodev },
+  { 'mfussenegger/nvim-jdtls' },
 
   { 'folke/which-key.nvim', config = setup_which_key, },
 }
