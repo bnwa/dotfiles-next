@@ -1,9 +1,10 @@
-local fn = vim.fn
-local cmd = vim.cmd
-local opt = vim.opt
+local autocmd = vim.api.nvim_create_autocmd
+local keymap = vim.keymap.set
 local extend = vim.tbl_extend
 local group = vim.api.nvim_create_augroup('Config', { clear = true })
-local autocmd = vim.api.nvim_create_autocmd
+local cmd = vim.cmd
+local opt = vim.opt
+local fn = vim.fn
 
 
 --[[
@@ -54,6 +55,11 @@ local function toggle_night_shift()
   else
     opt.background = 'light'
   end
+end
+
+local function set(modes, lhs, rhs, opts)
+  opts = opts and extend('force', { silent = true }, opts) or { silent = true }
+  keymap(modes, lhs, rhs, opts)
 end
 
 local function on(match, events, listener)
@@ -314,7 +320,7 @@ local function setup_which_key()
       },
       f = {
         name = 'Find',
-        ['"'] = {
+        ["'"] = {
           function()
             local picker = require 'telescope.builtin'
             picker.registers {}
@@ -331,6 +337,12 @@ local function setup_which_key()
             end
           end,
           "Find files under current working directory",
+        },
+        h = {
+          function()
+            require('telescope.builtin').help_tags {}
+          end,
+          "Find help page via tag match",
         },
         l =  {
           function()
@@ -384,6 +396,12 @@ local function setup_which_key()
           "Live grep workspace if ripgrep installed",
         },
       },
+      t = {
+        function()
+          vim.cmd 'Git'
+        end,
+        "Show Fugitive git status pane",
+      },
       r = {
         function()
           vim.lsp.buf.rename()
@@ -394,7 +412,7 @@ local function setup_which_key()
   }
 end
 
-function setup_rosepine()
+local function setup_rosepine()
   require('rose-pine').setup {
     variant = 'auto',
     dark_variant = 'moon',
@@ -469,6 +487,16 @@ require('lazy').setup {
 
   { 'folke/which-key.nvim', config = setup_which_key, },
 }
+
+-- Keymaps
+set('n', 'j', 'gj') -- down/up treats wrapped lines as single lines
+set('n', 'k', 'gk')
+set('n', 'p', ']p') -- putting text should match destination indent
+set('n', 'P', ']P')
+set('n', '<C-J>', '<C-W><C-J>') -- use one chord to switch pane focus
+set('n', '<C-K>', '<C-W><C-K>')
+set('n', '<C-L>', '<C-W><C-L>')
+set('n', '<C-H>', '<C-W><C-H>')
 
 
 -- COLORS
