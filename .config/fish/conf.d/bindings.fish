@@ -5,3 +5,5 @@ for mode in insert default visual
   # Ctrl+Shift+f for incremental accept
   bind -M $mode \ct forward-word
 end
+
+
