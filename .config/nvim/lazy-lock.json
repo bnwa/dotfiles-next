@@ -15,6 +15,7 @@
   "melange": { "branch": "master", "commit": "e4958aa60ec6e1c5ecb487b9028da3a33e753b34" },
   "mellifluous.nvim": { "branch": "main", "commit": "087c9e665f356c061fd1cf8d262fc8c54fa3c70a" },
   "neodev.nvim": { "branch": "main", "commit": "62515f64dfb196e8abe1263e17e2546559e41292" },
+  "nvim-bqf": { "branch": "main", "commit": "3460a1ccf4dc92a52ed7fe2012f02a9194cd84d2" },
   "nvim-cmp": { "branch": "main", "commit": "c4e491a87eeacf0408902c32f031d802c7eafce8" },
   "nvim-jdtls": { "branch": "master", "commit": "96e3978c3fdae3950f6ccda548775e8b8952f74a" },
   "nvim-luapad": { "branch": "master", "commit": "a5b3d6aa1fe5fe75e6124927392a9d3a60a0ecce" },

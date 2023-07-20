@@ -421,6 +421,16 @@ local function setup_rosepine()
   }
 end
 
+local function setup_bqf()
+  require('bqf').setup  {
+    auto_enable = true,
+    auto_resize_height = true,
+    preview = {
+      wrap = true,
+    }
+  }
+end
+
 if not vim.loop.fs_stat(lazypath) then
   fn.system({
     "git",
@@ -487,6 +497,7 @@ require('lazy').setup {
   { 'mfussenegger/nvim-jdtls' },
 
   { 'folke/which-key.nvim', config = setup_which_key, },
+  { 'kevinhwang91/nvim-bqf', config = setup_bqf, ft = 'qf', },
 }
 
 -- Keymaps
