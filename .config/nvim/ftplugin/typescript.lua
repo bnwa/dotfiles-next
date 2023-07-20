@@ -78,6 +78,12 @@ local config = {
 local settings = {
   typescript = config,
   javascript = config,
+  diagnostics = {
+    ignoredCodes = {
+      80001, -- File can be converted to ES module
+      80002  -- Functino can be converted to class
+    },
+  },
 }
 
 vim.lsp.start({
