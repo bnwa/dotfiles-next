@@ -1,6 +1,6 @@
 function javah --argument-names java_version --description "List and set the Java environment version"
   if test -z $java_version
-    /usr/libexec/java_home -V
+    set -l java_list (/usr/libexec/java_home -V 1> /dev/null)
     return 0
   end
   switch $java_version
