@@ -56,16 +56,17 @@ local settings = {
   }
 }
 
-vim.api.nvim_create_autocmd({ 'LspAttach' }, {
-  pattern = '*.lua',
-  callback = function(args)
-    local buf = args.buf
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
+vim.lsp.start({
+  before_init = require('neodev.lsp').before_init,
+  capabilities = capabilities,
+  cmd = { 'lua-language-server' },
+  name = 'lua-language-server',
+  on_attach = function(client, bufnr)
     local server = client.server_capabilities
 
     -- N.B. workaround formatexpr getting set to vim default
     if server.documentRangeFormattingProvider then
-      bo[buf].formatexpr = 'v:lua.vim.lsp.formatexpr()'
+      bo[bufnr].formatexpr = 'v:lua.vim.lsp.formatexpr()'
     end
 
     vim.diagnostic.config {
@@ -74,14 +75,7 @@ vim.api.nvim_create_autocmd({ 'LspAttach' }, {
       },
       virtual_text = false,
     }
-  end
-})
-
-vim.lsp.start({
-  before_init = require('neodev.lsp').before_init,
-  capabilities = capabilities,
-  cmd = { 'lua-language-server' },
-  name = 'lua-language-server',
+  end,
   root_dir = root_dir,
   settings = settings,
 })
