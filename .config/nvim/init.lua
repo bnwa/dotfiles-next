@@ -495,6 +495,7 @@ require('lazy').setup {
   { 'https://git.sr.ht/~whynothugo/lsp_lines.nvim', config = setup_lsp_lines },
   { 'folke/neodev.nvim', config = setup_neodev },
   { 'mfussenegger/nvim-jdtls' },
+  { 'b0o/schemastore.nvim' },
 
   { 'folke/which-key.nvim', config = setup_which_key, },
   { 'kevinhwang91/nvim-bqf', config = setup_bqf, ft = 'qf', },
