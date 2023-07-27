@@ -239,7 +239,11 @@ local function setup_mason()
   local mason = require 'mason'
   local registry = require 'mason-registry'
   local ensure_installed = {
+    'jdtls',
+    'json-lsp',
+    'lemminx',
     'lua-language-server',
+    'typescript-language-server',
   }
 
   mason.setup {
