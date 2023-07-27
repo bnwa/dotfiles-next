@@ -243,11 +243,14 @@ local function setup_mason()
   }
 
   mason.setup {
-    border = 'shadow',
-    icons = {
-      package_installed = "✓",
-      package_pending = "➜",
-      package_uninstalled = "✗",
+    PATH = 'prepend',
+    ui = {
+      border = 'shadow',
+      icons = {
+        package_installed = "✓",
+        package_pending = "➜",
+        package_uninstalled = "✗",
+      }
     }
   }
 
