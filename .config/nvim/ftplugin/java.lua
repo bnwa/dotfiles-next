@@ -1,7 +1,7 @@
 local cmp_ok, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
 local jdtls_ok, jdtls = pcall(require, 'jdtls')
 local mason_ok, _ = pcall(require, 'mason')
-local path = require 'usr.utils.path'
+local path = require 'user.utils.path'
 local lsp = vim.lsp
 local bo = vim.bo
 local fn = vim.fn
