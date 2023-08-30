@@ -441,8 +441,12 @@ local function setup_bqf()
     auto_resize_height = true,
     preview = {
       wrap = true,
-    }
+    },
   }
+end
+
+local function setup_gruvbox()
+  require('gruvbox').setup {}
 end
 
 if not vim.loop.fs_stat(lazypath) then
@@ -497,6 +501,9 @@ require('lazy').setup {
   { 'rose-pine/neovim', name = 'rose-pine', config = setup_rosepine },
   { 'savq/melange' },
   { 'folke/tokyonight.nvim', config = setup_tokyonight },
+  { 'ellisonleao/gruvbox.nvim', config = setup_gruvbox },
+  { 'illotum/flat.nvim' },
+  { 'talha-akram/noctis.nvim' },
 
   -- ICONS
   { 'nvim-tree/nvim-web-devicons', config = setup_devicons },
@@ -510,6 +517,15 @@ require('lazy').setup {
   { 'folke/neodev.nvim', config = setup_neodev },
   { 'mfussenegger/nvim-jdtls' },
   { 'b0o/schemastore.nvim' },
+  {
+    "luckasRanarison/nvim-devdocs",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    opts = { previewer_cmd = 'glow' }
+  },
 
   { 'folke/which-key.nvim', config = setup_which_key, },
   { 'kevinhwang91/nvim-bqf', config = setup_bqf, ft = 'qf', },
