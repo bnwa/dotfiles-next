@@ -24,7 +24,11 @@ opt.number = true
 opt.listchars.precedes = "«"
 opt.listchars.extends = "»"
 opt.relativenumber = true
-opt.shell = "/opt/homebrew/bin/fish -l"
+if jit.arch == 'x64' then
+  opt.shell = "/usr/local/bin/fish -l"
+else
+  opt.shell = "/opt/homebrew/bin/fish -l"
+end
 opt.shortmess:append "c"
 opt.splitbelow = false
 opt.splitright = false
