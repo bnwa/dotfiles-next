@@ -378,6 +378,13 @@ local function setup_which_key()
           end,
           "Find symbol in current buffer",
         },
+        P = {
+          function()
+            local picker = require 'telescope.builtin'
+            picker.resume {}
+          end,
+          "Resume previous picker state",
+        },
         r =  {
           function()
             local picker = require 'telescope.builtin'
