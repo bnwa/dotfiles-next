@@ -33,11 +33,6 @@ local function modal_color_scheme(mode)
   end
 end
 
-w.on('window-focus-changed', function(win, pane)
-  w.reload_configuration() -- re-evaluate color_scheme
-end
-)
-
 return {
   check_for_updates = false, -- Managed by Homebrew
   color_scheme = modal_color_scheme(gui.get_appearance()),
