@@ -500,8 +500,8 @@ require('lazy').setup {
   { 'savq/melange' },
   { 'folke/tokyonight.nvim', config = setup_tokyonight },
   { 'ellisonleao/gruvbox.nvim', config = setup_gruvbox },
-  { 'illotum/flat.nvim' },
   { 'talha-akram/noctis.nvim' },
+  { 'rose-pine/neovim', name = 'rose-pine' },
 
   -- ICONS
   { 'nvim-tree/nvim-web-devicons', config = setup_devicons },
