@@ -68,13 +68,6 @@ vim.lsp.start({
     if server.documentRangeFormattingProvider then
       bo[bufnr].formatexpr = 'v:lua.vim.lsp.formatexpr()'
     end
-
-    vim.diagnostic.config {
-      virtual_lines = {
-        only_current_line = true,
-      },
-      virtual_text = false,
-    }
   end,
   root_dir = root_dir,
   settings = settings,

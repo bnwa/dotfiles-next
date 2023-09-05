@@ -42,6 +42,10 @@ opt.undofile = true
 opt.updatetime = 100
 opt.visualbell = false
 
+vim.diagnostic.config {
+  virtual_text = false,
+}
+
 vim.g.mapleader = ' '
 
 
@@ -275,10 +279,6 @@ local function setup_mason()
   end
 end
 
-local function setup_lsp_lines()
-  require('lsp_lines').setup()
-end
-
 local function setup_neodev()
   require('neodev').setup {
     lspconfig = false,
@@ -439,18 +439,12 @@ local function setup_rosepine()
   }
 end
 
-local function setup_bqf()
-  require('bqf').setup  {
-    auto_enable = true,
-    auto_resize_height = true,
-    preview = {
-      wrap = true,
-    },
-  }
-end
-
 local function setup_gruvbox()
   require('gruvbox').setup {}
+end
+
+local function setup_corn()
+  require('corn').setup {}
 end
 
 if not vim.loop.fs_stat(lazypath) then
@@ -517,10 +511,10 @@ require('lazy').setup {
 
   -- LANGUAGE TOOLING
   { 'williamboman/mason.nvim', config = setup_mason },
-  { 'https://git.sr.ht/~whynothugo/lsp_lines.nvim', config = setup_lsp_lines },
   { 'folke/neodev.nvim', config = setup_neodev },
   { 'mfussenegger/nvim-jdtls' },
   { 'b0o/schemastore.nvim' },
+  { 'RaafatTurki/corn.nvim', config = setup_corn },
   {
     "luckasRanarison/nvim-devdocs",
     dependencies = {
@@ -532,7 +526,6 @@ require('lazy').setup {
   },
 
   { 'folke/which-key.nvim', config = setup_which_key, },
-  { 'kevinhwang91/nvim-bqf', config = setup_bqf, ft = 'qf', },
 }
 
 -- Keymaps

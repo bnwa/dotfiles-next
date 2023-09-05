@@ -138,13 +138,6 @@ vim.lsp.start({
       bo[bufnr].formatexpr = 'v:lua.vim.lsp.formatexpr()'
     end
 
-    vim.diagnostic.config {
-      virtual_lines = {
-        only_current_line = true,
-      },
-      virtual_text = false,
-    }
-
     new_cmd('RenameFile', renameFile, {
       desc = "Specify new file path for a buffer supported by typescript-language-server",
       nargs = '?',

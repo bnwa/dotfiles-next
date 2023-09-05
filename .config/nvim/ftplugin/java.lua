@@ -90,12 +90,6 @@ config.init_options = {
 }
 config.on_attach = function(client, _)
   client.notify('workspace/didChangeConfiguration', { settings = config.settings })
-  vim.diagnostic.config {
-    virtual_lines = {
-      only_current_line = true,
-    },
-    virtual_text = false,
-  }
 end
 config.root_dir = project_root
 config.settings = {
