@@ -52,13 +52,13 @@ vim.g.mapleader = ' '
 --UTILS
 local function toggle_night_shift()
   local date_str = os.date()
-  --TODO When day component is single digit, produces a space entry in
-  --resulting table so hour entry is at index 5
   local date_parts = vim.split(date_str, '[%s%p]+')
   local date_hour = fn.str2nr(date_parts[4])
+  local date_min = fn.str2nr(date_parts[5])
+  local min_night = date_hour >= 19 and date_min >= 30
+  local max_night = date_hour < 7
 
-  --TODO How to auto adjust for daylight savings?
-  if date_hour >= 20 or date_hour < 7 then
+  if min_night and max_night then
     opt.background = 'dark'
   else
     opt.background = 'light'
