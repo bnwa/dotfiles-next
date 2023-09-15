@@ -46,7 +46,7 @@ local mason_root = fn.stdpath('data') .. '/mason'
 local mason_jdtls_workspaces_root = mason_root .. '/share/jdtls/workspaces'
 local mason_jdtls_plugins_root = mason_root .. '/packages/jdtls/plugins'
 local mason_jdtls_config_root = mason_root .. '/packages/jdtls/config_mac'
-local project_root = jdtls.setup.find_root { 'pom.xml', '.git' }
+local project_root = jdtls.setup.find_root { '.git' }
 
 local launcher_jars = fn.glob(mason_jdtls_plugins_root .. '/org.eclipse.equinox.launcher_*.jar')
 local workspace_root = mason_jdtls_workspaces_root .. '/' .. fs.basename(project_root)
