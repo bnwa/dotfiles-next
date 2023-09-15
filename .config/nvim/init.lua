@@ -55,10 +55,9 @@ local function toggle_night_shift()
   local date_parts = vim.split(date_str, '[%s%p]+')
   local date_hour = fn.str2nr(date_parts[4])
   local date_min = fn.str2nr(date_parts[5])
-  local min_night = date_hour >= 19 and date_min >= 30
-  local max_night = date_hour < 7
+  local is_night = date_hour == 19 and date_min >= 30 or date_hour > 20
 
-  if min_night and max_night then
+  if is_night then
     opt.background = 'dark'
   else
     opt.background = 'light'
