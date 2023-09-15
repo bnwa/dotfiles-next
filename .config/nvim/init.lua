@@ -502,6 +502,7 @@ require('lazy').setup {
   { 'ellisonleao/gruvbox.nvim', config = setup_gruvbox },
   { 'talha-akram/noctis.nvim' },
   { 'rose-pine/neovim', name = 'rose-pine' },
+  { 'Mofiqul/dracula.nvim' },
 
   -- ICONS
   { 'nvim-tree/nvim-web-devicons', config = setup_devicons },
