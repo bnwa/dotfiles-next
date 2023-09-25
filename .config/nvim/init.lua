@@ -557,7 +557,7 @@ toggle_night_shift()
 if vim.g.neovide then
   opt.guifont = { 'FiraCode Nerd Font:h16',  }
   vim.g.neovide_remember_window_size = true
-  cmd.colorscheme 'mellifluous'
+  cmd.colorscheme 'rose-pine'
   cmd.cd '~'
 end
 
