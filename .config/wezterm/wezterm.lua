@@ -1,6 +1,8 @@
 local w = require 'wezterm'
 local gui = w.gui
 
+local screen = w.gui.screens().active
+
 local function dir_exists(path)
   local exists, _ = pcall(w.read_dir, path)
   if not exists then
@@ -47,5 +49,7 @@ return {
   },
   font_size = 16,
   hide_tab_bar_if_only_one_tab = true,
+  initial_cols = 80,
+  initial_rows = screen.height == 2160 and 51 or 24,
   native_macos_fullscreen_mode = true,
 }
