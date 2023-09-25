@@ -120,6 +120,15 @@ local setup_cmp = function()
     }, {
       { name = 'buffer' },
     }),
+    view =  {
+      docs = {
+        auto_open = true,
+      },
+    },
+    window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
+    },
   }
 
   cmp.setup.cmdline({ '/', '?', }, {
