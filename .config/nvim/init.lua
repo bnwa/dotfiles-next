@@ -60,7 +60,6 @@ local function toggle_night_shift()
   if is_night then
     opt.background = 'dark'
   else
-    vim.print("is not night")
     opt.background = 'light'
   end
 end
