@@ -93,6 +93,9 @@ config.on_attach = function(client, _)
 end
 config.root_dir = project_root
 config.settings = {
+  flags = {
+    allow_incremental_sync = true,
+  },
   java = {
     configuration = {
       runtimes = {
@@ -115,9 +118,12 @@ config.settings = {
     },
     implementationsCodeLens = { enabled = true },
     inlayHints = {
-      parameterNames = { enabled = true },
+      parameterNames = { enabled = "all" },
     },
     maven = { downloadSources = true },
+    references = {
+      includeDecompiledSources = true,
+    },
     referencesCodeLens = { enabled = true },
     signatureHelp = {
       description = { enabled = true },
