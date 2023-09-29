@@ -29,9 +29,9 @@ end
 
 local function modal_color_scheme(mode)
   if mode:find 'Dark' then
-    return 'Tokyo Night'
+    return 'rose-pine'
   else
-    return 'Tokyo Night Day'
+    return 'rose-pine-dawn'
   end
 end
 

@@ -98,7 +98,7 @@ set('n', '<C-H>', '<C-W><C-H>')
 
 
 -- COLORS
-cmd.colorscheme 'tokyonight'
+cmd.colorscheme 'rose-pine'
 toggle_night_shift()
 
 
