@@ -369,10 +369,7 @@ function M.setup()
 
   local function setup_rosepine()
     require('rose-pine').setup {
-      variant = 'auto',
-      dark_variant = 'moon',
       bold_vert_split = true,
-      disable_italics = true,
     }
   end
 
