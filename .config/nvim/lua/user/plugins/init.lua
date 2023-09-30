@@ -387,8 +387,11 @@ function M.setup()
     { 'nvim-treesitter/nvim-treesitter-textobjects' },
     { 'tpope/vim-surround' },
 
-    -- TERMINAL
+    -- CLI
     { 'akinsho/toggleterm.nvim', config = setup_toggleterm },
+
+    -- VCS
+    { 'tpope/vim-fugitive' },
 
     -- AUTOCOMPLETE
     { 'hrsh7th/nvim-cmp', config = setup_cmp },
