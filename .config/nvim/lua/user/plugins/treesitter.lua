@@ -80,7 +80,7 @@ return {
             ["]f"] = { query = { "@function.outer", "@method_definition" } },
           },
           goto_previous = {
-            ["]F"] = { query = { "@function.outer", "@method_definition" } },
+            ["[f"] = { query = { "@function.outer", "@method_definition" } },
           },
         }
       },
