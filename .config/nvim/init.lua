@@ -6,13 +6,6 @@ local nmap = keymaps.nmap
 local cmd = vim.cmd
 local opt = vim.opt
 
---[[
-TODO Rebind motions/text objects meant for
-prose for more appropriate uses in coding
-context, see :h object-motions, specifically
-sentence/paragraph/section types
---]]
-
 
 -- OPTIONS
 opt.background = 'dark'
