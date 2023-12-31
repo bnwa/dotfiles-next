@@ -79,8 +79,6 @@ end)
 -- KEYMAPS
 nmap('j', 'gj') -- down/up treats wrapped lines as single lines
 nmap('k', 'gk')
-nmap('p', ']p') -- putting text should match destination indent
-nmap('P', ']P')
 nmap('<C-J>', '<C-W><C-J>') -- use one chord to switch pane focus
 nmap('<C-K>', '<C-W><C-K>')
 nmap('<C-L>', '<C-W><C-L>')
