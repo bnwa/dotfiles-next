@@ -1,7 +1,12 @@
 local w = require 'wezterm'
 local gui = w.gui
 
-local screen = w.gui.screens().active
+local screenH =
+  gui and
+  gui.screens and
+  gui.screens().active and
+  gui.screens().active.height or
+  0
 
 local function dir_exists(path)
   local exists, _ = pcall(w.read_dir, path)
@@ -41,7 +46,7 @@ return {
   default_prog = shell_path(),
   font = w.font {
     family = 'FiraCode Nerd Font',
-    weight = 450, -- Retina
+    weight = "Medium",
     harfbuzz_features = {
       'ss05', -- circular 'at' symbol variant
       'cv30', -- longer 'pipe' symbol
@@ -50,6 +55,6 @@ return {
   font_size = 16,
   hide_tab_bar_if_only_one_tab = true,
   initial_cols = 80,
-  initial_rows = screen.height == 2160 and 51 or 24,
+  initial_rows =  screenH == 2160 and 51 or 24,
   native_macos_fullscreen_mode = true,
 }
