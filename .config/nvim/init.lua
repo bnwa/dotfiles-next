@@ -85,8 +85,7 @@ appearance.toggle_light_dark_mode()
 
 -- NEOVIDE
 if vim.g.neovide then
-  opt.guifont = { 'FiraCode Nerd Font:h16',  }
+  opt.guifont = { 'FiraCode_Nerd_Font:h16',  }
   vim.g.neovide_remember_window_size = true
-  cmd.colorscheme 'rose-pine'
   cmd.cd '~'
 end
