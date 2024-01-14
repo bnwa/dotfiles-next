@@ -60,8 +60,10 @@ end
 
 
 -- EVENTS
-autocmd.on('*', { 'FocusGained', 'FocusLost' },
-  appearance.toggle_light_dark_mode)
+if not vim.g.neovide then
+  autocmd.on('*', { 'FocusGained', 'FocusLost' },
+    appearance.toggle_light_dark_mode)
+end
 
 autocmd.on('*', { 'TermOpen' }, function()
   vim.wo.number = false
@@ -80,12 +82,14 @@ nmap('<C-H>', '<C-W><C-H>')
 
 -- COLORS
 cmd.colorscheme 'rose-pine'
-appearance.toggle_light_dark_mode()
+if not vim.g.neovide then
+  appearance.toggle_light_dark_mode()
+end
 
 
 -- NEOVIDE
 if vim.g.neovide then
-  opt.guifont = { 'FiraCode_Nerd_Font:h16',  }
+  vim.g.neovide_theme = 'auto' -- Neovide will manage light/dark mode
   vim.g.neovide_remember_window_size = true
   cmd.cd '~'
 end
