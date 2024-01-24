@@ -81,7 +81,7 @@ local settings = {
   diagnostics = {
     ignoredCodes = {
       80001, -- File can be converted to ES module
-      80002  -- Functino can be converted to class
+      80002  -- Function can be converted to class
     },
   },
 }
