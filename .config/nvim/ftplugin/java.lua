@@ -120,7 +120,10 @@ config.settings = {
     inlayHints = {
       parameterNames = { enabled = "all" },
     },
-    maven = { downloadSources = true },
+    maven = {
+      downloadSources = true,
+      updateSnapshots = true,
+    },
     references = {
       includeDecompiledSources = true,
     },
