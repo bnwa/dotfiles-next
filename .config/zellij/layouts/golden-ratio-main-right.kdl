@@ -3,7 +3,7 @@ layout {
 		pane 
 		pane size="64%" focus=true
 	}
-	pane size="10%" {
+	pane size="1%" {
 		plugin location="zellij:status-bar"
 	}
 }

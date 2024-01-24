@@ -1,1 +1,4 @@
 default_layout "golden-ratio-main-right"
+on_force_close "detach"
+pane_frames false
+simplified_ui true
