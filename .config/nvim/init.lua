@@ -81,10 +81,10 @@ nmap('<C-H>', '<C-W><C-H>')
 
 
 -- COLORS
-cmd.colorscheme 'rose-pine'
 if not vim.g.neovide then
   appearance.toggle_light_dark_mode()
 end
+cmd.colorscheme 'melange'
 
 
 -- NEOVIDE
