@@ -47,7 +47,10 @@ return {
         },
         e = {
           function()
-            vim.diagnostic.setqflist()
+            local buf_issues = vim.diagnostic.get(0)
+            local qf_issues = vim.diagnostic.toqflist(buf_issues)
+            vim.fn.setqflist(qf_issues, 'r')
+            vim.cmd 'cw'
           end,
           "Show LSP diagnostics in quickfix list"
         },
