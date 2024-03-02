@@ -127,7 +127,7 @@ vim.lsp.start({
 
     local function renameFile(meta)
       local src = meta.fargs[1] or vim.api.nvim_buf_get_name(bufnr)
-      vim.ui.input({ prompt = "New Path", default = src }, function(input)
+      vim.ui.input({ prompt = "New Path: ", default = src }, function(input)
         if input == nil then return end
         utils.lspRenameFile(client, src, input)
       end)

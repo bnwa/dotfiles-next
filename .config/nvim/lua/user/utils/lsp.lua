@@ -28,8 +28,8 @@ function M.lspRenameFile(client, src, dest)
     },
   }
 
-  if not destExists then
-    if fn.confirm("Expected file path to rename to exists, overwrite", "&Yes\n&No", 2, 'Warning') ~= 1 then
+  if destExists then
+    if fn.confirm("New file path exists already, overwrite?", "&Yes\n&No", 2, 'Warning') ~= 1 then
       print 'Rename aborted'
       return
     end
