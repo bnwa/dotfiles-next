@@ -8,7 +8,7 @@ local fn = vim.fn
 local fs = vim.fs
 
 bo.expandtab = true
-bo.tabstop = 4
+bo.softtabstop = 4
 bo.shiftwidth = 4
 
 

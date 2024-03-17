@@ -8,7 +8,7 @@ local schemas_ok, schemas = pcall(require, 'schemastore')
 
 bo.expandtab = true
 bo.shiftwidth = 2
-bo.tabstop = 2
+bo.softtabstop = 2
 
 if not cmp_ok then return end
 if not snip_ok then return end

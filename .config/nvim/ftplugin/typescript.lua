@@ -7,7 +7,7 @@ local bo = vim.bo
 
 bo.expandtab = true
 bo.shiftwidth = 2
-bo.tabstop = 2
+bo.softtabstop = 2
 opt.wildignore:append '*/node_modules/*'
 
 if not cmp_ok then return end
@@ -15,11 +15,11 @@ if not cmp_ok then return end
 local config = {
   format = {
     baseIndentSize = 0,
-    indentSize = bo.tabstop,
+    indentSize = bo.softtabstop,
     trimTrailingWhitespace = true,
     convertTabsToSpaces = true,
     semicolons = 'remove',
-    tabSize = bo.tabstop,
+    tabSize = bo.softtabstop,
     insertSpaceAfterFunctionKeywordForAnonymousFunctions = true,
     insertSpaceAfterKeywordsInControlFlowStatements = true,
     insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = true,

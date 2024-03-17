@@ -7,7 +7,7 @@ local snip_ok, _ = pcall(require, 'luasnip')
 
 
 bo.expandtab = true
-bo.tabstop = 4
+bo.softtabstop = 4
 bo.shiftwidth = 4
 
 
