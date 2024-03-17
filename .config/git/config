@@ -5,6 +5,25 @@
         name = Benoît Barberousse
 [stash]
         showPatch = true
+[pull]
+        ff = only
+        rebase = true
+[push]
+        autosetupRemote = true
+        followtags = true
+[merge]
+        conflictStyle = zdiff3
+[rebase]
+        autosquash = true
+[commit]
+        verbose = true
+[rerere]
+        enabled = true
+[diff]
+        algorithm = histogram
+        colorMoved = default
+[credential]
+        helper = osxkeychain
 [alias]
         a   = add --patch
         b   = branch
@@ -12,8 +31,10 @@
         ch  = checkout
         d   = diff
         fnd = grep --line-number --break --heading
-        l   = log --oneline --decorate
-        la  = log --oneline --decorate --all
+        fix = commit --fixup
+        l   = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
+        la  = l --all
+        lf  = l -p
         m   = merge
         p   = push
         r   = remote -v
@@ -21,3 +42,7 @@
         sv  = stash save -u
         svs = stash list
         opn = stash apply
+[includeIf "gitdir:~/Bitbucket/"]
+        path = ~/Bitbucket/.gitconfig
+[includeIf "gitdir:~/Developer/"]
+        path = ~/Developer/.gitconfig
