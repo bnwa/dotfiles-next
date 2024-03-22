@@ -46,7 +46,7 @@ return {
       'cv30', -- longer 'pipe' symbol
     }
   },
-  font_size = 16,
+  font_size = 18,
   hide_tab_bar_if_only_one_tab = true,
   initial_cols = 80,
   native_macos_fullscreen_mode = true,
