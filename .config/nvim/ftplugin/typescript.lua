@@ -12,14 +12,15 @@ opt.wildignore:append '*/node_modules/*'
 
 if not cmp_ok then return end
 
+
 local config = {
   format = {
-    baseIndentSize = 0,
-    indentSize = bo.softtabstop,
-    trimTrailingWhitespace = true,
+    baseIndentSize = bo.softtabstop,
     convertTabsToSpaces = true,
-    semicolons = 'remove',
-    tabSize = bo.softtabstop,
+    indentSize = bo.softtabstop,
+    indentStyle = 'Smart',
+    insertSpaceAfterCommanDelimiter = true,
+    insertSpaceAfterConstructor = true,
     insertSpaceAfterFunctionKeywordForAnonymousFunctions = true,
     insertSpaceAfterKeywordsInControlFlowStatements = true,
     insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = true,
@@ -29,61 +30,48 @@ local config = {
     insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis = true,
     insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces = true,
     insertSpaceAfterSemicolonInForStatements = true,
+    insertSpaceAfterTypeAssertion = true,
+    insertSpaceBeforeAndAfterBinaryOperators = true,
+    insertSpaceBeforeFunctionParenthesis = false,
+    insertSpaceBeforeTypeAnnotation = true,
+    placeOpenBraceOnNewLineForControlBlocks = false,
+    placeOpenBraceOnNewLineForFunctions = false,
+    semicolons = 'remove',
+    trimTrailingWhitespace = true,
   },
   inlayHints = {
-    includeInlayParameterNameHints = 'all',
-    includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+    includeInlayEnumMemberValueHints = true,
+    includeInlayFunctionLikeReturnTypeHints = true,
     includeInlayFunctionParameterTypeHints = true,
+    includeInlayParameterNameHints = 'all',
+    includeInlayParameterNameHintsWhenArgumentMatchesName = true,
     includeInlayVariableTypeHints = true,
     includeInlayPropertyDeclarationTypeHints = true,
-    includeInlayFunctionLikeReturnTypeHints = true,
-    includeInlayEnumMemberValueHints = true,
   },
-  preferences = {
-    autoImportFileExcludePatterns = {},
-    allowIncompleteCompletions = true,
-    allowRenameOfImportPath = true,
-    allowTextChangesInNewFiles = true,
-    disableSuggestions = false,
-    displayPartsForJSDoc = true,
-    generateReturnInDocTemplate = true,
-    importModuleSpecifierEnding = 'minimal',
-    includeAutomaticOptionalChainCompletions = true,
-    includeCompletionsForImportStatements = true,
-    includeCompletionsForModuleExports = true,
-    includeCompletionsWithClassMemberSnippets = true,
-    includeCompletionsWithInsertText = true,
-    includeCompletionsWithObjectLiteralMethodSnippets = true,
-    includeCompletionsWithSnippetText = true,
-    includeInlayEnumMemberValueHints = true,
-    includeInlayFunctionParameterTypeHints = true,
-    includeInlayFunctionLikeReturnTypeHints = true,
-    includeInlayParameterNameHints = 'all',
-    includeInlayPropertyDeclarationTypeHints = true,
-    includeInlayVariableTypeHints = true,
-    jsxAttributeCompletionStyle = 'auto',
-    providePrefixAndSuffixTextForRename = false,
-    quotePreference = 'double',
-    useAliasesForRenames = false,
-    useLabelDetailsInCompletionEntries = true,
+  implementationsCodeLens = {
+    enabled = true,
   },
   referencesCodeLens = {
     enabled = true,
+    showOnAllFunctions = true,
   },
-  suggest = {
-    completeFunctionCalls = true,
-  }
 }
 
 local settings = {
-  typescript = config,
-  javascript = config,
+  completions = {
+    completeFunctionCalls = true,
+  },
   diagnostics = {
     ignoredCodes = {
       80001, -- File can be converted to ES module
       80002  -- Function can be converted to class
     },
   },
+ --  implicitProjectConfiguration = {
+ --    checkJs = true,
+ --  },
+  javascript = config,
+  typescript = config,
 }
 
 vim.lsp.start({
@@ -116,8 +104,11 @@ vim.lsp.start({
       includeInlayPropertyDeclarationTypeHints = true,
       includeInlayVariableTypeHints = true,
       jsxAttributeCompletionStyle = 'auto',
+      organizeImportsCaseFirst = 'upper',
+      organizedImportsCollation = 'unicode',
+      organizeImportsIgnoreCase = false,
       providePrefixAndSuffixTextForRename = false,
-      quotePreference = 'double',
+      quotePreference = 'single',
       useLabelDetailsInCompletionEntries = true,
     },
   },
