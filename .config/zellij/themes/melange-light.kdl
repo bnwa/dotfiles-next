@@ -1,0 +1,15 @@
+themes {
+    melange-light {
+        fg "#54433A"
+        bg "#F1F1F1"
+        black "#E9E1DB"
+        red "#C77B8B"
+        green "#6E9B72"
+        yellow "#BC5C00"
+        blue "#7892BD"
+        magenta "#BE79BB"
+        cyan "#739797"
+        white "#7D6658"
+        orange "#FFB86C"
+    }
+}
