@@ -1,6 +1,8 @@
 local M = {}
 local augroup = vim.api.nvim_create_augroup('Config', { clear = true })
 
+M.augroup = augroup
+
 function M.on(match, events, listener)
   vim.api.nvim_create_autocmd(events, {
     callback = listener,
@@ -8,5 +10,6 @@ function M.on(match, events, listener)
     pattern = match,
   })
 end
+
 
 return M

@@ -60,6 +60,20 @@ return {
             end,
             "List registers and paste on selection"
           },
+          D =  {
+            function()
+              local picker = require 'telescope.builtin'
+              picker.lsp_type_definitions()
+            end,
+            "Find definition for type under cursor",
+          },
+          d =  {
+            function()
+              local picker = require 'telescope.builtin'
+              picker.lsp_definitions()
+            end,
+            "Find definition for type under cursor",
+          },
           f =  {
             function()
               local picker = require 'telescope.builtin'
@@ -134,6 +148,13 @@ return {
               end
             end,
             "Live grep workspace if ripgrep installed",
+          },
+        },
+        g = {
+          name = "Go to...",
+          ['d'] =  {
+            function()end,
+            "... definition",
           },
         },
         t = {
