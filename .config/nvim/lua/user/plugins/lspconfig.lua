@@ -1,5 +1,6 @@
 -- Created in init.lua
 local autocmd = require 'user.utils.autocmd'
+local NOOP = function()end
 
 return {
   'neovim/nvim-lspconfig',
@@ -141,7 +142,8 @@ return {
 
           require('lspconfig')[server_name].setup(server_config)
         end,
-      }
+        ['jdtls'] = NOOP,
+      },
     }
   end,
 }
