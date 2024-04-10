@@ -45,6 +45,12 @@ return {
           end,
           "Show LSP type information for symbol under cursor"
         },
+        E = {
+          function()
+            require('trouble').toggle 'workspace_diagnostics'
+          end,
+          "Show LSP diagnostics in quickfix list"
+        },
         e = {
           function()
             require('trouble').toggle 'document_diagnostics'
