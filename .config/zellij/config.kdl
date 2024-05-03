@@ -13,6 +13,7 @@ keybinds clear-defaults=true {
         bind "d" { Detach; }
         bind "p" { SwitchToMode "pane"; }
         bind "q" { Quit; }
+        bind "r" { SwitchToMode "resize"; }
         bind "s" {
             LaunchOrFocusPlugin "zellij:session-manager" {
                 floating true
@@ -26,10 +27,19 @@ keybinds clear-defaults=true {
         bind "l" "Right" { MoveFocus "Right"; }
         bind "j" "Down" { MoveFocus "Down"; }
         bind "k" "Up" { MoveFocus "Up"; }
-        bind "x" { CloseFocus; SwitchToMode "locked"; }
-        bind "d" { NewPane "Down"; SwitchToMode "locked"; }
-        bind "r" { NewPane "Right"; SwitchToMode "locked"; }
+        bind "-" { NewPane "Down"; SwitchToMode "locked"; }
+        bind "%" { NewPane "Left"; SwitchToMode "locked"; }
         bind "p" { SwitchFocus; }
+        bind "$" { NextSwapLayout; }
+        bind "x" { CloseFocus; SwitchToMode "locked"; }
+    }
+    resize {
+        bind "h" { Resize "Left"; }
+        bind "l" { Resize "Right"; }
+        bind "j" { Resize "Down"; }
+        bind "k" { Resize "Up"; }
+        bind "=" { Resize "Increase"; }
+        bind "-" { Resize "Decrease"; }
     }
     scroll {
     }
