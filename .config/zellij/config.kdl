@@ -1,10 +1,23 @@
-default_layout "golden-ratio-main-right"
+default_layout "compact"
 default_mode "locked"
 on_force_close "detach"
 pane_frames true
 simplified_ui false
 theme "melange-dark"
 
+plugins {
+    tab-bar location="zellij:tab-bar"
+    status-bar location="zellij:status-bar"
+    strider location="zellij:strider"
+    compact-bar location="zellij:compact-bar"
+    session-manager location="zellij:session-manager"
+    welcome-screen location="zellij:session-manager" {
+        welcome_screen true
+    }
+    filepicker location="zellij:strider" {
+        cwd "/"
+    }
+}
 keybinds clear-defaults=true {
     locked {
         bind "Ctrl f" { SwitchToMode "normal"; }
@@ -32,6 +45,8 @@ keybinds clear-defaults=true {
         bind "p" { SwitchFocus; }
         bind "$" { NextSwapLayout; }
         bind "x" { CloseFocus; SwitchToMode "locked"; }
+        bind "s" { SwitchToMode "scroll"; }
+        bind "/" { SwitchToMode "search"; }
     }
     resize {
         bind "h" { Resize "Left"; }
@@ -42,8 +57,20 @@ keybinds clear-defaults=true {
         bind "-" { Resize "Decrease"; }
     }
     scroll {
+        bind "j" { ScrollDown; }
+        bind "k" { ScrollUp; }
+        bind "d" { HalfPageScrollDown; }
+        bind "u" { HalfPageScrollUp; }
+        bind "D" { PageScrollDown; }
+        bind "U" { PageScrollUp; }
+        bind "J" { ScrollToBottom; }
+        bind "K" { ScrollToTop; }
+        bind "Enter" { SwitchToMode "Locked"; }
     }
     search {
+        bind "j" { Search "down"; }
+        bind "k" { Search "up"; }
+        bind "Enter" { SwitchToMode "Locked"; }
     }
     session {
     }
