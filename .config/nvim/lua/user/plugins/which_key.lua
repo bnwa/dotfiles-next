@@ -116,10 +116,10 @@ return {
           o =  {
             function()
               local picker = require 'telescope.builtin'
-              if vim.lsp.buf.server_ready() then
-                picker.lsp_document_symbols {}
-              else
+              if vim.tbl_isempty(vim.lsp.get_clients()) then
                 picker.treesitter {}
+              else
+                picker.lsp_document_symbols {}
               end
             end,
             "Find symbol in current buffer",
