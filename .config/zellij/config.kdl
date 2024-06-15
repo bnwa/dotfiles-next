@@ -19,6 +19,9 @@ plugins {
     }
 }
 keybinds clear-defaults=true {
+    entersearch {
+        bind "Enter"  { SwitchToMode "search"; }
+    }
     locked {
         bind "Ctrl f" { SwitchToMode "normal"; }
     }
@@ -27,13 +30,7 @@ keybinds clear-defaults=true {
         bind "p" { SwitchToMode "pane"; }
         bind "q" { Quit; }
         bind "r" { SwitchToMode "resize"; }
-        bind "s" {
-            LaunchOrFocusPlugin "zellij:session-manager" {
-                floating true
-                move_to_focused_tab true
-            };
-            SwitchToMode "locked"
-        }
+        bind "w" { SwitchToMode "tab"; }
     }
     pane {
         bind "h" "Left" { MoveFocus "Left"; }
@@ -46,7 +43,15 @@ keybinds clear-defaults=true {
         bind "$" { NextSwapLayout; }
         bind "x" { CloseFocus; SwitchToMode "locked"; }
         bind "s" { SwitchToMode "scroll"; }
-        bind "/" { SwitchToMode "search"; }
+        bind "/" { SwitchToMode "entersearch"; }
+        bind "H" { MovePane "Left"; }
+        bind "L" { MovePane "Right"; }
+        bind "J" { MovePane "Down"; }
+        bind "K" { MovePane "Up"; }
+    }
+    renametab {
+        bind "Enter" { SwitchToMode "Locked"; }
+        bind "Esc" "Ctrl [" { UndoRenameTab; SwitchToMode "Tab"; }
     }
     resize {
         bind "h" { Resize "Left"; }
@@ -79,5 +84,14 @@ keybinds clear-defaults=true {
     }
     shared_except "normal" "locked" {
         bind "Enter" "Esc" { SwitchToMode "Locked"; }
+    }
+    tab {
+        bind "c" { NewTab; }
+        bind "x" { CloseTab; }
+        bind "h" { GoToPreviousTab; }
+        bind "l" { GoToNextTab; }
+        bind "n" { SwitchToMode "RenameTab"; TabNameInput 0; }
+        bind "[" { MoveTab "Left"; }
+        bind "]" { MoveTab "Right"; }
     }
 }
