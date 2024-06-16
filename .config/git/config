@@ -6,7 +6,6 @@
 [stash]
         showPatch = true
 [pull]
-        ff = only
         rebase = true
 [push]
         autosetupRemote = true
