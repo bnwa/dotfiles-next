@@ -30,24 +30,31 @@ keybinds clear-defaults=true {
         bind "p" { SwitchToMode "pane"; }
         bind "q" { Quit; }
         bind "r" { SwitchToMode "resize"; }
-        bind "w" { SwitchToMode "tab"; }
+        bind "t" { SwitchToMode "tab"; }
+        bind "h" "Left" { MoveFocus "Left"; SwitchToMode "locked"; }
+        bind "l" "Right" { MoveFocus "Right"; SwitchToMode "locked"; }
+        bind "j" "Down" { MoveFocus "Down"; SwitchToMode "locked"; }
+        bind "k" "Up" { MoveFocus "Up"; SwitchToMode "locked"; }
+        bind "s" { SwitchToMode "scroll"; }
+        bind "w" {
+            LaunchOrFocusPlugin "session-manager" {
+                floating true
+                move_to_focused_tab true
+            };
+            SwitchToMode "Normal";
+        }
     }
     pane {
-        bind "h" "Left" { MoveFocus "Left"; }
-        bind "l" "Right" { MoveFocus "Right"; }
-        bind "j" "Down" { MoveFocus "Down"; }
-        bind "k" "Up" { MoveFocus "Up"; }
         bind "-" { NewPane "Down"; SwitchToMode "locked"; }
         bind "%" { NewPane "Left"; SwitchToMode "locked"; }
         bind "p" { SwitchFocus; }
         bind "$" { NextSwapLayout; }
         bind "x" { CloseFocus; SwitchToMode "locked"; }
-        bind "s" { SwitchToMode "scroll"; }
         bind "/" { SwitchToMode "entersearch"; }
-        bind "H" { MovePane "Left"; }
-        bind "L" { MovePane "Right"; }
-        bind "J" { MovePane "Down"; }
-        bind "K" { MovePane "Up"; }
+        bind "h" { MovePane "Left"; }
+        bind "l" { MovePane "Right"; }
+        bind "j" { MovePane "Down"; }
+        bind "k" { MovePane "Up"; }
     }
     renametab {
         bind "Enter" { SwitchToMode "Locked"; }
