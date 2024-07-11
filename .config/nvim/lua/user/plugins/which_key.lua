@@ -2,6 +2,10 @@ return {
   'folke/which-key.nvim',
   config = function()
     local which_key = require 'which-key'
+    --local termcodes =https://github.com/folke/which-key.nvim/issues/249#issuecomment-1151756976
+    local function termcodes(str)
+      return vim.api.nvim_replace_termcodes(str, true, true, true)
+    end
 
     which_key.setup {
       plugins = {
@@ -17,6 +21,15 @@ return {
         border = 'shadow',
       },
     }
+
+    which_key.register({
+      ['<leader>'] = {
+        ['['] = {
+          termcodes "<C-\\><C-n>",
+          "Escape from terminal mode to normal mode",
+        },
+      },
+    }, { mode = 't' })
 
     which_key.register {
       ['<leader>'] = {
