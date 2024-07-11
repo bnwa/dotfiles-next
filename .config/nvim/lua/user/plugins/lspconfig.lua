@@ -37,6 +37,8 @@ return {
         insertSpaceBeforeAndAfterBinaryOperators = true,
         insertSpaceBeforeFunctionParenthesis = false,
         insertSpaceBeforeTypeAnnotation = true,
+        organizeImportsIgnoreCase = false,
+        organizeImportsCaseFirst = true,
         placeOpenBraceOnNewLineForControlBlocks = false,
         placeOpenBraceOnNewLineForFunctions = false,
         semicolons = 'remove',
