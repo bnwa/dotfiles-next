@@ -74,6 +74,7 @@ return {
       },
       lemminx = {},
       lua_ls = {
+        before_init = require('neodev.lsp').before_init,
         settings = {
           Lua = {
             completion ={
