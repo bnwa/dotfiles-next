@@ -1,188 +1,162 @@
+local function termcodes(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
 return {
   'folke/which-key.nvim',
-  config = function()
-    local which_key = require 'which-key'
-    --local termcodes =https://github.com/folke/which-key.nvim/issues/249#issuecomment-1151756976
-    local function termcodes(str)
-      return vim.api.nvim_replace_termcodes(str, true, true, true)
-    end
-
-    which_key.setup {
-      plugins = {
-        spelling = {
-          enabled = false,
-        },
+  opts = {
+    plugins = {
+      spelling = {
+        enabled = false,
       },
-      popup_mappings = {
-        scroll_down = '<c-d>',
-        scroll_up = '<c-u>',
+    },
+    preset = "modern",
+    spec = {
+      {
+        '<Esc><Esc>',
+        termcodes "<C-\\><C-n>",
+        mode = 't',
+        desc = "Escape from terminal mode to normal mode"
       },
-      window = {
-        border = 'shadow',
+      {
+        "<leader>,",
+        function() vim.cmd.nohl() end,
+        desc = "Clear search highlight"
       },
-    }
-
-    which_key.register({
-      ['<leader>'] = {
-        ['['] = {
-          termcodes "<C-\\><C-n>",
-          "Escape from terminal mode to normal mode",
-        },
+      {
+        "<leader>`",
+        function() require('telescope.builtin').marks {} end,
+        desc = "List marks and jump on selection" },
+      {
+        "<leader>a",
+        function() vim.lsp.buf.code_action() end,
+        desc = "Select available code action" },
+      {
+        "<leader>d",
+        function() vim.lsp.buf.hover() end,
+        desc = "Show LSP type information for symbol under cursor" },
+      {
+        "<leader>e",
+        function() require('trouble').toggle 'diagnostics' end,
+        desc = "Show LSP diagnostics in quickfix list" },
+      {
+        "<leader>f", group = "Find" },
+      {
+        "<leader>f'",
+        function() require('telescope.builtin').registers {}
+        end,
+        desc = "List registers and paste on selection" },
+      {
+        "<leader>fD",
+        function() require('telescope.builtin').lsp_type_definitions {} end,
+        desc = "Find definition for type under cursor"
       },
-    }, { mode = 't' })
-
-    which_key.register {
-      ['<leader>'] = {
-        ['`'] = {
-          function()
-            local picker = require 'telescope.builtin'
-            picker.marks {}
-          end,
-          "List marks and jump on selection"
-        },
-        [','] = {
-          function()
-            vim.cmd.nohl()
-          end,
-          "Clear search highlight"
-        },
-        a = {
-          function()
-            vim.lsp.buf.code_action()
-          end,
-          "Select available code action"
-        },
-        d = {
-          function()
-            vim.lsp.buf.hover()
-          end,
-          "Show LSP type information for symbol under cursor"
-        },
-        e = {
-          function()
-            require('trouble').toggle 'diagnostics'
-          end,
-          "Show LSP diagnostics in quickfix list"
-        },
-        f = {
-          name = 'Find',
-          ["'"] = {
-            function()
-              local picker = require 'telescope.builtin'
-              picker.registers {}
-            end,
-            "List registers and paste on selection"
-          },
-          D =  {
-            function()
-              local picker = require 'telescope.builtin'
-              picker.lsp_type_definitions()
-            end,
-            "Find definition for type under cursor",
-          },
-          d =  {
-            function()
-              local picker = require 'telescope.builtin'
-              picker.lsp_definitions()
-            end,
-            "Find definition for type under cursor",
-          },
-          f =  {
-            function()
-              local picker = require 'telescope.builtin'
-              if vim.loop.fs_stat('./.git') then
-                picker.git_files { show_untracked = true }
-              else
-                picker.find_files {}
-              end
-            end,
-            "Find files under current working directory",
-          },
-          h = {
-            function()
-              require('telescope.builtin').help_tags {}
-            end,
-            "Find help page via tag match",
-          },
-          l =  {
-            function()
-              local picker = require 'telescope.builtin'
-              picker.buffers {
-                sort_mru = true,
-              }
-            end,
-            "Find buffer",
-          },
-          O =  {
-            function()
-              local picker = require 'telescope.builtin'
-              picker.lsp_dynamic_workspace_symbols {}
-            end,
-            "Find symbol in the current workspace",
-          },
-          o =  {
-            function()
-              local picker = require 'telescope.builtin'
-              if vim.tbl_isempty(vim.lsp.get_clients()) then
-                picker.treesitter {}
-              else
-                picker.lsp_document_symbols {}
-              end
-            end,
-            "Find symbol in current buffer",
-          },
-          P = {
-            function()
-              local picker = require 'telescope.builtin'
-              picker.resume {}
-            end,
-            "Resume previous picker state",
-          },
-          r =  {
-            function()
-              local picker = require 'telescope.builtin'
-              picker.lsp_references {}
-            end,
-            "find references to the symbol under cursor",
-          },
-          u =  {
-            function()
-              local picker = require 'telescope'
-              picker.extensions.undo.undo()
-            end,
-            "View undo tree and apply changes",
-          },
-          s = {
-            function()
-              if vim.fn.system({'which', 'ripgrep' }) then
-                require('telescope.builtin').live_grep {}
-              else
-                vim.notify('Install ripgrep to use live grep')
-              end
-            end,
-            "Live grep workspace if ripgrep installed",
-          },
-        },
-        g = {
-          name = "Go to...",
-          ['d'] =  {
-            function()end,
-            "... definition",
-          },
-        },
-        t = {
-          function()
-            vim.cmd 'Git'
-          end,
-          "Show Fugitive git status pane",
-        },
-        r = {
-          function()
-            vim.lsp.buf.rename()
-          end,
-          "Rename symbol under cursor"
-        },
-      }
-    }
-  end
+      {
+        "<leader>fO",
+        function()
+          local picker = require 'telescope.builtin'
+          picker.lsp_dynamic_workspace_symbols {}
+        end,
+        desc = "Find symbol in the current workspace"
+      },
+      {
+        "<leader>fP",
+        function()
+          local picker = require 'telescope.builtin'
+          picker.resume {}
+        end,
+        desc = "Resume previous picker state"
+      },
+      {
+        "<leader>fd",
+        function() require('telescope.builtin').lsp_definitions {} end,
+        desc = "Find definition for type under cursor"
+      },
+      { "<leader>ff",
+        function()
+          local picker = require 'telescope.builtin'
+          if vim.loop.fs_stat('./.git') then
+            picker.git_files { show_untracked = true }
+          else
+            picker.find_files {}
+          end
+        end,
+        desc = "Find files under current working directory" },
+      {
+        "<leader>fh",
+        function()
+          require('telescope.builtin').help_tags {}
+        end,
+        desc = "Find help page via tag match"
+      },
+      {
+        "<leader>fl",
+        function()
+          local picker = require 'telescope.builtin'
+          picker.buffers {
+            sort_mru = true,
+          }
+        end,
+        desc = "Find buffer"
+      },
+      {
+        "<leader>fo",
+        function()
+          local picker = require 'telescope.builtin'
+          if vim.tbl_isempty(vim.lsp.get_clients()) then
+            picker.treesitter {}
+          else
+            picker.lsp_document_symbols {}
+          end
+        end,
+        desc = "Find symbol in current buffer"
+      },
+      {
+        "<leader>fr",
+        function()
+          local picker = require 'telescope.builtin'
+          picker.lsp_references {}
+        end,
+        desc = "find references to the symbol under cursor"
+      },
+      {
+        "<leader>fs",
+        function()
+          if vim.fn.system({'which', 'ripgrep' }) then
+            require('telescope.builtin').live_grep {}
+          else
+            vim.notify('Install ripgrep to use live grep')
+          end
+        end,
+        desc = "Live grep workspace if ripgrep installed"
+      },
+      {
+        "<leader>fu",
+        function()
+          local picker = require 'telescope'
+          picker.extensions.undo.undo()
+        end,
+        desc = "View undo tree and apply changes"
+      },
+      { "<leader>g", group = "Go to..." },
+      {
+        "<leader>gd",
+        function() end,
+        desc = "... LSP definition"
+      },
+      {
+        "<leader>r",
+        function() vim.lsp.buf.rename() end,
+        desc = "Rename symbol under cursor"
+      },
+      {
+        "<leader>t",
+        function() vim.cmd 'Git' end,
+        desc = "Show Fugitive git status pane"
+      },
+    },
+    win = {
+      border = 'shadow',
+    },
+  },
 }
