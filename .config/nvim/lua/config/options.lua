@@ -14,9 +14,9 @@ local NIGHT_MAX = { 7 }
 opt.listchars.precedes = "«"
 opt.listchars.extends = "»"
 if jit.arch == "arm64" and path.can_exec("fish") then
-  opt.shell = "/opt/homebrew/bin/fish -l"
+  opt.shell = "/opt/homebrew/bin/fish"
 else
-  opt.shell = "/bin/zsh --login --interactive"
+  opt.shell = "/bin/zsh"
 end
 opt.splitbelow = false
 opt.splitright = false
