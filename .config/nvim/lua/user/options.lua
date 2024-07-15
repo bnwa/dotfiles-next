@@ -39,6 +39,7 @@ opt.foldenable = false
 opt.foldexpr = 'nvim_treesitter#foldexpr()'
 opt.foldlevel = 99 -- Init bufs with all folds open
 opt.foldmethod = 'expr'
+opt.gdefault = true
 opt.guicursor = { 'n:blinkon200', 'i-ci-ve:ver25' } -- Enable cursor blink
 opt.ignorecase = true -- Ignore case in search, command-line completion
 opt.laststatus = 3 -- Enable single, global status line 

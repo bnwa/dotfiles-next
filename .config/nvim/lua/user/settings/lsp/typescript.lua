@@ -43,6 +43,7 @@ local tsConfig = {
     showOnAllFunctions = true,
   },
 }
+
 return {
   settings = {
     completions = {
@@ -58,3 +59,4 @@ return {
     typescript = tsConfig,
   }
 }
+
