@@ -1,0 +1,15 @@
+{
+  "SchemaStore.nvim": { "branch": "main", "commit": "82db29c48789e6b61bd2ba78df8ffd7bf66470d9" },
+  "dracula.nvim": { "branch": "main", "commit": "fdf503e52ec1c8aae07353604d891fe5a3ed5201" },
+  "gruvbox.nvim": { "branch": "main", "commit": "7a1b23e4edf73a39642e77508ee6b9cbb8c60f9e" },
+  "lazy.nvim": { "branch": "main", "commit": "b02c9eae6a250f98908c146d1dc1a891f5019f0a" },
+  "lush.nvim": { "branch": "main", "commit": "1b66ab197b177aabc2270a2c9cb8019fa5a367df" },
+  "mason-extra-cmds": { "branch": "main", "commit": "1bf94d631a9d35061e694ab49dbdea83172a8e51" },
+  "mason-lspconfig.nvim": { "branch": "main", "commit": "37a336b653f8594df75c827ed589f1c91d91ff6c" },
+  "mason.nvim": { "branch": "main", "commit": "f96a31855fa8aea55599cea412fe611b85a874ed" },
+  "melange": { "branch": "master", "commit": "f626d41b9110e6ab853538d8b939979a0f1adfeb" },
+  "mellifluous.nvim": { "branch": "main", "commit": "1d4884d64b0ebd685f418c29eeb4274f3688eecc" },
+  "noctis.nvim": { "branch": "main", "commit": "fbc84ec2f1a8049295bfe9eb50b3a4342036ad84" },
+  "nvim-lspconfig": { "branch": "master", "commit": "216deb2d1b5fbf24398919228208649bbf5cbadf" },
+  "rose-pine": { "branch": "main", "commit": "dded5c15e9d27ac95ad1e803b35a752d80f3f42b" }
+}
