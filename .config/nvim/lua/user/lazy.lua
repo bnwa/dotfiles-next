@@ -15,10 +15,15 @@ local LAZY_PATH = fn.stdpath('data') .. '/lazy/lazy.nvim'
 local has_rg = path.can_exec 'rg'
 local has_fd = path.can_exec 'fd'
 local has_fzf = path.can_exec 'fzf'
+local has_make = path.can_exec 'make'
+local has_cmake = path.can_exec 'cmake'
+
 local should_update_brew = platform.os.mac and
   not has_rg or
   not has_fd or
-  not has_fzf
+  not has_fzf or
+  not has_make and not has_cmake
+
 
 if not vim.uv.fs_stat(LAZY_PATH) then
   notify "Lazy.nvim package manager not found, installing..."
@@ -44,6 +49,8 @@ if should_update_brew then
       if not has_rg then list.append(missing, 'ripgrep') end
       if not has_fd then list.append(missing, 'fd') end
       if not has_fzf then list.append(missing, 'fzf') end
+      if not has_make then list.append(missing, 'make') end
+      if not has_cmake then list.append(missing, 'cmake') end
       local brew_install = run(list.concat({ 'brew', 'install' }, missing))
       if brew_install.code ~= 0 then
         err("Homebrew failed to install missing plugin path dependencies: " ..  missing .. "\n\n" .. brew_install.stderr)
