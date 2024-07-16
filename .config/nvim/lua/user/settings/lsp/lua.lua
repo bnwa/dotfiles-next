@@ -78,6 +78,10 @@ return {
         viewString = true, -- For example, hovering "\x48" will display "H".
       },
       runtime = {
+        path = {
+          '?.lua',
+          '?/init.lua',
+        },
         version = 'LuaJIT',
       },
       workspace = {

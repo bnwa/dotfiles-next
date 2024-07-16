@@ -8,11 +8,11 @@ return {
       'b0o/SchemaStore.nvim',
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
+      'yioneko/nvim-vtsls',
     },
     config = function()
       local opts = lsp_opts
       local cmp_ok, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
-      local installer = require 'mason-tool-installer'
       local mason_lsp = require 'mason-lspconfig'
       local servers = opts.servers
       local ensure_installed = vim.tbl_keys(servers)
@@ -20,11 +20,6 @@ return {
       {},
       opts.capabilities,
       cmp_ok and cmp_lsp.default_capabilities() or {})
-
-      installer.setup {
-        auto_update = true,
-        ensure_installed,
-      }
 
       vim.diagnostic.config(opts.diagnostic)
 
@@ -46,21 +41,23 @@ return {
         end
       end
 
-      local function setup(server_name) 
+      local function setup(server_name)
         local lsp = require 'lspconfig'
         local config = servers[server_name]
         config.on_attach = on_attach
         config.capabilities = capabilities
+        if server_name == 'vtsls' then
+          require('lspconfig.configs').vtsls = require('vtsls').lspconfig
+        end
         lsp[server_name].setup(config)
       end
 
       mason_lsp.setup {
+        automatic_installation = false,
+        ensure_installed = ensure_installed,
         handlers = { setup },
       }
     end,
-  },
-  {
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
   },
   {
     'williamboman/mason-lspconfig.nvim',
@@ -120,17 +117,38 @@ return {
       { "dmitmel/cmp-cmdline-history" },
       { url = "https://codeberg.org/FelipeLema/cmp-async-path" },
       { "saadparwaiz1/cmp_luasnip" },
+      { "L3MON4D3/LuaSnip", version = "v2.*", build = "make install_jsregexp" },
     },
     opts = function()
       local cmp = require 'cmp'
+      local defaults = require('cmp.config.default')()
       return {
+        experimental = {
+          ghost_text = {
+            hl_group = 'CmpGhostText',
+          },
+        },
+        mapping = cmp.mapping.preset.insert {
+          ['<C-n>'] = cmp.mapping.select_next_item(),
+          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+          ['<C-CR>'] = function(fallback)
+            cmp.abort()
+            fallback()
+          end,
+        },
+        preselect = cmp.PreselectMode.None,
         snippet = {
           expand = function(args)
             require('luasnip').lsp_expand(args.body)
           end,
         },
+        sorting = defaults.sorting,
         sources = cmp.config.sources({
           { name = "nvim_lsp_signature_help" },
+          { name = "lazydev" },
           { name = "nvim_lsp" },
         }, {
           { name = "treesitter" },

@@ -1,5 +1,5 @@
 local lua_ls = require 'user.settings.lsp.lua'
-local tsserver = require 'user.settings.lsp.typescript'
+local vtsls = require 'user.settings.lsp.typescript'
 
 local severity = vim.diagnostic.severity
 
@@ -30,7 +30,7 @@ return {
   },
   servers = {
     lua_ls = lua_ls,
-    tsserver = tsserver,
+    vtsls = vtsls,
   },
 }
 
