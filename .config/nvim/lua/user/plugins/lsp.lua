@@ -97,11 +97,12 @@ return {
     },
     ft = "lua", -- only load on lua files
     opts = {
-      library = {
+      library = vim.list_extend({
         -- See the configuration section for more details
         -- Load luvit types when the `vim.uv` word is found
         { path = 'luvit-meta/library', words = { "vim%.uv" } },
-      },
+      }, vim.tbl_map(function(path) return { path, word = { 'vim' } } end,
+      vim.api.nvim_get_runtime_file("", true)))
     },
   },
   {
