@@ -74,4 +74,16 @@ return {
     'nvim-tree/nvim-web-devicons',
     config = true,
   },
+  {
+    'akinsho/toggleterm.nvim',
+    version = "*",
+    opts = {
+      direction = 'float',
+      float_opts = {
+        border = 'double',
+        title_pos = 'center',
+      },
+      open_mapping = [[<C-\>]],
+    },
+  },
 }
