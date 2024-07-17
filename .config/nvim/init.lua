@@ -1,4 +1,4 @@
 require 'user.options'
-require 'user.lazy'
+require 'user.settings.plugins'
 require 'user.autocmds'
 require 'user.colorscheme'
