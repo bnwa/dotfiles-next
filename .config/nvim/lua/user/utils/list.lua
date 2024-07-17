@@ -1,8 +1,20 @@
 local M = {}
 
+function M.is(x)
+  return vim.islist(x)
+end
+
+function M.from_table(t)
+  local ls = {}
+  for _, x in pairs(t) do
+    M.append(ls, x)
+  end
+  return ls
+end
+
 function M.append(ls, x)
   table.insert(ls, x)
-  return #ls
+  return ls
 end
 
 function M.contains(ls, x)
@@ -20,12 +32,22 @@ function M.concat(ls_a, ls_b)
   return ls_c
 end
 
-function M.map(tbl, f)
-  return vim.tbl_map(f, tbl)
+function M.map(ls, f)
+  local result = {}
+  for _, x in ipairs(ls) do
+    M.append(result, f(x))
+  end
+  return result
 end
 
-function M.filter(tbl, pred)
-  return vim.tbl_filter(pred, tbl)
+function M.filter(ls, f)
+  local result = {}
+  for _, x in ipairs(ls) do
+    if f(x) then
+      M.append(result, x)
+    end
+  end
+  return result
 end
 
 return M
