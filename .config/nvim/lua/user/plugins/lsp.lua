@@ -124,11 +124,6 @@ return {
       local cmp = require 'cmp'
       local defaults = require('cmp.config.default')()
       return {
-        experimental = {
-          ghost_text = {
-            hl_group = 'CmpGhostText',
-          },
-        },
         mapping = cmp.mapping.preset.insert {
           ['<C-n>'] = cmp.mapping.select_next_item(),
           ['<C-p>'] = cmp.mapping.select_prev_item(),
