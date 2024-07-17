@@ -1,5 +1,7 @@
+local lsp_util = require 'user.utils.lsp'
 local lsp_opts = require 'user.settings.lsp'
 local autocmd = require 'user.utils.autocmd'
+
 
 return {
   {
@@ -24,6 +26,7 @@ return {
       vim.diagnostic.config(opts.diagnostic)
 
       local function on_attach(client, buf)
+        local wk = require('which-key')
         if client.supports_method('textDocument/inlayHint', { bufnr = buf })
           and vim.api.nvim_buf_is_valid(buf)
           and vim.bo[buf].buftype == '' then
@@ -39,6 +42,21 @@ return {
             vim.lsp.codelens.refresh()
           end)
         end
+        wk.add({
+          '<Tab>',
+          function()
+            if vim.snippet.active({ direction = 1 }) then
+              vim.print('Should jump')
+              return '<cmd>lua vim.snippet.jump(1)<cr>'
+            else
+              vim.print('Did not jump')
+              return '<Tab>'
+            end
+          end,
+          expr = true,
+          buffer = buf,
+          mode = { 'i', 's' },
+        })
       end
 
       local function setup(server_name)
@@ -108,22 +126,31 @@ return {
   {
     'hrsh7th/nvim-cmp',
     dependencies = {
-      { "hrsh7th/cmp-nvim-lsp" },
-      { "hrsh7th/cmp-buffer" },
-      { "hrsh7th/cmp-cmdline" },
+      "onsails/lspkind.nvim",
+      "hrsh7th/cmp-nvim-lsp" ,
+      "hrsh7th/cmp-buffer" ,
+      "hrsh7th/cmp-cmdline" ,
+      "hrsh7th/cmp-nvim-lsp-document-symbol" ,
+      "hrsh7th/cmp-nvim-lsp-signature-help" ,
+      "ray-x/cmp-treesitter" ,
+      "dmitmel/cmp-cmdline-history" ,
       { "mtoohey31/cmp-fish", ft = "fish" },
-      { "hrsh7th/cmp-nvim-lsp-document-symbol" },
-      { "hrsh7th/cmp-nvim-lsp-signature-help" },
-      { "ray-x/cmp-treesitter" },
-      { "dmitmel/cmp-cmdline-history" },
       { url = "https://codeberg.org/FelipeLema/cmp-async-path" },
-      { "saadparwaiz1/cmp_luasnip" },
-      { "L3MON4D3/LuaSnip", version = "v2.*", build = "make install_jsregexp" },
     },
     opts = function()
       local cmp = require 'cmp'
       local defaults = require('cmp.config.default')()
       return {
+        formatting = {
+          format = require('lspkind').cmp_format({
+            ellipsis_char = '…',
+            maxwidth = function()
+              return math.floor(0.45 * vim.o.columns)
+            end,
+            mode = 'symbol',
+            show_labelDetails = true,
+          })
+        },
         mapping = cmp.mapping.preset.insert {
           ['<C-n>'] = cmp.mapping.select_next_item(),
           ['<C-p>'] = cmp.mapping.select_prev_item(),
@@ -138,7 +165,7 @@ return {
         preselect = cmp.PreselectMode.None,
         snippet = {
           expand = function(args)
-            require('luasnip').lsp_expand(args.body)
+            vim.snippet.expand(args.body)
           end,
         },
         sorting = defaults.sorting,
@@ -164,6 +191,35 @@ return {
     end,
     config = function(_, opts)
       require('cmp').setup(opts)
+    end,
+  },
+  {
+    "onsails/lspkind.nvim",
+    opts = {
+      mode = "symbol",
+      symbol_map = {
+        Array = "󰅪",
+        Boolean = "⊨",
+        Class = "󰌗",
+        Constructor = "",
+        Key = "󰌆",
+        Namespace = "󰅪",
+        Null = "NULL",
+        Number = "#",
+        Object = "󰀚",
+        Package = "󰏗",
+        Property = "",
+        Reference = "",
+        Snippet = "",
+        String = "󰀬",
+        TypeParameter = "󰊄",
+        Unit = "",
+      },
+      menu = {},
+    },
+    enabled = vim.g.icons_enabled,
+    config = function(_, opts)
+      require("lspkind").init(opts)
     end,
   },
 }

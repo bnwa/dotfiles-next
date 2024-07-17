@@ -225,4 +225,26 @@ return colorschemes({
       })
     end,
   },
+  {
+    'rose-pine/neovim',
+    name = 'rose-pine',
+    opts = {
+      dim_inactive_widows = true,
+      enable = {
+        legacy_highlights = false,
+      },
+    },
+  },
+  {
+    "folke/tokyonight.nvim",
+    opts = {
+      dim_inactive = false,
+      styles = {
+        comments = { italic = true },
+      },
+    }
+  },
+  {
+    "AstroNvim/astrotheme",
+  },
 })

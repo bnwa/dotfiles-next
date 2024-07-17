@@ -1,13 +1,12 @@
-local function termcodes(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
+local lsp = require 'user.utils.lsp'
+local str = require 'user.utils.str'
 
 return {
   {
-    '<Esc><Esc>',
-    termcodes "<C-\\><C-n>",
-    mode = 't',
-    desc = "Escape from terminal mode to normal mode"
+    '<leader>?',
+    function()
+      require('which-key').show {}
+    end,
   },
   {
     "<leader>,",
