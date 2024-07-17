@@ -1,10 +1,11 @@
-local path = require 'user.utils.path'
+local keymap = require 'user.settings.keymap'
 
 return {
   {
     'nvim-telescope/telescope.nvim',
     dependencies = {
       'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons',
       'nvim-telescope/telescope-ui-select.nvim',
       'tsakirist/telescope-lazy.nvim',
       'debugloop/telescope-undo.nvim',
@@ -55,5 +56,22 @@ return {
   {
     'nvim-telescope/telescope-fzf-native.nvim',
     build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
+  },
+  {
+    "folke/which-key.nvim",
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+    },
+    opts = {
+      preset = 'modern',
+      spec = keymap,
+      win = {
+        border = 'double'
+      }
+    },
+  },
+  {
+    'nvim-tree/nvim-web-devicons',
+    config = true,
   },
 }
