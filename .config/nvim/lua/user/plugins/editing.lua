@@ -26,4 +26,8 @@ return {
       -- patterns = {[[%s/\(\n\n\)\n\+/\1/]]},
     },
   },
+  {
+    'arnamak/stay-centered.nvim',
+    opts = {},
+  },
 }
