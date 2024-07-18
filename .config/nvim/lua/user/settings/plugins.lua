@@ -60,4 +60,7 @@ if should_update_brew then
 end
 
 vim.opt.rtp:prepend(LAZY_PATH)
-require('lazy').setup 'user.plugins'
+require('lazy').setup {
+  { import = 'user.plugins' },
+  { import = 'user.plugins.lang' },
+}

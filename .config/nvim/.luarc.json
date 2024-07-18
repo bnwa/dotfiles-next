@@ -1,0 +1,10 @@
+{
+    "workspace.library": [
+        "/Users/barberousse/.config/nvim",
+        "/Users/barberousse/.local/share/nvim/lazy/lazy.nvim",
+        "/opt/homebrew/Cellar/neovim/0.10.0/share/nvim/runtime",
+        "/opt/homebrew/Cellar/neovim/0.10.0/lib/nvim",
+        "/Users/barberousse/.local/state/nvim/lazy/readme",
+        "${3rd}/luassert/library"
+    ]
+}

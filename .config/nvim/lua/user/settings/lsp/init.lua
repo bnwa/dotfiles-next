@@ -1,6 +1,3 @@
-local lua_ls = require 'user.settings.lsp.lua'
-local vtsls = require 'user.settings.lsp.typescript'
-
 local severity = vim.diagnostic.severity
 
 local SIGNS = {
@@ -28,9 +25,4 @@ return {
     update_in_insert = true,
     virtual_text = true,
   },
-  servers = {
-    lua_ls = lua_ls,
-    vtsls = vtsls,
-  },
 }
-
