@@ -14,7 +14,7 @@ return {
   capabilities = vim.lsp.protocol.make_client_capabilities(),
   diagnostic = {
     float = {
-      border = 'double',
+      border = 'rounded',
       source = 'always',
     },
     jump = {

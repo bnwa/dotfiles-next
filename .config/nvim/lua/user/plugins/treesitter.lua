@@ -7,6 +7,7 @@ return {
     dependencies = {
       'RRethy/nvim-treesitter-endwise',
       'nvim-treesitter/nvim-treesitter-textobjects',
+      'andymass/vim-matchup',
     },
     build = ":TSUpdate",
     event = { 'BufReadPre', 'BufNewFile' },
@@ -130,6 +131,9 @@ return {
           goto_previous = {
             ["[f"] = { query = { "@function.outer", "@method_definition" } },
           },
+        },
+        matchup = {
+          enable = true,
         }
       },
     },

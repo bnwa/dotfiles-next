@@ -1,4 +1,4 @@
 require 'user.settings.neovim'
 require 'user.settings.plugins'
-require 'user.autocmds'
-require 'user.colorscheme'
+require 'user.settings.autocmd'
+require 'user.settings.colorscheme'

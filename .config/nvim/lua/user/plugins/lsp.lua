@@ -92,7 +92,7 @@ return {
         "github:mason-org/mason-registry",
       },
       ui = {
-        border = "double",
+        border = 'rounded',
         icons = {
           package_installed = "✓",
           package_uninstalled = "✗",
@@ -127,9 +127,9 @@ return {
     'hrsh7th/nvim-cmp',
     dependencies = {
       "onsails/lspkind.nvim",
+      'garymjr/nvim-snippets' ,
       "hrsh7th/cmp-nvim-lsp" ,
       "hrsh7th/cmp-buffer" ,
-      "hrsh7th/cmp-cmdline" ,
       "hrsh7th/cmp-nvim-lsp-document-symbol" ,
       "hrsh7th/cmp-nvim-lsp-signature-help" ,
       "ray-x/cmp-treesitter" ,
@@ -173,6 +173,7 @@ return {
           { name = "nvim_lsp_signature_help" },
           { name = "lazydev" },
           { name = "nvim_lsp" },
+          { name = "snippets" },
         }, {
           { name = "treesitter" },
         }, {
@@ -184,14 +185,47 @@ return {
           },
         },
         window = {
-          completion = cmp.config.window.bordered(),
-          documentation = cmp.config.window.bordered(),
+          completion = cmp.config.window.bordered({ border = 'rounded' }),
+          documentation = cmp.config.window.bordered({ border = 'rounded' }),
         },
       }
     end,
     config = function(_, opts)
       require('cmp').setup(opts)
     end,
+  },
+  {
+    "hrsh7th/cmp-cmdline" ,
+    dependencies = {
+      'hrsh7th/nvim-cmp',
+    },
+    config = function()
+      local cmp = require 'cmp'
+      cmp.setup.cmdline({ '/', '?' }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = 'nvim_lsp_document_symbol' },
+        },{
+          { name = 'treesitter' },
+        },{
+          { name = 'buffer' },
+        }),
+      })
+      cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = 'cmdline', priority = 1000, option = { ignore_cmds = { 'Man', '!' } } },
+          { name = 'cmdline_history', priority = 500 },
+          { name = 'path', priority = 750 },
+        })
+      })
+    end
+  },
+  {
+    "garymjr/nvim-snippets",
+    opts = {
+      create_cmp_source = true,
+    },
   },
   {
     "onsails/lspkind.nvim",
@@ -222,4 +256,17 @@ return {
       require("lspkind").init(opts)
     end,
   },
+  {
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    dependencies = {
+      'williamboman/mason.nvim',
+    },
+    opts = {
+      ensure_installed = {
+        'java-debug-adapter',
+        'java-test',
+        'js-debug-adapter',
+      }
+    }
+  }
 }

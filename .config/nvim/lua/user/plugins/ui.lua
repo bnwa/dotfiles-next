@@ -25,7 +25,7 @@ return {
             preview_cutoff = 20,
           },
           layout_strategy = 'vertical',
-          path_display = {'smart'},
+          path_display = {'truncate'},
           preview = {
             filetype_hook = function(path, buf, opts)
               if opts.ft == 'bigfile' then
@@ -85,7 +85,7 @@ return {
       preset = 'modern',
       spec = keymap,
       win = {
-        border = 'double'
+        border = 'rounded'
       }
     },
   },
@@ -99,7 +99,7 @@ return {
     opts = {
       direction = 'float',
       float_opts = {
-        border = 'double',
+        border = 'rounded',
         title_pos = 'center',
       },
       open_mapping = [[<C-\>]],
@@ -108,5 +108,47 @@ return {
   {
     "tzachar/highlight-undo.nvim",
   },
-  { 'echasnovski/mini.animate', version = '*' }
+  { 'echasnovski/mini.animate', version = '*' },
+  {
+    "folke/noice.nvim",
+    opts = {
+      lsp = {
+        documentation = {
+          opts = {
+            win_opts = { border = 'rounded' },
+          },
+        },
+        signature = {
+          auto_open  = {
+            luasnip = false,
+          },
+        },
+      },
+      override = {
+        -- override the default lsp markdown formatter with Noice
+        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+        -- override the lsp markdown formatter with Noice
+        ["vim.lsp.util.stylize_markdown"] = true,
+        -- override cmp documentation with Noice (needs the other options to work)
+        ["cmp.entry.get_documentation"] = true,
+      },
+      popupmenu = {
+        backend = 'nui'
+      },
+      presets = {
+        command_palette = true,
+      }
+    },
+  },
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {},
+  },
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {},
+  },
+  { 'tpope/vim-fugitive' },
 }
