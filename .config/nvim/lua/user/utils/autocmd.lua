@@ -30,4 +30,12 @@ function M.buffer(desc, buf, evts, listener)
   })
 end
 
+function M.filetype(matches, listener)
+  vim.api.nvim_create_autocmd('FileType', {
+    callback = listener,
+    group = USER_AUGROUP,
+    pattern = matches,
+  })
+end
+
 return M

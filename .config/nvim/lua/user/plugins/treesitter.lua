@@ -48,6 +48,8 @@ return {
         'kdl',
         'kotlin',
         'lua',
+        'luadoc',
+        'markdown',
         'markdown_inline',
         'purescript',
         'python',

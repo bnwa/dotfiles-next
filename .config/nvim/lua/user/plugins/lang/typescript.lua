@@ -17,6 +17,7 @@ return {
     opts = {
       servers = {
         vtsls = {
+          filetypes = ft,
           setup = function(config)
             local lsp = require 'lspconfig'
             require('lspconfig.configs').vtsls = require('vtsls').lspconfig

@@ -1,4 +1,14 @@
 local autocmd = require 'user.utils.autocmd'
+local list = require 'user.utils.list'
+
+local severity = vim.diagnostic.severity
+
+local SIGNS = {
+  [severity.ERROR] = '',
+  [severity.WARN] = '',
+  [severity.INFO] = '󰋽',
+  [severity.HINT] = '',
+}
 
 return {
   {
@@ -7,24 +17,37 @@ return {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
     },
-    opts = function()
-      local opts = require 'user.settings.lsp'
-      return opts
-    end,
+    opts = {
+      capabilities = vim.lsp.protocol.make_client_capabilities(),
+      diagnostic = {
+        float = {
+          border = 'rounded',
+          source = 'always',
+        },
+        jump = {
+          float = true,
+        },
+        severity_sort = true,
+        signs = {
+          text = SIGNS,
+        },
+        underline = false,
+        update_in_insert = true,
+        virtual_text = true,
+      },
+    },
     config = function(_, opts)
       local cmp_ok, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
       local mason_lsp = require 'mason-lspconfig'
       local servers = opts.servers
       local ensure_installed = vim.tbl_keys(servers)
-      local capabilities = vim.tbl_deep_extend('force',
-      {},
-      opts.capabilities,
-      cmp_ok and cmp_lsp.default_capabilities() or {})
+      local capabilities = vim.tbl_deep_extend('force', {}, opts.capabilities, cmp_ok and cmp_lsp.default_capabilities() or {})
 
       vim.diagnostic.config(opts.diagnostic)
 
       local function on_attach(client, buf)
-        local wk = require('which-key')
+        local wk = require 'which-key'
+
         if client.supports_method('textDocument/inlayHint', { bufnr = buf })
           and vim.api.nvim_buf_is_valid(buf)
           and vim.bo[buf].buftype == '' then
@@ -58,14 +81,19 @@ return {
       local function setup(server_name)
         local lsp = require 'lspconfig'
         local config = servers[server_name]
+        local filetypes = config.filetypes
+        if not list.contains(filetypes, vim.bo.filetype) then
+          return
+        end
 
+        local local_on_attach = config.on_attach
         local server_config = vim.tbl_extend('force', {},
           config.server_config, {
           capabilities = capabilities,
           on_attach = function(client, buf)
             local override = false
-            if type(config.on_attach) == 'function' then
-              override = config.on_attach(client, buf)
+            if type(local_on_attach) == 'function' then
+              override = local_on_attach(client, buf)
             end
             if not override then on_attach(client, buf) end
           end,
@@ -89,7 +117,6 @@ return {
     'williamboman/mason-lspconfig.nvim',
     dependencies = {
       'williamboman/mason.nvim',
-      'neovim/nvim-lspconfig',
       'Zeioth/mason-extra-cmds',
     },
     config = function()end,

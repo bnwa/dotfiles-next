@@ -1,9 +1,10 @@
+local cmd = vim.cmd
 local opt = vim.opt
 local g = vim.g
 
 g.bigfile = { lines = 10000, size = 100 * 1024 }
 g.colorscheme = 'melange'
-g.min_night_time = { 18, 30 }
+g.min_night_time = { 17, 30 }
 g.max_night_time = { 7, 0 }
 g.mapleader = ' '
 g.maplocalleader = ','
@@ -28,7 +29,7 @@ opt.copyindent = true -- copy extant indent structure when putting new line
 opt.completeopt = { 'menu', 'menuone', 'noselect' }
 opt.colorcolumn = "80"
 opt.cmdheight = 0 -- Hide command-line unless in use
-opt.confirm = true -- Confirm to save changes before exiting modified buffer 
+opt.confirm = true -- Confirm to save changes before exiting modified buffer
 opt.cursorline = true --Highlight the current line the cursor is on
 opt.diffopt:append 'algorithm:histogram' -- Diff with histogram algo
 opt.diffopt:append 'linematch:60' -- Recommend line cutoff for diff hunk
@@ -43,7 +44,7 @@ opt.foldmethod = 'expr'
 opt.gdefault = true
 opt.guicursor = { 'n:blinkon200', 'i-ci-ve:ver25' } -- Enable cursor blink
 opt.ignorecase = true -- Ignore case in search, command-line completion
-opt.laststatus = 3 -- Enable single, global status line 
+opt.laststatus = 3 -- Enable single, global status line
 opt.listchars.extends = '»' -- Show this char when line excedes window right
 opt.listchars.precendes = '«' -- Show this char when line excedes window left
 opt.number = true -- Show line numbers

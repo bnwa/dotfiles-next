@@ -1,6 +1,6 @@
 local server_config = require 'user.settings.lsp.lua'
 
-local ft = 'lua'
+local ft = {'lua'}
 
 return {
   {
@@ -9,6 +9,7 @@ return {
     opts = {
       servers = {
         lua_ls = {
+          filetypes = ft,
           server_config = server_config,
         },
       },
