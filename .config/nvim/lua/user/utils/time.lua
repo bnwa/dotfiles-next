@@ -25,9 +25,9 @@ function M.between(min, max)
   if max_is_am and curr_is_am or not max_is_am and not curr_is_am then
     lte_max = curr_hours < max_hours or curr_hours == max_hours and curr_mins <= max_minutes
   elseif max_is_am and not curr_is_am then
-    lte_max = false
-  elseif not max_is_am and curr_is_am then
     lte_max = true
+  elseif not max_is_am and curr_is_am then
+    lte_max = false
   end
 
   return gte_min and lte_max
