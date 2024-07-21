@@ -26,6 +26,7 @@ return {
       "TSUpdate",
       "TSUpdateSync",
     },
+    opts_extend = { 'ensure_installed' },
     opts = {
       auto_install = false,
       ensure_installed = {
@@ -44,7 +45,6 @@ return {
         'java',
         'javascript',
         'jsdoc',
-        'json',
         'kdl',
         'kotlin',
         'lua',
