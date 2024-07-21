@@ -12,8 +12,7 @@ return {
       'nvim-telescope/telescope-fzf-native.nvim',
     },
     opts = function()
-      local scope = require 'telescope'
-      scope.setup {
+      return {
         defaults = {
           dynamic_preview_title = true,
           entry_prefix = '○ ',
@@ -66,6 +65,10 @@ return {
           },
         },
       }
+    end,
+    config = function(_, opts)
+      local scope = require 'telescope'
+      scope.setup(opts)
       scope.load_extension('fzf')
       scope.load_extension('lazy')
       scope.load_extension('ui-select')
@@ -111,6 +114,10 @@ return {
   { 'echasnovski/mini.animate', version = '*' },
   {
     "folke/noice.nvim",
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'rcarriga/nvim-notify',
+    },
     opts = {
       lsp = {
         documentation = {
@@ -154,16 +161,16 @@ return {
   {
     'hrsh7th/nvim-cmp',
     dependencies = {
-      "onsails/lspkind.nvim",
+      'onsails/lspkind.nvim',
       'garymjr/nvim-snippets' ,
-      "hrsh7th/cmp-nvim-lsp" ,
-      "hrsh7th/cmp-buffer" ,
-      "hrsh7th/cmp-nvim-lsp-document-symbol" ,
-      "hrsh7th/cmp-nvim-lsp-signature-help" ,
-      "ray-x/cmp-treesitter" ,
-      "dmitmel/cmp-cmdline-history" ,
-      { "mtoohey31/cmp-fish", ft = "fish" },
-      { url = "https://codeberg.org/FelipeLema/cmp-async-path" },
+      'hrsh7th/cmp-nvim-lsp' ,
+      'hrsh7th/cmp-buffer' ,
+      'hrsh7th/cmp-nvim-lsp-document-symbol' ,
+      'hrsh7th/cmp-nvim-lsp-signature-help' ,
+      'ray-x/cmp-treesitter' ,
+      'dmitmel/cmp-cmdline-history' ,
+      { 'mtoohey31/cmp-fish', ft = "fish" },
+      { url = 'https://codeberg.org/FelipeLema/cmp-async-path' },
     },
     opts = function()
       local cmp = require 'cmp'
@@ -184,8 +191,9 @@ return {
           ['<C-p>'] = cmp.mapping.select_prev_item(),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+          ['C-o>'] = cmp.mapping.open_docs(),
           ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-          ['<C-CR>'] = function(fallback)
+          ['<C-[>'] = function(fallback)
             cmp.abort()
             fallback()
           end,
@@ -199,8 +207,8 @@ return {
         sorting = defaults.sorting,
         sources = cmp.config.sources({
           { name = "nvim_lsp_signature_help" },
-          { name = "lazydev" },
           { name = "nvim_lsp" },
+          { name = 'cmp_yanky'},
           { name = "snippets" },
         }, {
           { name = "treesitter" },

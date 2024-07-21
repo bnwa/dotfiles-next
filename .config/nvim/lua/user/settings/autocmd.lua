@@ -64,12 +64,14 @@ autocmd.event("Resize splits when neovim itself resizes",
     vim.cmd("tabnext " .. current_tab)
   end)
 
+--[[
 autocmd.event("Highlight on yank",
  { 'TextYankPost' },
  { '*' },
  function()
    vim.highlight.on_yank()
  end)
+]]--
 
 autocmd.event("Close matching filetypes with 'q'",
   { 'FileType' },

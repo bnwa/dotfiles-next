@@ -3,6 +3,26 @@ local str = require 'user.utils.str'
 
 return {
   {
+    'p',
+    '<Plug>(YankyPutAfter)',
+    desc = 'Put register before cursor with Yanky',
+  },
+  {
+    'P',
+    '<Plug>(YankyPutBefore)',
+    desc = 'Put register before cursor with Yanky',
+  },
+  {
+    ']p',
+    '<Plug>(YankyPutIndentAfterLinewise)',
+    desc = "Put register after current line"
+  },
+  {
+    ']P',
+    '<Plug>(YankyPutIndentBeforeLinewise)',
+    desc = "Put register before current line"
+  },
+  {
     '<leader>?',
     function()
       require('which-key').show {}
@@ -48,6 +68,14 @@ return {
       picker.lsp_dynamic_workspace_symbols {}
     end,
     desc = "Find symbol in the current workspace"
+  },
+  {
+    '<leader>fp',
+    function()
+      local scope = require 'telescope'
+      local picker = scope.extensions.yank_history
+      picker.yank_history()
+    end,
   },
   {
     "<leader>fP",

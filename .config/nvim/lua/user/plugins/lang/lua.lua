@@ -19,16 +19,30 @@ return {
     'folke/lazydev.nvim',
     dependencies = {
       'Bilal2453/luvit-meta',
-      'neovim/nvim-lspconfig'
     },
-    ft = ft,
     opts = {
-      library = vim.list_extend({
-        -- See the configuration section for more details
-        -- Load luvit types when the `vim.uv` word is found
-        { path = 'luvit-meta/library', words = { "vim%.uv" } },
-      }, vim.tbl_map(function(path) return { path, word = { 'vim' } } end,
-      vim.api.nvim_get_runtime_file("", true)))
+      integrations = {
+        lspconfig = true,
+        cmp = true,
+        coq = false,
+      },
+      library = {
+        { path = 'luvit-meta/library', word = { 'vim%.uv' } },
+      },
+      runtime = vim.env.VIMRUNTIME,
     },
   },
+  {
+    'hrsh7th/nvim-cmp',
+    opts = function(_, opts)
+      opts.sources = opts.sources or {}
+      table.insert(opts.sources, {
+        name = 'lazydev',
+        group_index = 0,
+        entry_filter = function()
+          return vim.bo.filetype == 'lua'
+        end
+      })
+    end,
+  }
 }
