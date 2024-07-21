@@ -3,6 +3,7 @@ local server_config = require 'user.settings.lsp.typescript'
 local ft = {
   'javascript',
   'javascriptreact',
+  'typescript',
   'typescriptscript',
   'typescriptreact',
 }
@@ -21,6 +22,7 @@ return {
           setup = function(config)
             local lsp = require 'lspconfig'
             require('lspconfig.configs').vtsls = require('vtsls').lspconfig
+            vim.print('Setting up TS LSP')
             lsp.vtsls.setup(config)
           end,
           server_config = server_config,
