@@ -6,7 +6,7 @@ local function accum_jdk_paths(tbl, str)
   local name_start_idx = string.find(str, '"', 1, true)
   local path_start_idx = string.find(str, '/', 1, true)
   local ver_str = string.sub(str, 3, 3) == '.' and string.sub(str, 1, 2) or
-  string.sub(str, 2, 2) == '.' and string.sub(str, 1, 1) == '1' and string.sub(str, 3, 3) or
+  string.sub(str, 2, 2) == '.' and string.sub(str, 1, 1) == '1' and string.sub(str, 1, 3) or
   string.sub(str, 2, 2) == '.' and string.sub(str, 1, 1) or
   ''
 
