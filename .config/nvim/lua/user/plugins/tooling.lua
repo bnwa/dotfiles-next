@@ -88,7 +88,8 @@ return {
 
         local local_on_attach = config.on_attach
         local server_config = vim.tbl_extend('force', {},
-          config.server_config, {
+          {},
+          config, {
           capabilities = capabilities,
           on_attach = function(client, buf)
             local override = false

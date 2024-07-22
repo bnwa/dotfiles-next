@@ -1,4 +1,4 @@
-local server_config = require 'user.settings.lsp.java'
+local settings = require 'user.settings.lsp.java'
 local autocmd = require 'user.utils.autocmd'
 local path = require 'user.utils.path'
 
@@ -19,11 +19,11 @@ return {
         jdtls = {
           on_attach = function(client, _)
             client.notify('workspace/didChangeConfiguration', {
-              settings = server_config
+              settings = settings
             })
           end,
           filetypes = ft,
-          server_config = server_config,
+          settings = settings,
           setup = function(config)
             local jdtls = require 'jdtls'
             local mason_root = fn.stdpath('data') .. '/mason'
@@ -51,10 +51,10 @@ return {
                   extended_capabilities = extended_capabilities,
                 },
                 root_dir = project_root,
-                settings = config.server_config,
+                settings = config.settings,
                 on_attach = function(client, _)
                   client.notify('workspace/didChangeConfiguration', {
-                    settings = config.server_config
+                    settings = config.settings
                   })
                 end,
                 cmd = {

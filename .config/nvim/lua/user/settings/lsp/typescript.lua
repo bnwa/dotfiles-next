@@ -143,10 +143,8 @@ local ts = {
 }
 
 return {
-  settings = {
-    javascript = shared,
-    typescript = vim.tbl_extend('force', {}, ts, shared),
-    vtsls = vtsls,
-  }
+  javascript = shared,
+  typescript = vim.tbl_extend('force', {}, ts, shared),
+  vtsls = vtsls,
 }
 

@@ -15,7 +15,7 @@ return {
         servers = {
           jsonls = {
             filetypes = ft,
-            server_config = {
+            settings = {
               format = {
                 enable = true,
               },

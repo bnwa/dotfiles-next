@@ -1,4 +1,5 @@
-local server_config = require 'user.settings.lsp.lua'
+local settings = require 'user.settings.lsp.lua'
+local list = require 'user.utils.list'
 
 local ft = {'lua'}
 
@@ -10,7 +11,7 @@ return {
       servers = {
         lua_ls = {
           filetypes = ft,
-          server_config = server_config,
+          settings = settings,
         },
       },
     }
@@ -26,9 +27,12 @@ return {
         cmp = true,
         coq = false,
       },
-      library = {
-        { path = 'luvit-meta/library', word = { 'vim%.uv' } },
+      library = list.concat({
+        { path = 'luvit-meta/library', word = { 'vim%.uv' } }
       },
+      list.map(vim.api.nvim_get_runtime_file("", true), function(path)
+        return { path = path }
+      end)),
       runtime = vim.env.VIMRUNTIME,
     },
   },
