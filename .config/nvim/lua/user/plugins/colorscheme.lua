@@ -247,4 +247,8 @@ return colorschemes({
   {
     "AstroNvim/astrotheme",
   },
+  {
+    "tiagovla/tokyodark.nvim",
+    opts = {},
+  },
 })
