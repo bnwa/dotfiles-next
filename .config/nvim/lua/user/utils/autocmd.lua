@@ -38,4 +38,11 @@ function M.filetype(matches, listener)
   })
 end
 
+function M.trigger(eventName, matches)
+  vim.api.nvim_exec_autocmds(eventName, {
+    group = USER_AUGROUP,
+    pattern = matches,
+  })
+end
+
 return M
