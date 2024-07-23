@@ -338,4 +338,10 @@ return {
     --dependencies = { { "echasnovski/mini.icons", opts = {} } },
     dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
   },
+  {
+    "lukas-reineke/virt-column.nvim",
+    config = function()
+      require("virt-column").setup({ char = "▕" })
+    end,
+  },
 }
