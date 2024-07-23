@@ -9,23 +9,7 @@ return {
       'nvim-treesitter/nvim-treesitter-textobjects',
       'andymass/vim-matchup',
     },
-    build = ":TSUpdate",
-    event = { 'BufReadPre', 'BufNewFile' },
-    cmd = {
-      "TSBufDisable",
-      "TSBufEnable",
-      "TSBufToggle",
-      "TSDisable",
-      "TSEnable",
-      "TSToggle",
-      "TSInstall",
-      "TSInstallInfo",
-      "TSInstallSync",
-      "TSModuleInfo",
-      "TSUninstall",
-      "TSUpdate",
-      "TSUpdateSync",
-    },
+    build = ":TSUpdateSync",
     opts_extend = { 'ensure_installed' },
     opts = {
       auto_install = false,
@@ -142,14 +126,12 @@ return {
   },
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
-    event = { 'BufReadPre', 'BufNewFile' },
   },
   {
     'nvim-treesitter/nvim-treesitter-context',
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
     },
-    event = { 'BufReadPre', 'BufNewFile' },
     opts = {
       enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
       max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
@@ -170,7 +152,6 @@ return {
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
     },
-    event = { 'BufReadPre', 'BufNewFile' },
     opts =  {
       opts = {
         enable_close = true, -- Auto close tags
@@ -186,7 +167,6 @@ return {
       'nvim-treesitter/nvim-treesitter',
     },
     enabled = fn.has('nvim-0.10.0') == 1 ,
-    event = { 'BufReadPre', 'BufNewFile' },
     opts = {},
   },
 }
