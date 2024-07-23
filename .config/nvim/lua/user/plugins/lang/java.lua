@@ -75,7 +75,6 @@ return {
                 }
               })
             end)
-            return true
           end,
         },
       },
