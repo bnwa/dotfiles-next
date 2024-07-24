@@ -172,4 +172,11 @@ return {
     function() vim.cmd 'Git' end,
     desc = "Show Fugitive git status pane"
   },
+  {
+    '<leader>j',
+    function()
+      local ok, treesj = pcall(require, 'treesj')
+      if ok then treesj.toggle() end
+    end,
+  },
 }

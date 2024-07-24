@@ -149,4 +149,13 @@ return {
     enabled = fn.has('nvim-0.10.0') == 1 ,
     opts = {},
   },
+  {
+    'Wansmer/treesj',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter'
+    }, -- if you install parsers with `nvim-treesitter`
+    opts = {
+      use_default_keymaps = false,
+    },
+  },
 }
