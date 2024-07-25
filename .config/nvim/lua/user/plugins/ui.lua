@@ -183,6 +183,7 @@ return {
   {
     'hrsh7th/nvim-cmp',
     dependencies = {
+      'rcarriga/cmp-dap',
       'onsails/lspkind.nvim',
       'garymjr/nvim-snippets' ,
       'hrsh7th/cmp-nvim-lsp' ,
@@ -249,7 +250,12 @@ return {
       }
     end,
     config = function(_, opts)
-      require('cmp').setup(opts)
+      local cmp = require 'cmp'
+      cmp.setup.filetype({ "dap-repl", "dapui_watches" }, {
+        sources = { { name = "dap" } },
+      })
+      cmp.setup(opts)
+
     end,
   },
   {
