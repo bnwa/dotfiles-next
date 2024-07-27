@@ -31,7 +31,6 @@ return {
         dapui.close()
       end
 
-      vim.print(handlers)
       mason.setup {
         automatic_installation = false,
         ensure_installed = vim.tbl_keys(handlers),

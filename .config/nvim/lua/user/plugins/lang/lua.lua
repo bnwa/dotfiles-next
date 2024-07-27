@@ -6,7 +6,9 @@ local ft = {'lua'}
 return {
   {
     'neovim/nvim-lspconfig',
-    ft = ft,
+    dependencies = {
+      'folke/lazydev.nvim',
+    },
     opts = {
       servers = {
         lua_ls = {
@@ -22,17 +24,15 @@ return {
       'Bilal2453/luvit-meta',
     },
     opts = {
+      enabled = true,
       integrations = {
         lspconfig = true,
         cmp = true,
         coq = false,
       },
-      library = list.concat({
-        { path = 'luvit-meta/library', word = { 'vim%.uv' } }
-      },
-      list.map(vim.api.nvim_get_runtime_file("", true), function(path)
-        return { path = path }
-      end)),
+      library = list.concat(
+        vim.api.nvim_get_runtime_file("", true),
+        { path = 'luvit-meta/library', word = { 'vim%.uv' } }),
       runtime = vim.env.VIMRUNTIME,
     },
   },
@@ -43,10 +43,8 @@ return {
       table.insert(opts.sources, {
         name = 'lazydev',
         group_index = 0,
-        entry_filter = function()
-          return vim.bo.filetype == 'lua'
-        end
       })
+      return opts
     end,
   },
 }
