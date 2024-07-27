@@ -13,7 +13,6 @@ return {
     dependencies = {
       'mfussenegger/nvim-jdtls',
     },
-    ft = ft,
     opts = {
       servers = {
         jdtls = {

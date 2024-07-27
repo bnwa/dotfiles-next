@@ -81,10 +81,6 @@ return {
       local function setup(server_name)
         local lsp = require 'lspconfig'
         local config = servers[server_name]
-        local filetypes = config.filetypes
-        if not list.contains(filetypes, vim.bo.filetype) then
-          return
-        end
 
         local local_on_attach = config.on_attach
         local server_config = vim.tbl_extend('force', {},
@@ -110,8 +106,8 @@ return {
       mason_lsp.setup {
         automatic_installation = false,
         ensure_installed = ensure_installed,
-        handlers = { setup },
       }
+      mason_lsp.setup_handlers { setup }
     end,
   },
   {

@@ -4,7 +4,6 @@ local ft = {
   'javascript',
   'javascriptreact',
   'typescript',
-  'typescriptscript',
   'typescriptreact',
 }
 
@@ -14,7 +13,6 @@ return {
     dependencies = {
       'yioneko/nvim-vtsls',
     },
-    ft = ft,
     opts = {
       servers = {
         vtsls = {
