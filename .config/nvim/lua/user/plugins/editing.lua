@@ -40,7 +40,7 @@ return {
     opts = {},
   },
   {
-    'gprod/yanky.nvim',
+    'gbprod/yanky.nvim',
     dependencies = {
       'kkharji/sqlite.lua',
       'chrisgrieser/cmp_yanky',
