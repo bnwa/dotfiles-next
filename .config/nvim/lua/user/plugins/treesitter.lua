@@ -55,7 +55,7 @@ return {
       highlight = {
         additional_vim_regex_highlighting = false,
         disable = function(lang, buf)
-          local max_kbs = g.big_file.size
+          local max_kbs = g.bigfile.size
           local buf_name = vim.api.nvim_buf_get_name(buf)
           local ok, stats = pcall(vim.uv.fs_stat, buf_name)
           if ok and stats and stats.size > max_kbs then

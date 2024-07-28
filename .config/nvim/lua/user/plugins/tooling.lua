@@ -1,5 +1,4 @@
 local autocmd = require 'user.utils.autocmd'
-local list = require 'user.utils.list'
 
 local severity = vim.diagnostic.severity
 
