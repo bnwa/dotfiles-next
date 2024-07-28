@@ -13,6 +13,7 @@ return {
   {
     'neovim/nvim-lspconfig',
     dependencies = {
+      'nvim-java/nvim-java',
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
     },
@@ -112,6 +113,7 @@ return {
   {
     'williamboman/mason-lspconfig.nvim',
     dependencies = {
+      'nvim-java/nvim-java',
       'williamboman/mason.nvim',
       'Zeioth/mason-extra-cmds',
     },
@@ -128,10 +130,6 @@ return {
     'williamboman/mason.nvim',
     build = ":MasonUpdate",
     opt = {
-      registries = {
-        "github:nvim-java/mason-registry",
-        "github:mason-org/mason-registry",
-      },
       ui = {
         border = 'rounded',
         icons = {

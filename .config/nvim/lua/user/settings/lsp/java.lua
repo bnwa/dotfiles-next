@@ -40,11 +40,37 @@ return {
     allow_incremental_sync = true,
   },
   java = {
+    autobuild = { enabled = true }, -- default: true
     configuration = {
+      maven = {
+--        globalSettings = "", -- default: nil, settings.xml location
+--        lifecycleMappings = "", -- default: nil, mappings xml location
+--        userSettings = "", -- default: nil, settings.xml location
+      },
       runtimes = get_jdk_paths(),
+--      updateBuildConfiguration = "",
+    },
+    codeGeneration = {
+--      addFinalForNewDeclaration = '',
+      generateComments = false, -- default: false,
+--        insertionLocation = '',
+      hashCodeEquals = {
+        useInstanceOf = false, -- default: false
+        useJava7Objects = false, -- default: false
+      },
+      toString = {
+--        codeStyle = "STRING_CONCATENATION", -- default: 'STRING_CONCATENATION'
+--        limitElements = 0, -- default: 0
+        listArrayContents = true, -- default: true
+        skipNullValues = false, -- default: false
+--        template = "",
+      },
+      useBlocks = false, -- default: false
     },
     completion = {
       chain = { enabled = true },
+      collapseCompletionItems = false, -- default: false
+      enabled = true, -- default: true
       favoriteStaticMembers = {
         "org.hamcrest.MatcherAssert.assertThat",
         "org.hamcrest.Matchers.*",
@@ -55,22 +81,111 @@ return {
         "org.junit.jupiter.api.DynamicTest.*",
         "org.mockito.Mockito.*",
       },
+--      filteredTypes = {},
+      -- when true, guessing in-scope vals to pass; false, insert param names
+      guessMethodArguments = true,
+--      importOrder = {}, -- default: { 'java', 'javax', 'org', 'com' }
+      lazyResolveTextEdit = { enabled = false }, -- default: false
+      -- 'FIRSTLETTER' | 'OFF'
+      matchCase = 'OFF', -- default: 'OFF'
+      maxResults = 50, -- default: 50
+      overwrite = true, -- default: true
+      postfix = { enabled = true }, -- default: true
     },
-    implementationsCodeLens = { enabled = true },
+    foldingRange = { enabled = true }, -- default: true
+    eclipse = {
+      downloadSources = false, --default: false
+    },
+    edit = {
+      smartSemicolonDetection = { enabled = true }, -- default: false
+      validateAllOpenBuffersOnChanges = true, -- default: true
+    },
+    errors = {
+--      incompleteClassPath = { severity = "" }, -- default: 'warning'
+    },
+    executeCommand = { enabled = true }, -- default: true
+    format = {
+      comments = true, -- default: true
+      enabled = true, -- default: true
+      insertSpaces = true, -- default: true
+      onType = { enabled = false }, -- default: false
+      tabSize = 4, -- default: 4
+    },
+    implementationsCodeLens = { enabled = true }, -- default: false
+    import = {
+      -- default: [ '**/node_modules/**, **/.metadata/**, **/archetype-resources/**, **/META-INF/maven/** ]
+--      exclusions = {},
+      gradle = {
+        annotationProcessing = { enabled = false },
+--        arguments = {},
+        enabled = false, --default: false
+--        home = "",
+--        java = { home = "" },
+--        jvmArguments = {},
+        offline = { enabled = false }, -- default: false
+--        user = { home = "" }
+        wrapper = { enabled = false }, -- default: true
+--        version = "",
+      },
+    },
     inlayHints = {
-      parameterNames = { enabled = "all" },
+      -- 'none' | 'literals' | 'all'
+      parameterNames = { enabled = "all" }, -- default: 'all'
     },
+    maxConcurrentBuilds = 1, -- default: 1
     maven = {
-      downloadSources = true,
-      updateSnapshots = true,
+      downloadSources = true, -- default: false
+      updateSnapshots = true, -- default: false
+    },
+    -- How member elements are ordered by code actions
+    memberSortOrder = {
+      'T', -- Types
+      'F', -- Fields
+      'SF', -- Static Fields
+      'C', -- Constructors
+      'I', -- Initializers
+      'SI', -- Static Initializers
+      'SM', -- Static Methods
+      'M', -- Methods
+    },
+    project = {
+      encoding = 'UTF-8',
+--      outputPath = "", -- default: ""
+--      referencedLibraries = {}, -- default: [ 'lib/**' ]
+--      resourcesFilters = {}, -- default: [ 'node_modules', '.git']
+--      sourcePaths = {}, -- default: nil
+    },
+    refactoring = {
+      extract = {
+        interface = {
+          replace = false, -- default: false
+        }
+      }
     },
     references = {
-      includeDecompiledSources = true,
+      includeAccessors = true, -- default: true
+      includeDecompiledSources = true, -- default: true
     },
-    referencesCodeLens = { enabled = true },
+    referencesCodeLens = { enabled = true }, -- default: true
+    rename = { enabled = true }, -- default: true
+    saveActions = {
+      organizeImports = true, -- default: false
+    },
+    selectionRange = { enabled = true }, -- default: true
     signatureHelp = {
-      description = { enabled = true },
-      enabled = true
-    }
+      description = { enabled = true }, -- default: false
+      enabled = true, -- default: true
+    },
+    sources = {
+      organizeImports = {
+        -- number of imports added before a star-import declaration is used.
+        starThreshold = 99, -- default: 99
+        staticStarThreshold = 10, -- default: 99
+      }
+    },
+    symbols = {
+      includeSourceMethodDeclarations = true -- default: false
+    },
+    telemetry = { enabled = false },
   },
 }

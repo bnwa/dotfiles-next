@@ -9,74 +9,40 @@ local ft = {'java'}
 
 return {
   {
-    'neovim/nvim-lspconfig',
+    'nvim-java/nvim-java',
     dependencies = {
-      'mfussenegger/nvim-jdtls',
+      'williamboman/mason.nvim',
     },
+    config = function()
+    end,
+  },
+  {
+    'williamboman/mason.nvim',
+    opts = {
+      registries = {
+        "github:nvim-java/mason-registry",
+        "github:mason-org/mason-registry",
+      },
+    },
+  },
+  {
+    'neovim/nvim-lspconfig',
     opts = {
       servers = {
         jdtls = {
+          filetypes = ft,
           on_attach = function(client, _)
             client.notify('workspace/didChangeConfiguration', {
               settings = settings
             })
           end,
-          filetypes = ft,
           settings = settings,
           setup = function(config)
-            local jdtls = require 'jdtls'
-            local mason_root = fn.stdpath('data') .. '/mason'
-            local mason_jdtls_workspaces_root = mason_root .. '/share/jdtls/workspaces'
-            local mason_jdtls_plugins_root = mason_root .. '/packages/jdtls/plugins'
-            local mason_jdtls_config_root = mason_root .. '/packages/jdtls/config_mac'
-            local launcher_jars = fn.glob(mason_jdtls_plugins_root .. '/org.eclipse.equinox.launcher_*.jar')
-            local extended_capabilities = vim.tbl_deep_extend('force',
-            vim.deepcopy(jdtls.extendedClientCapabilities),
-            { resolveAdditionalTextEditsSupport = true })
-
-            if not path.is_directory(mason_jdtls_workspaces_root) then
-              fn.mkdir(mason_jdtls_workspaces_root, 'p')
-            end
-
-            autocmd.filetype(config.filetypes, function()
-              local project_root = fs.root(0, { '.git', "mvnw", "gradlew"  })
-              local workspace_root = mason_jdtls_workspaces_root .. '/' .. fs.basename(project_root)
-              jdtls.start_or_attach({
-                capabilities = config.capabilities,
-                flags = {
-                  allow_incremental_sync = true,
-                },
-                init_options = {
-                  extended_capabilities = extended_capabilities,
-                },
-                root_dir = project_root,
-                settings = config.settings,
-                on_attach = function(client, _)
-                  client.notify('workspace/didChangeConfiguration', {
-                    settings = config.settings
-                  })
-                end,
-                cmd = {
-                  'java',
-                  '-Declipse.application=org.eclipse.jdt.ls.core.id1',
-                  '-Dosgi.bundles.defaultStartLevel=4',
-                  '-Declipse.product=org.eclipse.jdt.ls.core.product',
-                  '-Dlog.protocol=true',
-                  '-Dlog.level=ALL',
-                  '-Xms1g', -- Set initial Java process heap size
-                  '-Xmx2g', -- Set max Java process heap size
-                  '--add-modules=ALL-SYSTEM',
-                  '--add-opens', 'java.base/java.util=ALL-UNNAMED',
-                  '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-                  '-jar', launcher_jars,
-                  '-configuration', mason_jdtls_config_root,
-                  '-data', workspace_root,
-                }
-              })
-            end)
+            require('java').setup {}
+            require('lspconfig').jdtls.setup(config)
           end,
         },
       },
-    }
+    },
   },
 }
