@@ -12,20 +12,6 @@ if not vim.g.neovide then
   end)
 end
 
-autocmd.event("Set indent to 4 spaces for specific filetypes",
-  { 'FileType' },
-  {
-    '*.html',
-    '*.java',
-    '*.markdown',
-    '*.sql',
-    '*.xml',
-  },
-  function()
-    vim.bo.shiftwidth = 4
-    vim.bo.softtabstop = 4
-  end)
-
 autocmd.event("Hightlight matches when searching",
   { 'CmdLineEnter' },
   { [[/,\?]] },
