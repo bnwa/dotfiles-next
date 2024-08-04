@@ -129,8 +129,9 @@ return {
       },
     },
     inlayHints = {
+      -- Disabling until JDTLS bug in neovim is fixed
       -- 'none' | 'literals' | 'all'
-      parameterNames = { enabled = "all" }, -- default: 'all'
+      parameterNames = { enabled = 'none' }, -- default: 'all'
     },
     maxConcurrentBuilds = 1, -- default: 1
     maven = {
