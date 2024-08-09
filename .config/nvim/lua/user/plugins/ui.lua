@@ -192,6 +192,7 @@ return {
       'hrsh7th/cmp-nvim-lsp-signature-help' ,
       'ray-x/cmp-treesitter' ,
       'dmitmel/cmp-cmdline-history' ,
+      'zbirenbaum/copilot-cmp',
       { 'mtoohey31/cmp-fish', ft = "fish" },
       { url = 'https://codeberg.org/FelipeLema/cmp-async-path' },
     },
@@ -207,6 +208,7 @@ return {
             end,
             mode = 'symbol',
             show_labelDetails = true,
+            symbol_map = { Copilot = '' },
           })
         },
         mapping = cmp.mapping.preset.insert {
@@ -232,7 +234,7 @@ return {
           { name = "nvim_lsp_signature_help" },
           { name = "nvim_lsp" },
           { name = 'cmp_yanky'},
-          { name = "snippets" },
+          { name = 'copilot' },
         }, {
           { name = "treesitter" },
         }, {
@@ -349,5 +351,14 @@ return {
     config = function()
       require("virt-column").setup({ char = "▕" })
     end,
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    opts = {
+      fix_pairs = true,
+    },
+    config = function (_, opts)
+      require("copilot_cmp").setup(opts)
+    end
   },
 }

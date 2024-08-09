@@ -1,3 +1,8 @@
+local path = require 'user.utils.path'
+
+local fnm_node = '/Users/barberousse.benoit/.local/state/fnm_multishells/60178_1722749776756/bin/node'
+local brew_node = '/opt/Homebrew/bin/node'
+
 return {
   {
     'windwp/nvim-autopairs',
@@ -28,15 +33,6 @@ return {
   },
   {
     'arnamak/stay-centered.nvim',
-    opts = {},
-  },
-  {
-    "OXY2DEV/markview.nvim",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons"
-    },
-    ft = "markdown",
     opts = {},
   },
   {
@@ -95,4 +91,13 @@ return {
       { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
     },
   },
+  {
+    'zbirenbaum/copilot.lua',
+    event = 'InsertEnter',
+    opts = {
+      copilot_node_command = path.can_exec(fnm_node) and fnm_node or brew_node,
+      panel = { enabled = false },
+      suggestion = { enabled = false },
+    }
+  }
 }
