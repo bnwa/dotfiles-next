@@ -27,9 +27,9 @@ end
 
 local function modal_color_scheme(mode)
   if mode:find 'Dark' then
-    return 'melange_dark'
+    return 'Gruvbox dark, soft (base16)'
   else
-    return 'melange_light'
+    return 'Gruvbox light, soft (base16)'
   end
 end
 
