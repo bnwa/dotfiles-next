@@ -3,7 +3,7 @@ local opt = vim.opt
 local g = vim.g
 
 g.bigfile = { lines = 10000, size = 100 * 1024 }
-g.colorscheme = 'gruvbox'
+g.colorscheme = 'mellifluous'
 g.min_night_time = { 19, 30 }
 g.max_night_time = { 7, 0 }
 g.mapleader = ' '
@@ -72,7 +72,6 @@ opt.winminwidth = 10 -- Mininum window width
 opt.wrap = false -- Whether to wrap lines at window boundary
 
 if vim.g.neovide then
-  vim.g.neovide_theme = 'auto' -- Neovide will manage light/dark mode
   vim.g.neovide_remember_window_size = true
   cmd.cd '~'
 end

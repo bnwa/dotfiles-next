@@ -95,6 +95,7 @@ return colorschemes({
   },
   {
     'ramojus/mellifluous.nvim',
+    version = '0.x',
     dependencies = { 'rktjmp/lush.nvim' },
     opts = {
       dim_inactive = false,
@@ -251,4 +252,9 @@ return colorschemes({
     'tiagovla/tokyodark.nvim',
     opts = {},
   },
+  {
+    'echasnovski/mini.colors',
+    version = false,
+    opts = {},
+  }
 })

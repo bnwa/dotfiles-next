@@ -1,16 +1,6 @@
 local autocmd = require 'user.utils.autocmd'
-local color = require 'user.utils.color'
 
 local opt = vim.opt
-
-if not vim.g.neovide then
-  autocmd.event("Toggle background when focus changes",
-  { 'FocusGained', 'FocusLost' },
-  { '*' },
-  function()
-    color.light_or_dark_mode()
-  end)
-end
 
 autocmd.event("Hightlight matches when searching",
   { 'CmdLineEnter' },
