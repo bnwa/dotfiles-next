@@ -12,6 +12,8 @@ local has_fd = path.can_exec 'fd'
 local has_fzf = path.can_exec 'fzf'
 local has_make = path.can_exec 'make'
 local has_cmake = path.can_exec 'cmake'
+local has_brew_sqlite = path.is_directory '/opt/homebrew/opt/sqlite/lib'
+local has_brew_node = path.can_exec '/opt/homebrew/bin/node'
 
 local should_update_brew = platform.os.mac and
   not has_rg or
@@ -52,6 +54,8 @@ if should_update_brew then
   if not has_fzf then list.append(missing, 'fzf') end
   if not has_make then list.append(missing, 'make') end
   if not has_cmake then list.append(missing, 'cmake') end
+  if not has_brew_sqlite then list.append(missing, 'sqlite') end
+  if not has_brew_node then list.append(missing, 'node') end
 
   local brew_install = platform.exec(list.concat({ 'brew', 'install' }, missing))
   if not brew_install then

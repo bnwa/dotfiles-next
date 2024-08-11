@@ -1,6 +1,5 @@
 local path = require 'user.utils.path'
 
-local fnm_node = '/Users/barberousse.benoit/.local/state/fnm_multishells/60178_1722749776756/bin/node'
 local brew_node = '/opt/Homebrew/bin/node'
 
 return {
@@ -93,9 +92,10 @@ return {
   },
   {
     'zbirenbaum/copilot.lua',
+    enabled = function() return path.can_exec(brew_node) end,
     event = 'InsertEnter',
     opts = {
-      copilot_node_command = path.can_exec(fnm_node) and fnm_node or brew_node,
+      copilot_node_command = brew_node,
       panel = { enabled = false },
       suggestion = { enabled = false },
     }
