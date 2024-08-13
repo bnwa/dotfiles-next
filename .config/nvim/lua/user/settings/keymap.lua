@@ -179,4 +179,10 @@ return {
       if ok then treesj.toggle() end
     end,
   },
+  {
+    '<leader>F',
+    function()
+      require('oil').open_float()
+    end
+  },
 }
