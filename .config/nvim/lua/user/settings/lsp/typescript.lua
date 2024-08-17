@@ -28,7 +28,7 @@ local shared = {
     semicolons = 'remove',
   },
   inlayHints = {
-    enabled = true,
+    enabled = false,
     includeInlayEnumMemberValueHints = true,
     includeInlayFunctionLikeReturnTypeHints = true,
     includeInlayFunctionParameterTypeHints = true,
