@@ -65,6 +65,6 @@ end
 
 vim.opt.rtp:prepend(LAZY_PATH)
 require('lazy').setup {
-  { import = 'user.plugins.lang' },
   { import = 'user.plugins' },
+  { import = 'user.plugins.lang' },
 }
