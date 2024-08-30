@@ -1,5 +1,7 @@
 local list = require 'user.utils.list'
 
+---@param lazy_specs  LazyPluginSpec[]
+---@return LazyPluginSpec[]
 local function colorschemes(lazy_specs)
   return list.map(lazy_specs, function(spec)
     return vim.tbl_extend('force', spec, {

@@ -37,6 +37,7 @@ if not vim.uv.fs_stat(LAZY_PATH) then
 end
 
 if should_update_brew then
+  ---@type string[]
   local missing = {}
   if not path.can_exec 'brew' then
     return notify "Missing binary plugin deps but Homebrew not installed, " ..  "certain behavior may be missing"
