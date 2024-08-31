@@ -9,21 +9,6 @@ g.max_night_time = { 7, 0 }
 g.mapleader = ' '
 g.maplocalleader = ','
 
-vim.filetype.add({
-  pattern = {
-    [".*"] = {
-      function(path, buf)
-        return vim.bo[buf]
-            and vim.bo[buf].filetype ~= "bigfile"
-            and path
-            and vim.fn.getfsize(path) > vim.g.bigfile.size
-            and "bigfile"
-          or nil
-      end,
-    },
-  },
-})
-
 opt.autoindent = true -- Copy current line indent when <CR>/'o'/'O' inserted
 opt.copyindent = true -- copy extant indent structure when putting new line
 opt.completeopt = { 'menu', 'menuone', 'noselect' }
