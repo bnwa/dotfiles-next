@@ -48,7 +48,7 @@ opt.shortmess:append 'c' -- Disable search navigation messages
 opt.shortmess:append 's' -- Disable search end messages
 opt.smartcase = true -- Ignore 'ignorecase' when using upper case chars
 opt.smoothscroll = true -- Enable smooth scrolling
-opt.softtabstop = 2 -- Value of <TAB> in spaces
+opt.tabstop = 2 -- Value of <TAB> in spaces
 opt.termguicolors = true -- Enable True Color support
 opt.undofile = true -- Enable persistent per file undo history
 opt.updatetime = 4000 -- interval in milliseconds of inactivity to write swap
