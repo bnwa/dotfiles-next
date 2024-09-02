@@ -29,33 +29,33 @@ local shared = {
   },
   inlayHints = {
     enabled = false,
-    includeInlayEnumMemberValueHints = true,
-    includeInlayFunctionLikeReturnTypeHints = true,
-    includeInlayFunctionParameterTypeHints = true,
-    includeInlayParameterNameHints = 'all',
-    includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-    includeInlayVariableTypeHints = true,
-    includeInlayPropertyDeclarationTypeHints = true,
-    enumMemberValues = {
-      enabled = true,
-    },
-    functionLikeReturnTypes = {
-      enabled = true,
-    },
-    parameterNames = {
-      enabled = "all",
-      suppressWhenArgumentMatchesName = true,
-    },
-    parameterTypes = {
-      enabled = true,
-    },
-    propertyDeclarationTypes = {
-      enabled = true,
-    },
-    variableTypes = {
-      enabled = true,
-      suppressWhenTypeMatchesName = true,
-    },
+    -- includeInlayEnumMemberValueHints = true,
+    -- includeInlayFunctionLikeReturnTypeHints = true,
+    -- includeInlayFunctionParameterTypeHints = true,
+    -- includeInlayParameterNameHints = 'all',
+    -- includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+    -- includeInlayVariableTypeHints = true,
+    -- includeInlayPropertyDeclarationTypeHints = true,
+    -- enumMemberValues = {
+    --   enabled = true,
+    -- },
+    -- functionLikeReturnTypes = {
+    --   enabled = true,
+    -- },
+    -- parameterNames = {
+    --   enabled = "all",
+    --   suppressWhenArgumentMatchesName = true,
+    -- },
+    -- parameterTypes = {
+    --   enabled = true,
+    -- },
+    -- propertyDeclarationTypes = {
+    --   enabled = true,
+    -- },
+    -- variableTypes = {
+    --   enabled = true,
+    --   suppressWhenTypeMatchesName = true,
+    -- },
   },
   implementationsCodeLens = {
     enabled = true,
