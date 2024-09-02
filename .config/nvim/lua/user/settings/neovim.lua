@@ -3,7 +3,7 @@ local opt = vim.opt
 local g = vim.g
 
 g.bigfile = { lines = 10000, size = 100 * 1024 }
-g.colorscheme = 'mellifluous'
+g.colorscheme = 'melange'
 g.min_night_time = { 19, 30 }
 g.max_night_time = { 7, 0 }
 g.mapleader = ' '
