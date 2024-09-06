@@ -15,28 +15,44 @@ local os = {
   unix = fn.has 'unix' == 1,
 }
 
+--- Execute platform command line
+--- @param cmd string[]
+--- @return boolean,string
+local function exec(cmd)
+  local done = vim.system(cmd):wait()
+  local success = done.code == 0
+  local stderr = done.stderr
+  local stdout = done.stdout
+  if not success then
+    err(("[io.cmd] - Encountered error executing %s").format(fn.join(cmd)))
+    if stderr == nil then
+      return false, ""
+    else
+      local err_msg, _ = str.from_term(stderr)
+      err(("%s").format(err_msg))
+      return false, err_msg
+    end
+  end
+  if stdout == nil then return true, "" end
+  local output, _ = str.from_term(stdout)
+  return true, output
+end
+
 return {
   arch = arch,
   os = os,
-  --- Execute platform command line
-  --- @param cmd string[]
-  exec = function(cmd)
-    local done = vim.system(cmd):wait()
-    local success = done.code == 0
-    local stderr = done.stderr
-    local stdout = done.stdout
-    if not success then
-      err(("[io.cmd] - Encountered error executing %s").format(fn.join(cmd)))
-      if stderr == nil then
-        return false, ""
-      else
-        local err_msg, _ = str.from_term(stderr)
-        err(("%s").format(err_msg))
-        return false, err_msg
-      end
+  ---@return boolean ok whether IO completed succesfully or not
+  ---@return boolean|string result when ok, boolean; err string otherwise
+  dark_mode = function()
+    if not os.mac then return false,"OS must be Darwin" end
+    local ok, mode = exec { 'defaults', 'read', '-g', 'AppleInterfaceStyle' }
+    if not ok then
+      return false,mode
+    elseif vim.trim(mode) == 'Dark' then
+      return true,true
+    else
+      return true,false
     end
-    if stdout == nil then return true, "" end
-    local output, _ = str.from_term(stdout)
-    return true, output
   end,
+  exec = exec,
 }

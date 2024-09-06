@@ -6,9 +6,7 @@ local colorscheme = vim.g.colorscheme
 
 if vim.g.neovide then
   vim.g.neovide_theme = 'auto' -- Neovide will manage light/dark mode
-end
-
-if not vim.g.neovide then
+else
   color.light_or_dark_mode()
   autocmd.event("Toggle background when focus changes",
     { 'FocusGained', 'FocusLost' },
