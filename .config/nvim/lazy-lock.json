@@ -34,6 +34,7 @@
   "mellifluous.nvim": { "branch": "main", "commit": "ba89cdf64f2682ada33fd128a1e8d217915363e0" },
   "mini.animate": { "branch": "main", "commit": "0a35f6db55cfac04a0999abe3465f7b692dc56a7" },
   "mini.colors": { "branch": "main", "commit": "9fa904dd46da5d84028478b9cc689be021732fab" },
+  "mini.icons": { "branch": "main", "commit": "2d89252993fec829b24720097a687412d10f6c85" },
   "noctis.nvim": { "branch": "main", "commit": "fbc84ec2f1a8049295bfe9eb50b3a4342036ad84" },
   "noice.nvim": { "branch": "main", "commit": "448bb9c524a7601035449210838e374a30153172" },
   "nui.nvim": { "branch": "main", "commit": "61574ce6e60c815b0a0c4b5655b8486ba58089a1" },
