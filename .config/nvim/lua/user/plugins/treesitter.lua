@@ -161,4 +161,9 @@ return {
       use_default_keymaps = false,
     },
   },
+  {
+      'ckolkey/ts-node-action',
+       dependencies = { 'nvim-treesitter' },
+       opts = {},
+  },
 }
