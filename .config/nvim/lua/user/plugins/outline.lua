@@ -1,8 +1,5 @@
 return {
   "hedyhli/outline.nvim",
-  dependencies = {
-    'onsails/lspkind.nvim',
-  },
   opts = {
     outline_window = {
       -- Where to open the split window: right/left
@@ -232,11 +229,14 @@ return {
       -- ---@param bufnr integer Code buffer
       -- ---@returns string|boolean The icon string to display, such as "f", or `false`
       -- ---                        to fallback to `icon_source`.
-      -- icon_fetcher = nil,
+      icon_fetcher = function(kind, _)
+        local icon = MiniIcons.get('lsp', kind)
+        return icon
+      end,
       -- 3rd party source for fetching icons. This is used as a fallback if
       -- icon_fetcher returned an empty string.
       -- Currently supported values: 'lspkind'
-      icon_source = 'lspkind',
+      -- icon_source = 'lspkind',
     --   -- The next fallback if both icon_fetcher and icon_source has failed, is
     --   -- the custom mapping of icons specified below. The icons table is also
     --   -- needed for specifying hl group.

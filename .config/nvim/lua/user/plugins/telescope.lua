@@ -7,7 +7,7 @@ return {
     'nvim-telescope/telescope.nvim',
     dependencies = {
       'nvim-lua/plenary.nvim',
-      'nvim-tree/nvim-web-devicons',
+      'echasnovski/mini.icons',
       'nvim-telescope/telescope-ui-select.nvim',
       'tsakirist/telescope-lazy.nvim',
       'debugloop/telescope-undo.nvim',

@@ -3,7 +3,7 @@ local keymap = require 'user.settings.keymap'
 return {
   "folke/which-key.nvim",
   dependencies = {
-    'nvim-tree/nvim-web-devicons',
+    'echasnovski/mini.icons',
   },
   opts = {
     preset = 'modern',

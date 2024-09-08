@@ -30,7 +30,7 @@ return {
     'hrsh7th/nvim-cmp',
     dependencies = {
       'rcarriga/cmp-dap',
-      'onsails/lspkind.nvim',
+      'echasnovski/mini.icons',
       'garymjr/nvim-snippets' ,
       'hrsh7th/cmp-nvim-lsp' ,
       'hrsh7th/cmp-buffer' ,
@@ -47,15 +47,11 @@ return {
       local defaults = require('cmp.config.default')()
       return {
         formatting = {
-          format = require('lspkind').cmp_format({
-            ellipsis_char = '…',
-            maxwidth = function()
-              return math.floor(0.45 * vim.o.columns)
-            end,
-            mode = 'symbol',
-            show_labelDetails = true,
-            symbol_map = { Copilot = '' },
-          })
+          format = function(entry, vim_item)
+            local icon = MiniIcons.get('lsp', vim_item.kind)
+            vim_item.kind = icon .. ' ' .. vim_item.kind
+            return vim_item
+          end
         },
         mapping = cmp.mapping.preset.insert {
           ['<C-n>'] = cmp.mapping.select_next_item(),
