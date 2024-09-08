@@ -1,5 +1,4 @@
 local str = require 'user.utils.str'
-local err = vim.api.nvim_err_writeln
 local fn = vim.fn
 
 local arch = {
@@ -24,12 +23,10 @@ local function exec(cmd)
   local stderr = done.stderr
   local stdout = done.stdout
   if not success then
-    err(("[io.cmd] - Encountered error executing %s").format(fn.join(cmd)))
     if stderr == nil then
       return false, ""
     else
       local err_msg, _ = str.from_term(stderr)
-      err(("%s").format(err_msg))
       return false, err_msg
     end
   end
