@@ -153,17 +153,18 @@ return {
     opts = {},
   },
   {
-    'Wansmer/treesj',
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter'
-    }, -- if you install parsers with `nvim-treesitter`
-    opts = {
-      use_default_keymaps = false,
-    },
-  },
-  {
-      'ckolkey/ts-node-action',
-       dependencies = { 'nvim-treesitter' },
-       opts = {},
+    'ckolkey/ts-node-action',
+    dependencies = { 'nvim-treesitter' },
+    opts = function()
+      local actions = require 'ts-node-action.actions'
+      return {
+        lua = {
+          ['table constructor'] = actions.toggle_multiline(),
+        },
+        typescript = {
+          ['array'] = actions.toggle_multiline(),
+        }
+      }
+    end,
   },
 }

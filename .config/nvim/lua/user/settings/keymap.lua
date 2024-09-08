@@ -173,13 +173,6 @@ return {
     desc = "Show Fugitive git status pane"
   },
   {
-    '<leader>j',
-    function()
-      local ok, treesj = pcall(require, 'treesj')
-      if ok then treesj.toggle() end
-    end,
-  },
-  {
     '<leader>F',
     function()
       require('oil').open_float()
