@@ -45,6 +45,12 @@ return {
     opts = function()
       local cmp = require 'cmp'
       local defaults = require('cmp.config.default')()
+      --https://github.com/zbirenbaum/copilot-cmp
+      local has_words_before = function()
+        if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_text(0, line-1, 0, line-1, col, {})[1]:match("^%s*$") == nil
+      end
       return {
         formatting = {
           format = function(entry, vim_item)
@@ -54,8 +60,8 @@ return {
           end
         },
         mapping = cmp.mapping.preset.insert {
-          ['<C-n>'] = cmp.mapping.select_next_item(),
-          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+          ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['C-o>'] = cmp.mapping.open_docs(),
@@ -64,6 +70,13 @@ return {
             cmp.abort()
             fallback()
           end,
+          ["<Tab>"] = vim.schedule_wrap(function(fallback)
+            if cmp.visible() and has_words_before() then
+              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+            else
+              fallback()
+            end
+          end)
         },
         preselect = cmp.PreselectMode.None,
         snippet = {
@@ -73,13 +86,12 @@ return {
         },
         sorting = defaults.sorting,
         sources = cmp.config.sources({
+          { name = 'copilot' },
           { name = "nvim_lsp_signature_help" },
           { name = "nvim_lsp" },
           { name = 'cmp_yanky'},
-          { name = 'copilot' },
-        }, {
           { name = "treesitter" },
-        }, {
+        },{
           { name = "buffer" },
         }),
         view =  {
