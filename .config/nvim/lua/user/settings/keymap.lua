@@ -1,6 +1,3 @@
-local lsp = require 'user.utils.lsp'
-local str = require 'user.utils.str'
-
 return {
   {
     'p',
