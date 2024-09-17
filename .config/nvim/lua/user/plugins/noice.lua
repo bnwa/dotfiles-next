@@ -16,9 +16,6 @@ return {
         },
       },
     },
-    messages = {
-      view = "messages",
-    },
     override = {
       -- override the default lsp markdown formatter with Noice
       ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
@@ -34,37 +31,21 @@ return {
       command_palette = true,
     },
     routes = {
-      -- JDTLS emits progress as message
+      -- Commands that outputs lists that require inspection should
+      -- output to 'messages' view rather than ephermeral 'mini' view
       {
         filter = {
-          event = 'msg_show',
-          find = 'Language Server',
+          any = {
+            { event = 'noice', kind = 'stats' },
+            { event = 'msg_show', cmdline = 'ls' },
+            { event = 'msg_show', cmdline = 'map' },
+            { event = 'msg_show', cmdline = 'marks' },
+            { event = 'msg_show', cmdline = 'command' },
+            { event = 'msg_show', cmdline = 'function' },
+            { event = 'msg_show', cmdline = 'registers' },
+          },
         },
-        view = 'mini',
-      },
-      -- JDTLS announces server online as message
-      {
-        filter = {
-          event = 'msg_show',
-          find = '%s*Ready$',
-        },
-        view = 'mini',
-      },
-      -- JDTLS announces startup as message
-      {
-        filter = {
-          event = 'msg_show',
-          find = '^Init',
-        },
-        view = 'mini',
-      },
-      -- NoiceStats flashes as 'mini' view by default, ugh...
-      {
-        filter = {
-          event = 'noice',
-          kind = 'stats',
-        },
-        view = 'messages',
+        view = 'messages'
       },
     },
     views = {
