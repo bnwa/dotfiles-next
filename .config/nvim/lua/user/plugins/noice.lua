@@ -41,6 +41,7 @@ return {
             { event = 'msg_show', cmdline = 'map' },
             { event = 'msg_show', cmdline = 'marks' },
             { event = 'msg_show', cmdline = 'command' },
+            { event = 'msg_show', cmdline = 'autocmd' },
             { event = 'msg_show', cmdline = 'function' },
             { event = 'msg_show', cmdline = 'registers' },
           },

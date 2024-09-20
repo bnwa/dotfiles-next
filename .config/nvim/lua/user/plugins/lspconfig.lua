@@ -11,7 +11,7 @@ local SIGNS = {
 return {
   'neovim/nvim-lspconfig',
   dependencies = {
-    'nvim-java/nvim-java',
+    'hrsh7th/nvim-cmp',
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
   },
@@ -37,6 +37,7 @@ return {
   config = function(_, opts)
     local cmp_ok, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
     local mason_lsp = require 'mason-lspconfig'
+    local mason = require 'mason'
     local servers = opts.servers
     local ensure_installed = vim.tbl_keys(servers)
     local capabilities = vim.tbl_deep_extend('force', {}, opts.capabilities, cmp_ok and cmp_lsp.default_capabilities() or {})
@@ -61,6 +62,9 @@ return {
           vim.lsp.codelens.refresh()
         end)
       end
+      if client.server_capabilities['documentSymbolProvider'] then
+        require('nvim-navic').attach(client, buf)
+      end
       wk.add({
         '<Tab>',
         function()
@@ -81,7 +85,7 @@ return {
       local config = servers[server_name]
 
       local local_on_attach = config.on_attach
-      local server_config = vim.tbl_extend('force', {},
+      local server_config = vim.tbl_extend('force',
       {},
       config, {
         capabilities = capabilities,
@@ -101,6 +105,20 @@ return {
       end
     end
 
+    mason.setup {
+      registries = {
+        'github:nvim-java/mason-registry',
+        'github:mason-org/mason-registry',
+      },
+      ui = {
+        border = 'rounded',
+        icons = {
+          package_installed = "✓",
+          package_uninstalled = "✗",
+          package_pending = "⟳",
+        },
+      },
+    }
     mason_lsp.setup {
       automatic_installation = false,
       ensure_installed = ensure_installed,

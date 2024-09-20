@@ -2,11 +2,10 @@ return {
   {
     'williamboman/mason-lspconfig.nvim',
     dependencies = {
-      'nvim-java/nvim-java',
       'williamboman/mason.nvim',
       'Zeioth/mason-extra-cmds',
     },
-    config = function()end,
+    config = false,
   },
   {
     "Zeioth/mason-extra-cmds",
@@ -17,21 +16,6 @@ return {
   },
   {
     'williamboman/mason.nvim',
-    build = ":MasonUpdate",
-    opt = {
-      ui = {
-        border = 'rounded',
-        icons = {
-          package_installed = "✓",
-          package_uninstalled = "✗",
-          package_pending = "⟳",
-        },
-      },
-    },
-    config = function(_, opts)
-      local mason = require 'mason'
-      mason.setup(opts)
-    end,
   },
   {
       "jay-babu/mason-null-ls.nvim",

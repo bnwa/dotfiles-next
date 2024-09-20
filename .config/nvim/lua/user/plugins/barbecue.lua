@@ -7,6 +7,7 @@ return {
     'echasnovski/mini.icons' ,
   },
   opts = {
+    attach_navic = false,
     exclude_filetypes = {
       'netrw',
       'toggleterm',

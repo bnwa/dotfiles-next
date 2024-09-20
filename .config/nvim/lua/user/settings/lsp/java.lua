@@ -23,16 +23,15 @@ local function accum_jdk_paths(tbl, str)
 end
 
 local function get_jdk_paths()
-  local jdk_paths = {}
   local java_home_bin = '/usr/libexec/java_home'
   if path.can_exec(java_home_bin) then
     local output = fn.systemlist({ java_home_bin, '-V', })
     return fn.reduce(
       vim.list_slice(output, 1, #output - 1),
       accum_jdk_paths,
-      jdk_paths)
+      {})
   end
-  return jdk_paths
+  return {}
 end
 
 return {
