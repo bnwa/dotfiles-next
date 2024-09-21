@@ -16,13 +16,15 @@ return {
           jsonls = {
             filetypes = ft,
             settings = {
-              format = {
-                enable = true,
-              },
-              schemas = require('schemastore').json.schemas(),
-              validate = {
-                enable = true,
-              },
+              json = {
+                format = {
+                  enable = true,
+                },
+                schemas = require('schemastore').json.schemas(),
+                validate = {
+                  enable = true,
+                },
+              }
             },
           },
         },
