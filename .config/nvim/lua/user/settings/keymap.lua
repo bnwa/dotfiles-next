@@ -20,6 +20,12 @@ return {
     desc = "Put register before current line"
   },
   {
+    '<C-r>',
+    '<C-r><C-o>',
+    desc = "Insert from register remapped to CTRL-R CTRL-P",
+    mode = 'i',
+  },
+  {
     '<leader>?',
     function()
       require('which-key').show {}
