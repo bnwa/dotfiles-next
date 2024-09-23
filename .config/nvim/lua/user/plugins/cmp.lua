@@ -77,18 +77,25 @@ return {
             end
           end,
           ['C-o>'] = cmp.mapping.open_docs(),
-          ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+          ['<C-y>'] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
           ['<C-[>'] = function(fallback)
             cmp.abort()
             fallback()
           end,
           ["<Tab>"] = vim.schedule_wrap(function(fallback)
             if cmp.visible() and has_words_before() then
-              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+              cmp.select_next_item({ behavior = cmp.SelectBehavior.Replace })
             else
-              fallback()
+              return fallback()
             end
-          end)
+          end),
+          ["<CR>"] = function(fallback)
+            if cmp.visible() then
+              cmp.confirm({ select = false, behavior = cmp.ConfirmBehavior.Replace })
+            else
+              return fallback()
+            end
+          end
         },
         preselect = cmp.PreselectMode.None,
         snippet = {
@@ -119,11 +126,12 @@ return {
     end,
     config = function(_, opts)
       local cmp = require 'cmp'
+      local autopairs = require 'nvim-autopairs.completion.cmp'
       cmp.setup.filetype({ "dap-repl", "dapui_watches" }, {
         sources = { { name = "dap" } },
       })
       cmp.setup(opts)
-
+      cmp.event:on('confirm_done', autopairs.on_confirm_done())
     end,
   }
 }
