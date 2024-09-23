@@ -46,6 +46,7 @@ opt.shortmess:append 'C' -- Disable tag search messages
 opt.shortmess:append 'I' -- Disable intro message
 opt.shortmess:append 'c' -- Disable search navigation messages
 opt.shortmess:append 's' -- Disable search end messages
+opt.signcolumn = 'yes' -- Prevent win shifting when gutter signs appear
 opt.smartcase = true -- Ignore 'ignorecase' when using upper case chars
 opt.smoothscroll = true -- Enable smooth scrolling
 opt.tabstop = 2 -- Value of <TAB> in spaces
