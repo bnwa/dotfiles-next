@@ -47,10 +47,12 @@ return {
       local defaults = require('cmp.config.default')()
       --https://github.com/zbirenbaum/copilot-cmp
       local has_words_before = function()
-        if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+        if vim.api.nvim_get_option_value('buftype', { buf = 0 }) == "prompt" then return false end
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0 and vim.api.nvim_buf_get_text(0, line-1, 0, line-1, col, {})[1]:match("^%s*$") == nil
       end
+      local sorting = defaults.sorting
+      table.insert(sorting.comparators, 1, require('copilot_cmp.comparators').prioritize)
       return {
         formatting = {
           format = function(entry, vim_item)
@@ -84,7 +86,7 @@ return {
           end,
           ["<Tab>"] = vim.schedule_wrap(function(fallback)
             if cmp.visible() and has_words_before() then
-              cmp.select_next_item({ behavior = cmp.SelectBehavior.Replace })
+              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
             else
               return fallback()
             end
@@ -103,7 +105,7 @@ return {
             vim.snippet.expand(args.body)
           end,
         },
-        sorting = defaults.sorting,
+        sorting = sorting,
         sources = cmp.config.sources({
           { name = 'copilot' },
           { name = "nvim_lsp_signature_help" },
@@ -132,6 +134,12 @@ return {
       })
       cmp.setup(opts)
       cmp.event:on('confirm_done', autopairs.on_confirm_done())
+      cmp.event:on('menu_opened', function()
+        vim.b.copilot_suggestion_hidden = true
+      end)
+      cmp.event:on('menu_closed', function()
+        vim.b.copilot_suggestion_hidden = true
+      end)
     end,
   }
 }
