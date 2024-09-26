@@ -17,13 +17,9 @@ return {
             filetypes = ft,
             settings = {
               json = {
-                format = {
-                  enable = true,
-                },
+                format = { enable = true, },
                 schemas = require('schemastore').json.schemas(),
-                validate = {
-                  enable = true,
-                },
+                validate = { enable = true, },
               }
             },
           },
