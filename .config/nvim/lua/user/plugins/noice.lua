@@ -44,6 +44,7 @@ return {
             { event = 'msg_show', cmdline = 'autocmd' },
             { event = 'msg_show', cmdline = 'function' },
             { event = 'msg_show', cmdline = 'registers' },
+            { event = 'msg_show', cmdline = 'TSInstallInfo' },
           },
         },
         view = 'messages'
