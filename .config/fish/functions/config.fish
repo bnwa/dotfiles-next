@@ -20,6 +20,8 @@ function config
           nvim --cmd 'cd ~/.config/fish' ~/.config/fish/{*,**/*}.fish
         case zel
           nvim --cmd 'cd ~/.config/zellij' ~/.config/zellij/{*,**/*}.kdl
+        case tmux
+          nvim --cmd 'cd ~/.config/tmux' ~/.config/tmux/*
         case '*'
           echo "Unknown argument to 'e' encountered:" $target
           return 1
