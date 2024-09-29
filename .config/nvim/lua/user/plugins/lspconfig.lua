@@ -35,7 +35,9 @@ return {
     },
   },
   config = function(_, opts)
+    local lsp = require 'lspconfig'
     local cmp_ok, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
+    local lsp_configs = require 'lspconfig.configs'
     local mason_lsp = require 'mason-lspconfig'
     local mason = require 'mason'
     local servers = opts.servers
@@ -81,7 +83,6 @@ return {
     end
 
     local function setup(server_name)
-      local lsp = require 'lspconfig'
       local config = servers[server_name]
 
       local local_on_attach = config.on_attach
@@ -98,6 +99,7 @@ return {
         end,
       })
 
+      --vim.print("LSP!: " .. server_name)
       if type(config.setup) == 'function' then
         config.setup(server_config)
       else
@@ -105,10 +107,20 @@ return {
       end
     end
 
+    for name,config in pairs(servers) do
+      if config.default_config and not lsp_configs[name] then
+        lsp_configs[name] = {
+          name = name,
+          default_config = config.default_config
+        }
+      end
+    end
+
     mason.setup {
       registries = {
         'github:nvim-java/mason-registry',
         'github:mason-org/mason-registry',
+        'github:bnwa/mason-registry',
       },
       ui = {
         border = 'rounded',
@@ -119,10 +131,8 @@ return {
         },
       },
     }
-    mason_lsp.setup {
-      automatic_installation = false,
-      ensure_installed = ensure_installed,
-    }
-    mason_lsp.setup_handlers { setup }
+    for name, _ in pairs(servers) do
+      setup(name)
+    end
   end,
 }
