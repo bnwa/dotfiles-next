@@ -13,6 +13,7 @@ opt.autoindent = true -- Copy current line indent when <CR>/'o'/'O' inserted
 opt.copyindent = true -- copy extant indent structure when putting new line
 opt.completeopt = { 'menu', 'menuone', 'noselect' }
 opt.colorcolumn = "80"
+opt.clipboard:append 'unnamedplus' -- Use system clipboard register by default
 opt.cmdheight = 0 -- Hide command-line unless in use
 opt.confirm = true -- Confirm to save changes before exiting modified buffer
 opt.cursorline = true --Highlight the current line the cursor is on
