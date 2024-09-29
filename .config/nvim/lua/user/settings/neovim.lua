@@ -31,6 +31,7 @@ opt.foldlevelstart = 99 -- Init bufs with all folds open
 opt.foldmethod = 'expr'
 opt.gdefault = true
 opt.guicursor = { 'n:blinkon200', 'i-ci-ve:ver25' } -- Enable cursor blink
+opt.inccommand = 'split' -- Show previews of results for substitutions
 opt.ignorecase = true -- Ignore case in search, command-line completion
 opt.laststatus = 3 -- Enable single, global status line
 opt.listchars.extends = '»' -- Show this char when line excedes window right
