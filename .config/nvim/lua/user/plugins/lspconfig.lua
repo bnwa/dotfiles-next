@@ -99,7 +99,6 @@ return {
         end,
       })
 
-      --vim.print("LSP!: " .. server_name)
       if type(config.setup) == 'function' then
         config.setup(server_config)
       else

@@ -77,15 +77,11 @@ return {
       viewString = true, -- For example, hovering "\x48" will display "H".
     },
     runtime = {
-      path = {
-        '?.lua',
-        '?/init.lua',
-      },
       version = 'LuaJIT',
     },
     workspace = {
-      checkThirdParty = 'Apply',
-      library = vim.api.nvim_get_runtime_file("", true),
+      checkThirdParty = 'Disable',
+      library = {}
     },
   }
 }

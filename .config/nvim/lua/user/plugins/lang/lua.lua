@@ -14,6 +14,20 @@ return {
         lua_ls = {
           filetypes = ft,
           settings = settings,
+          setup = function(config)
+            local lsp = require 'lspconfig'
+            local lazydev = require 'lazydev'
+            local library = vim.api.nvim_get_runtime_file('lua', true)
+            local path = vim.split(package.path, ';')
+            table.insert(path, 1, 'lua/?/init.lua')
+            table.insert(path, 1, 'lua/?.lua')
+            local lsp_cfg = vim.tbl_extend('force', {},
+              config,
+              { settings = { Lua = { workspace = { library = library } } } },
+              { settings = { Lua = { runtime = { path = path } } } })
+            lazydev.setup {}
+            lsp['lua_ls'].setup(lsp_cfg)
+          end
         },
       },
     }
@@ -23,18 +37,7 @@ return {
     dependencies = {
       'Bilal2453/luvit-meta',
     },
-    opts = {
-      enabled = true,
-      integrations = {
-        lspconfig = true,
-        cmp = true,
-        coq = false,
-      },
-      library = list.concat(
-        vim.api.nvim_get_runtime_file("", true),
-        { path = 'luvit-meta/library', word = { 'vim%.uv' } }),
-      runtime = vim.env.VIMRUNTIME,
-    },
+    config = false,
   },
   {
     'hrsh7th/nvim-cmp',
