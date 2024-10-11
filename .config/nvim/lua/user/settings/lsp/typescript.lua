@@ -29,33 +29,33 @@ local shared = {
   },
   inlayHints = {
     enabled = false,
-    -- includeInlayEnumMemberValueHints = true,
-    -- includeInlayFunctionLikeReturnTypeHints = true,
-    -- includeInlayFunctionParameterTypeHints = true,
-    -- includeInlayParameterNameHints = 'all',
-    -- includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-    -- includeInlayVariableTypeHints = true,
-    -- includeInlayPropertyDeclarationTypeHints = true,
-    -- enumMemberValues = {
-    --   enabled = true,
-    -- },
-    -- functionLikeReturnTypes = {
-    --   enabled = true,
-    -- },
-    -- parameterNames = {
-    --   enabled = "all",
-    --   suppressWhenArgumentMatchesName = true,
-    -- },
-    -- parameterTypes = {
-    --   enabled = true,
-    -- },
-    -- propertyDeclarationTypes = {
-    --   enabled = true,
-    -- },
-    -- variableTypes = {
-    --   enabled = true,
-    --   suppressWhenTypeMatchesName = true,
-    -- },
+    includeInlayEnumMemberValueHints = true,
+    includeInlayFunctionLikeReturnTypeHints = true,
+    includeInlayFunctionParameterTypeHints = true,
+    includeInlayParameterNameHints = 'all',
+    includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+    includeInlayVariableTypeHints = true,
+    includeInlayPropertyDeclarationTypeHints = true,
+    enumMemberValues = {
+      enabled = true,
+    },
+    functionLikeReturnTypes = {
+      enabled = true,
+    },
+    parameterNames = {
+      enabled = "all",
+      suppressWhenArgumentMatchesName = true,
+    },
+    parameterTypes = {
+      enabled = true,
+    },
+    propertyDeclarationTypes = {
+      enabled = true,
+    },
+    variableTypes = {
+      enabled = true,
+      suppressWhenTypeMatchesName = true,
+    },
   },
   implementationsCodeLens = {
     enabled = true,
@@ -117,16 +117,14 @@ local vtsls_format = {
 }
 
 local vtsls = {
-  vtsls = {
-    enableMoveToFileCodeAction = true,
-    experimental = {
-      completion = {
-        enableServerSideFuzzyMatch = true,
-      },
+  enableMoveToFileCodeAction = true,
+  experimental = {
+    completion = {
+      enableServerSideFuzzyMatch = true,
     },
-    javascript = vtsls_format,
-    typescript = vtsls_format,
   },
+  javascript = vtsls_format,
+  typescript = vtsls_format,
 }
 
 local ts = {
@@ -134,6 +132,7 @@ local ts = {
     experimental = {
       enabledProjectDiagnostics = true,
     },
+    maxTsServerMemory = 8092,
     useSyntaxServer = 'auto',
     workspaceSymbols = {
       scope = 'allOpenProjects', -- allOpenProjects | currentProject
