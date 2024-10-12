@@ -6,6 +6,7 @@ tools=(
   "bat",
   "bottom",
   "cmake",
+  "delta",
   "fd",
   "ffmpeg@6",
   "fish",
