@@ -24,3 +24,5 @@ items = [
 "rocks-config.nvim" = "3.0.0"
 "mason.nvim" = "1.10.0"
 "mason-tool-installer.nvim" = "scm"
+"rocks-git.nvim" = "2.4.0"
+melange-nvim = "scm"
