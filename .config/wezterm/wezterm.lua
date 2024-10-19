@@ -36,7 +36,6 @@ end
 return {
   check_for_updates = false, -- Managed by Homebrew
   color_scheme = modal_color_scheme(gui.get_appearance()),
-  color_scheme_dirs = { w.home_dir .. '/.local/share/nvim/lazy/melange/term/wezterm' },
   default_prog = shell_path(),
   font = w.font {
     family = 'FiraCode Nerd Font',
