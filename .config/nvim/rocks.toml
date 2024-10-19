@@ -7,6 +7,12 @@
 plugins_dir = "user/packages"
 auto_setup = false
 
+[bundles.mason]
+items = [
+    "mason.nvim",
+    "mason-tool-installer.nvim"
+]
+
 # List of non-Neovim rocks.
 # This includes things like `toml` or other lua packages.
 [rocks]
@@ -17,3 +23,4 @@ auto_setup = false
 "rocks.nvim" = "2.40.4" # rocks.nvim can also manage itself :D
 "rocks-config.nvim" = "3.0.0"
 "mason.nvim" = "1.10.0"
+"mason-tool-installer.nvim" = "scm"
