@@ -13,6 +13,10 @@ items = [
     "mason-tool-installer.nvim"
 ]
 
+[treesitter]
+auto_highlight = "all"
+auto_install = true
+
 # List of non-Neovim rocks.
 # This includes things like `toml` or other lua packages.
 [rocks]
@@ -26,3 +30,4 @@ items = [
 "mason-tool-installer.nvim" = "scm"
 "rocks-git.nvim" = "2.4.0"
 melange-nvim = "scm"
+"rocks-treesitter.nvim" = "1.1.3"
