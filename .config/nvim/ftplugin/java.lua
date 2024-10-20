@@ -1,9 +1,7 @@
-local M = {}
-
 local path = require 'user.utils.path'
 local fn = vim.fn
 
-function M.accum_jdk_paths(tbl, str)
+function accum_jdk_paths(tbl, str)
   str = vim.trim(str)
   local name_start_idx = string.find(str, '"', 1, true)
   local path_start_idx = string.find(str, '/', 1, true)
@@ -19,12 +17,13 @@ function M.accum_jdk_paths(tbl, str)
   table.insert(tbl, {
     name = "JavaSE-" .. ver_str,
     path = string.sub(str, path_start_idx)
+    version = tonumber(ver_str)
   })
 
   return tbl
 end
 
-function M.get_jdk_paths()
+function get_jdk_paths()
   local java_home_bin = '/usr/libexec/java_home'
   if path.can_exec(java_home_bin) then
     local output = fn.systemlist({ java_home_bin, '-V', })
@@ -36,4 +35,3 @@ function M.get_jdk_paths()
   return {}
 end
 
-return M

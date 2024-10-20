@@ -1,48 +1,24 @@
 local USER_AUGROUP = vim.api.nvim_create_augroup('UserConfig', { clear = true })
 
 local M = {}
-
-function M.event(desc, evts, filter, listener)
-  vim.api.nvim_create_autocmd(evts, {
-    callback = listener,
-    desc = desc,
+local defaults = {
     group = USER_AUGROUP,
-    pattern = filter,
-  })
+    pattern = { '*' },
+}
+
+function M.on(evts, params)
+    vim.api.nvim_create_autocmd(evts,
+        vim.tbl_deep_extend('force', {}, defaults, params))
 end
 
-function M.once(desc, matches, evts, listener)
-  vim.api.nvim_create_autocmd(evts, {
-    callback = listener,
-    desc = desc,
-    group = USER_AUGROUP,
-    once = true,
-    pattern = matches,
-  })
+function M.once(evts, params)
+    vim.api.nvim_create_autocmd(evts,
+        vim.tbl_deep_extend('force', {}, defaults, params, { once = true }))
 end
 
-function M.buffer(desc, buf, evts, listener)
-  vim.api.nvim_create_autocmd(evts, {
-    callback = listener,
-    desc = desc,
-    group = USER_AUGROUP,
-    buffer = buf,
-  })
-end
-
-function M.filetype(matches, listener)
-  vim.api.nvim_create_autocmd('FileType', {
-    callback = listener,
-    group = USER_AUGROUP,
-    pattern = matches,
-  })
-end
-
-function M.trigger(eventName, matches)
-  vim.api.nvim_exec_autocmds(eventName, {
-    group = USER_AUGROUP,
-    pattern = matches,
-  })
+function M.filetype(matches, params)
+    vim.api.nvim_create_autocmd('FileType',
+        vim.tbl_deep_extend('force', {}, defaults, params))
 end
 
 return M
