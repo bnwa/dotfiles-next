@@ -31,3 +31,5 @@ auto_install = true
 "rocks-git.nvim" = "2.4.0"
 melange-nvim = "scm"
 "rocks-treesitter.nvim" = "1.1.3"
+"toggleterm.nvim" = "2.12.0"
+tree-sitter-toml = "0.0.30"
