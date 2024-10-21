@@ -10,6 +10,7 @@ require('mason-registry').refresh(function()
     require('mason-tool-installer').setup {
         ensure_installed = {
             'vtsls',
+            'lua-language-server',
         },
         integrations = {
             ['mason-lspconfig'] = false,
