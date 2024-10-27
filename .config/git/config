@@ -42,7 +42,5 @@
         sv  = stash save -u
         svs = stash list
         opn = stash apply
-[includeIf "gitdir:~/Bitbucket/"]
-        path = ~/Bitbucket/.gitconfig
 [includeIf "gitdir:~/Developer/"]
         path = ~/Developer/.gitconfig
