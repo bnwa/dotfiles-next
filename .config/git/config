@@ -1,5 +1,6 @@
 [core]
         autocrlf = input
+        pager = delta
         safecrlf = true
 [user]
         name = Benoît Barberousse
@@ -24,6 +25,12 @@
         colorMoved = default
 [credential]
         helper = osxkeychain
+[interactive]
+        diffFilter = delta --color-only
+[delta]
+        line-numbers = true
+        navigate = true
+        side-by-side = true
 [alias]
         a   = add --patch
         b   = branch
