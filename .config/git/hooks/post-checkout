@@ -1,0 +1,32 @@
+#! /opt/homebrew/bin/fish
+
+set -l prev_head $argv[1]
+set -l curr_head $argv[2]
+set -l is_branch_co $argv[3]
+
+set -l prev_br (string sub --start 3 (git branch --contains $prev_head))
+set -l curr_br (string sub --start 3 (git branch --contains $curr_head))
+
+if not test $is_branch_co -eq 1
+  return 0
+end
+
+if test $prev_br = 'main'; and not test $curr_br = 'scratch'
+  return 0
+end
+
+if test $prev_br = 'scratch'; and not test $curr_br = 'main'
+  return 0
+end
+
+test -d ~/.local/share/nvim; and mv ~/.local/share/{nvim,nvim-tmp}
+test -d ~/.local/state/nvim; and mv ~/.local/state/{nvim,nvim-tmp}
+test -d ~/.cache/nvim; and mv ~/.cache/{nvim,nvim-tmp}
+
+test -d ~/.local/share/nvim-bak; and mv ~/.local/share/{nvim-bak,nvim}
+test -d ~/.local/state/nvim-bak; and mv ~/.local/state/{nvim-bak,nvim}
+test -d ~/.cache/nvim-bak; and mv ~/.cache/{nvim-bak,nvim}
+
+test -d ~/.local/share/nvim-tmp; and mv ~/.local/share/{nvim-tmp,nvim-bak}
+test -d ~/.local/state/nvim-tmp; and mv ~/.local/state/{nvim-tmp,nvim-bak}
+test -d ~/.cache/nvim-tmp; and mv ~/.cache/{nvim-tmp,nvim-bak}
