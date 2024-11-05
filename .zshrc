@@ -1,7 +1,6 @@
 [[ -d $HOME/.dotfiles ]] && alias config="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 [[ -x $(which bat) ]] && alias cat=bat
 [[ -x $(which eza) ]] && alias ls=eza
-[[ -x $(which rg) ]] && alias grep=rg
 [[ -x $(which trash) ]] && alias rm="trash -vF"
 [[ -x $(which delta) ]] && alias diff=delta
 alias l="ls -A --color=always"
