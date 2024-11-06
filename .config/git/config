@@ -39,6 +39,7 @@
         d   = diff
         fnd = grep --line-number --break --heading
         fix = commit --fixup
+        h   = show --format="%h" --no-patch HEAD
         l   = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
         la  = l --all
         lf  = l -p
