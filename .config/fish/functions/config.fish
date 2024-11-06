@@ -22,6 +22,8 @@ function config
           nvim --cmd 'cd ~/.config/zellij' ~/.config/zellij/{*,**/*}.kdl
         case tmux
           nvim --cmd 'cd ~/.config/tmux' ~/.config/tmux/*
+        case git
+          nvim --cmd 'cd ~/.config/git' ~/.config/git/{*,**/*}
         case '*'
           echo "Unknown argument to 'e' encountered:" $target
           return 1
