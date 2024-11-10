@@ -1,145 +1,67 @@
 return {
+  { 'saghen/blink.compat' },
   {
-    "hrsh7th/cmp-cmdline" ,
+    'saghen/blink.cmp',
+    lazy = false, -- lazy loading handled internally
+    -- optional: provides snippets for the snippet source
     dependencies = {
-      'hrsh7th/nvim-cmp',
-    },
-    config = function()
-      local cmp = require 'cmp'
-      cmp.setup.cmdline({ '/', '?' }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = 'nvim_lsp_document_symbol' },
-        },{
-          { name = 'treesitter' },
-        },{
-          { name = 'buffer' },
-        }),
-      })
-      cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = 'cmdline', priority = 1000, option = { ignore_cmds = { 'Man', '!' } } },
-          { name = 'cmdline_history', priority = 500 },
-          { name = 'path', priority = 750 },
-        })
-      })
-    end
-  },
-  {
-    'hrsh7th/nvim-cmp',
-    dependencies = {
-      'rcarriga/cmp-dap',
-      'echasnovski/mini.icons',
-      'garymjr/nvim-snippets' ,
-      'hrsh7th/cmp-nvim-lsp' ,
-      'hrsh7th/cmp-buffer' ,
-      'hrsh7th/cmp-nvim-lsp-document-symbol' ,
-      'hrsh7th/cmp-nvim-lsp-signature-help' ,
-      'ray-x/cmp-treesitter' ,
-      'dmitmel/cmp-cmdline-history' ,
       'zbirenbaum/copilot-cmp',
-      { 'mtoohey31/cmp-fish', ft = "fish" },
-      { url = 'https://codeberg.org/FelipeLema/cmp-async-path' },
+      'rafamadriz/friendly-snippets',
     },
-    opts = function()
-      local cmp = require 'cmp'
-      local defaults = require('cmp.config.default')()
-      --https://github.com/zbirenbaum/copilot-cmp
-      local has_words_before = function()
-        if vim.api.nvim_get_option_value('buftype', { buf = 0 }) == "prompt" then return false end
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_text(0, line-1, 0, line-1, col, {})[1]:match("^%s*$") == nil
-      end
-      local sorting = defaults.sorting
-      table.insert(sorting.comparators, 1, require('copilot_cmp.comparators').prioritize)
-      return {
-        formatting = {
-          format = function(entry, vim_item)
-            local icon = MiniIcons.get('lsp', vim_item.kind)
-            vim_item.kind = icon .. ' ' .. vim_item.kind
-            return vim_item
-          end
-        },
-        mapping = cmp.mapping.preset.insert {
-          ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-          ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-          ['<C-f>'] = function(fallback)
-            if cmp.visible() and cmp.visible_docs then
-              cmp.mapping.scroll_docs(4)
-            else
-              fallback()
-            end
-          end,
-          ['<C-b>'] = function(fallback)
-            if cmp.visible() and cmp.visible_docs then
-              cmp.mapping.scroll_docs(-4)
-            else
-              fallback()
-            end
-          end,
-          ['C-o>'] = cmp.mapping.open_docs(),
-          ['<C-y>'] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
-          ['<C-[>'] = function(fallback)
-            cmp.abort()
-            fallback()
-          end,
-          ["<Tab>"] = vim.schedule_wrap(function(fallback)
-            if cmp.visible() and has_words_before() then
-              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-            else
-              return fallback()
-            end
-          end),
-          ["<CR>"] = function(fallback)
-            if cmp.visible() then
-              cmp.confirm({ select = false, behavior = cmp.ConfirmBehavior.Replace })
-            else
-              return fallback()
-            end
-          end
-        },
-        preselect = cmp.PreselectMode.None,
-        snippet = {
-          expand = function(args)
-            vim.snippet.expand(args.body)
-          end,
-        },
-        sorting = sorting,
-        sources = cmp.config.sources({
-          { name = 'copilot' },
-          { name = "nvim_lsp_signature_help" },
-          { name = "nvim_lsp" },
-          { name = 'cmp_yanky'},
-          { name = "treesitter" },
-        },{
-          { name = "buffer" },
-        }),
-        view =  {
-          docs = {
-            auto_open = true,
-          },
-        },
-        window = {
-          completion = cmp.config.window.bordered({ border = 'rounded' }),
-          documentation = cmp.config.window.bordered({ border = 'rounded' }),
-        },
+
+    -- use a release tag to download pre-built binaries
+    version = 'v0.*',
+    -- OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
+    -- build = 'cargo build --release',
+    -- If you use nix, you can build from source using latest nightly rust with:
+    -- build = 'nix run .#build-plugin',
+
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
+    opts = {
+      -- 'default' for mappings similar to built-in completion
+      -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
+      -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
+      -- see the "default configuration" section below for full documentation on how to define
+      -- your own keymap.
+      keymap = { preset = 'enter' },
+
+      highlight = {
+        -- sets the fallback highlight groups to nvim-cmp's highlight groups
+        -- useful for when your theme doesn't support blink.cmp
+        -- will be removed in a future release, assuming themes add support
+        use_nvim_cmp_as_default = true,
+      },
+      -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+      -- adjusts spacing to ensure icons are aligned
+      nerd_font_variant = 'normal',
+
+      -- experimental auto-brackets support
+      accept = { auto_brackets = { enabled = true } },
+
+      windows = { autocomplete = { selection = 'auto_insert' } },
+
+      sources = {
+        completion = {
+          enabled_providers = {
+            'lsp',
+            'copilot',
+            'path',
+            'snippets',
+            'buffer',
+          }
+        }
+      },
+
+      providers = {
+        copilot = {
+          name = 'copilot',
+          module = 'blink.compat.source'
+        }
       }
-    end,
-    config = function(_, opts)
-      local cmp = require 'cmp'
-      local autopairs = require 'nvim-autopairs.completion.cmp'
-      cmp.setup.filetype({ "dap-repl", "dapui_watches" }, {
-        sources = { { name = "dap" } },
-      })
-      cmp.setup(opts)
-      cmp.event:on('confirm_done', autopairs.on_confirm_done())
-      cmp.event:on('menu_opened', function()
-        vim.b.copilot_suggestion_hidden = true
-      end)
-      cmp.event:on('menu_closed', function()
-        vim.b.copilot_suggestion_hidden = true
-      end)
-    end,
-  }
+    },
+    -- allows extending the enabled_providers array elsewhere in your config
+    -- without having to redefining it
+    opts_extend = { "sources.completion.enabled_providers" },
+  },
 }

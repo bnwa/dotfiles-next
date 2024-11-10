@@ -7,7 +7,7 @@ local lsp = vim.lsp
 local fn = vim.fn
 local function setup(config)
   local bundles = {}
-  local cmp_lsp = require 'cmp_nvim_lsp'
+  --local cmp_lsp = require 'cmp_nvim_lsp'
   local registry = require 'mason-registry'
   local jdtls = require 'jdtls'
   local dap = require 'jdtls.dap'

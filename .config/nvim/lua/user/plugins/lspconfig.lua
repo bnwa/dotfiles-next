@@ -11,7 +11,7 @@ local SIGNS = {
 return {
   'neovim/nvim-lspconfig',
   dependencies = {
-    'hrsh7th/nvim-cmp',
+    'saghen/blink.cmp',
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
   },
@@ -36,13 +36,12 @@ return {
   },
   config = function(_, opts)
     local lsp = require 'lspconfig'
-    local cmp_ok, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
+    local cmp_ok, cmp_lsp = pcall(require, 'blink.cmp')
     local lsp_configs = require 'lspconfig.configs'
     local mason_lsp = require 'mason-lspconfig'
     local mason = require 'mason'
     local servers = opts.servers
     local ensure_installed = vim.tbl_keys(servers)
-    local capabilities = vim.tbl_deep_extend('force', {}, opts.capabilities, cmp_ok and cmp_lsp.default_capabilities() or {})
 
     vim.diagnostic.config(opts.diagnostic)
 
@@ -86,6 +85,7 @@ return {
       local config = servers[server_name]
 
       local local_on_attach = config.on_attach
+      local capabilities = cmp_lsp.get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
       local server_config = vim.tbl_extend('force',
       {},
       config, {
