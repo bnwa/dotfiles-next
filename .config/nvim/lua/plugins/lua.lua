@@ -71,6 +71,7 @@ return {
               hint = {
                 arrayIndex = "Enable",
                 await = true,
+                enable = false,
                 paramName = true,
                 paramType = true,
                 semicolon = "SameLine",
