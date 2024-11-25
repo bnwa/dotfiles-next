@@ -12,7 +12,7 @@ local should_update_brew = platform.os.mac and not has_rg or not has_fd or not h
 
 if should_update_brew then
   --- @type string[]
-  local missing
+  local missing = {}
   if not vim.fn.executable("brew") then
     return vim.notify("Missing binary plugin deps but Homebrew not installed, ") .. "certain behavior may be missing"
   end
