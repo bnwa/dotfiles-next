@@ -1,6 +1,8 @@
 local fn = vim.fn
 local g = vim.g
 
+--- @module 'lazy.types'
+--- @type LazySpec[]
 return {
   {
     'nvim-treesitter/nvim-treesitter',

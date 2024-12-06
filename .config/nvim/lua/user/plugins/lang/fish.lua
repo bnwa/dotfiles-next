@@ -2,6 +2,8 @@ local ft = {
   'fish'
 }
 
+--- @module 'lazy.types'
+--- @type LazySpec
 return {
   'neovim/nvim-lspconfig',
   opts = {

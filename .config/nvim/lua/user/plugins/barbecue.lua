@@ -1,3 +1,5 @@
+--- @module 'lazy.types'
+--- @type LazySpec
 return {
   "utilyre/barbecue.nvim",
   name = "barbecue",

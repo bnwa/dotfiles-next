@@ -1,3 +1,5 @@
+--- @module 'lazy.types'
+--- @type LazySpec
 return {
   'stevearc/oil.nvim',
   opts = {

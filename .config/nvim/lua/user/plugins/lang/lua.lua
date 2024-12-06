@@ -3,6 +3,8 @@ local list = require 'user.utils.list'
 
 local ft = {'lua'}
 
+--- @module 'lazy.types'
+--- @type LazySpec[]
 return {
   {
     'neovim/nvim-lspconfig',

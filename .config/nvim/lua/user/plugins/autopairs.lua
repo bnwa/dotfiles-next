@@ -1,3 +1,5 @@
+--- @module 'lazy.types'
+--- @type LazySpec
 return {
   'windwp/nvim-autopairs',
   opts = {

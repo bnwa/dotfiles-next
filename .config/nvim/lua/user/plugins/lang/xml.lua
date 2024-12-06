@@ -1,4 +1,6 @@
 local LSP = require 'user.constants.lsp'
+--- @module 'lazy.types'
+--- @type LazySpec[]
 return {
   {
     'neovim/nvim-lspconfig',

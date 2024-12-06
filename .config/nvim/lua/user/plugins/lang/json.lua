@@ -4,6 +4,8 @@ local ft = {
   'json5',
 }
 
+--- @module 'lazy.types'
+--- @type LazySpec[]
 return {
   {
     'neovim/nvim-lspconfig',

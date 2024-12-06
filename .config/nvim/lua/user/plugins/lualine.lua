@@ -1,3 +1,5 @@
+--- @module 'lazy.types'
+--- @type LazySpec
 return {
   'nvim-lualine/lualine.nvim',
   dependencies = { 'echasnovski/mini.icons' },

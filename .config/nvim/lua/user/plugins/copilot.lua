@@ -1,5 +1,7 @@
 local path = require 'user.utils.path'
 
+--- @module 'lazy.types'
+--- @type LazySpec[]
 return {
   {
     "zbirenbaum/copilot-cmp",

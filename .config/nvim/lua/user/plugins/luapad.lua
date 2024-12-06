@@ -1,3 +1,5 @@
+--- @module 'lazy.types'
+--- @type LazySpec
 return {
   'rafcamlet/nvim-luapad',
   opts = {

@@ -1,3 +1,5 @@
+--- @module 'lazy.types'
+--- @type LazySpec[]
 return {
   {
     "OXY2DEV/markview.nvim",

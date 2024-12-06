@@ -1,5 +1,7 @@
 local keymap = require 'user.settings.keymap'
 
+--- @module 'lazy.types'
+--- @type LazySpec
 return {
   "folke/which-key.nvim",
   dependencies = {

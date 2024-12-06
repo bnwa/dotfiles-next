@@ -1,3 +1,5 @@
+--- @module 'lazy.types'
+--- @type LazySpec
 return {
   "nvimtools/none-ls.nvim",
   name = 'null-ls',

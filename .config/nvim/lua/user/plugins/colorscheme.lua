@@ -1,5 +1,6 @@
 local list = require 'user.utils.list'
 
+---@module 'lazy.types'
 ---@param lazy_specs  LazyPluginSpec[]
 ---@return LazyPluginSpec[]
 local function colorschemes(lazy_specs)

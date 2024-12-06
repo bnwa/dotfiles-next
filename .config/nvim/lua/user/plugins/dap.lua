@@ -1,5 +1,7 @@
 local fn = vim.fn
 
+--- @module 'lazy.types'
+--- @type LazySpec[]
 return {
   {
     'mfussenegger/nvim-dap',
