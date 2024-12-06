@@ -10,7 +10,6 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
       'echasnovski/mini.icons',
-      'nvim-telescope/telescope-ui-select.nvim',
       'tsakirist/telescope-lazy.nvim',
       'debugloop/telescope-undo.nvim',
       'nvim-telescope/telescope-fzf-native.nvim',
@@ -57,9 +56,6 @@ return {
           lazy = {
             show_icon = true,
           },
-          ['ui-select'] = {
-            require('telescope.themes').get_dropdown {},
-          },
           undo = {
             side_by_side = true,
             layout_strategy = 'vertical',
@@ -75,7 +71,6 @@ return {
       scope.setup(opts)
       scope.load_extension('fzf')
       scope.load_extension('lazy')
-      scope.load_extension('ui-select')
       scope.load_extension('undo')
     end,
   }
