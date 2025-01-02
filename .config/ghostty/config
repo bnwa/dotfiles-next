@@ -1,0 +1,17 @@
+command = /opt/homebrew/bin/fish
+
+cursor-style = block
+cursor-style-blink = false
+
+font-family = FiraCode Nerd Font Mono
+
+font-style = Ret
+font-style-bold = Bold
+
+font-size = 18
+
+font-synthetic-style = no-bold
+
+shell-integration-features = no-cursor
+
+theme = dark:melange_dark,light:melange_light
