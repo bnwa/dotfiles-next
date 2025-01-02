@@ -53,7 +53,7 @@ return colorschemes({
         cursor_line_number = false,
       },
       plugins = {
-        cmp = true,
+        cmp = false,
         gitsigns = true,
         indent_blankline = true,
         nvim_tree = {
