@@ -46,4 +46,35 @@ return {
       }
     }
   },
+  {
+    'folke/snacks.nvim',
+    ---@module 'snacks'
+    ---@type snacks.Config
+    opts = {
+      picker = {
+        sources = {
+          lsp_symbols = {
+            filter = {
+              default = {
+                "Class",
+                "Constructor",
+                "Enum",
+                "Field",
+                "Function",
+                "Interface",
+                "Method",
+                "Module",
+                "Namespace",
+                "Package",
+                "Property",
+                "Struct",
+                "Trait",
+                "Variable",
+              }
+            }
+          }
+        }
+      }
+    }
+  },
 }
