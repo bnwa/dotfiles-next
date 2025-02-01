@@ -1,3 +1,8 @@
+background = #292522
+foreground = #ECE1D7
+cursor-color = #ECE1D7
+selection-background = #403A36
+selection-foreground = #ECE1D7
 palette = 0=#34302C
 palette = 1=#BD8183
 palette = 2=#78997A
@@ -14,8 +19,3 @@ palette = 12=#A3A9CE
 palette = 13=#CF9BC2
 palette = 14=#89B3B6
 palette = 15=#ECE1D7
-background = #292522
-foreground = #ECE1D7
-cursor-color = #ECE1D7
-selection-background = #403A36
-selection-foreground = #ECE1D7
