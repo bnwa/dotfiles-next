@@ -36,7 +36,7 @@ taps=(
 )
 casks=(
   "font-fira-code-nerd-font"
-  "wezterm"
+  "ghostty"
   "zulu-jdk17"
   "zulu-jdk8"
 )
