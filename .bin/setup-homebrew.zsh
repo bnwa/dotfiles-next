@@ -24,6 +24,7 @@ tools=(
   "node"
   "pandoc"
   "ripgrep"
+  "rust"
   "sqlite"
   "subversion"
   "tldr"
