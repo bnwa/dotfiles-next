@@ -1,6 +1,16 @@
 --- @type LazySpec[]
 return {
-  { 'akinsho/bufferline.nvim', enabled = false },
+  { "akinsho/bufferline.nvim", enabled = false },
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim", -- required
+      "sindrets/diffview.nvim", -- optional - Diff integration
+    },
+    opts = {
+      graph_style = "unicode",
+    },
+  },
   {
     "akinsho/toggleterm.nvim",
     version = "*",
@@ -30,51 +40,73 @@ return {
     -- stylua: ignore end
   },
   {
-    'nvim-lualine/lualine.nvim',
+    "nvim-lualine/lualine.nvim",
     opts = {
       sections = {
         lualine_b = {
-          { 'branch',
+          {
+            "branch",
             --- @param str string
             --- @return string
             fmt = function(str)
-              if str:len() > 16 then return str:sub(1, 16)
-              else return str end
-            end
-          }
-        }
-      }
-    }
+              if str:len() > 16 then
+                return str:sub(1, 16)
+              else
+                return str
+              end
+            end,
+          },
+        },
+      },
+    },
   },
   {
-    'folke/snacks.nvim',
-    ---@module 'snacks'
-    ---@type snacks.Config
+    "yarospace/lua-console.nvim",
+    lazy = true,
     opts = {
-      picker = {
-        sources = {
-          lsp_symbols = {
-            filter = {
-              default = {
-                "Class",
-                "Constructor",
-                "Enum",
-                "Field",
-                "Function",
-                "Interface",
-                "Method",
-                "Module",
-                "Namespace",
-                "Package",
-                "Property",
-                "Struct",
-                "Trait",
-                "Variable",
-              }
-            }
-          }
-        }
-      }
-    }
+      mappings = {
+        toggle = false,
+        attach = false,
+      },
+    },
+    keys = {
+      {
+        "<leader>ft",
+        function()
+          require("lua-console").toggle_console()
+        end,
+        desc = "Toggle Lua Console",
+      },
+      {
+        "<leader>fT",
+        function()
+          require("lua-console").attach_toggle()
+        end,
+        desc = "Attach Lua Console",
+      },
+    },
+  },
+  {
+    "mgierada/lazydocker.nvim",
+    dependencies = { "akinsho/toggleterm.nvim" },
+    enabled = function()
+      local path = require("user.utils.path")
+      return path.can_exec("docker") and path.can_exec("lazydocker")
+    end,
+    event = "VeryLazy",
+    config = function()
+      require("lazydocker").setup({
+        border = "curved", -- valid options are "single" | "double" | "shadow" | "curved"
+      })
+    end,
+    keys = {
+      {
+        "<leader>z",
+        function()
+          require("lazydocker").open()
+        end,
+        desc = "Open Lazydocker floating window",
+      },
+    },
   },
 }
