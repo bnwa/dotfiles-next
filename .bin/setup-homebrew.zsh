@@ -17,6 +17,7 @@ tools=(
   "glow"
   "httpie"
   "jq"
+  "lazydocker"
   "lazygit"
   "make"
   "maven"
@@ -42,7 +43,7 @@ casks=(
   "font-fira-code-nerd-font"
   "ghostty"
   "zulu-jdk17"
-  "zulu-jdk8"
+  "adoptopenjdk8"
 )
 
 xcode-select -p &>/dev/null || {
