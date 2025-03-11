@@ -34,7 +34,8 @@ local function get_jdk_paths()
   return {}
 end
 
---- @type LazySpec[]
+---@module 'lazy'
+---@type LazySpec[]
 return {
   {
     "neovim/nvim-lspconfig",
