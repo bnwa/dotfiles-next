@@ -4,11 +4,11 @@
 local cmd = vim.cmd
 local opt = vim.opt
 
---vim.g.autoformat = false
+vim.g.autoformat = false
 
 opt.cmdheight = 0 -- Hide command-line unless in use
-opt.diffopt:append 'algorithm:histogram' -- Diff with histogram algo
-opt.diffopt:append 'linematch:80' -- Recommend line cutoff for diff hunk
+opt.diffopt:append("algorithm:histogram") -- Diff with histogram algo
+opt.diffopt:append("linematch:80") -- Recommend line cutoff for diff hunk
 opt.listchars.extends = "»" -- Show this char when line excedes window right
 opt.listchars.precedes = "«" -- Show this char when line excedes window left
 opt.mousescroll.hor = 1 -- Disable horizontal mouse scroll
