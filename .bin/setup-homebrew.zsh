@@ -25,6 +25,7 @@ tools=(
   "node"
   "pandoc"
   "ripgrep"
+  "rsync"
   "rust"
   "sqlite"
   "subversion"
