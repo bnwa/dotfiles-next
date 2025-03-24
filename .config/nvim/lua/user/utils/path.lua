@@ -7,7 +7,8 @@ function M.can_read_file(path)
 end
 
 function M.is_directory(path)
-  return 1 == fn.isdirectory(path)
+  local stat = vim.uv.fs_stat(path)
+  return stat and stat.type == 'directory'
 end
 
 function M.can_exec(path)
