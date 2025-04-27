@@ -14,4 +14,4 @@ font-synthetic-style = no-bold
 
 shell-integration-features = no-cursor
 
-theme = dark:melange_dark,light:melange_light
+theme = dark:mellifluous_dark,light:mellifluous_light
