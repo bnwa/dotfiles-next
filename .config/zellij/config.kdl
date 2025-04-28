@@ -3,7 +3,7 @@ default_mode "locked"
 on_force_close "detach"
 pane_frames true
 simplified_ui false
-theme "melange-dark"
+theme "melange-light"
 
 plugins {
     tab-bar location="zellij:tab-bar"
