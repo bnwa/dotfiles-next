@@ -6,14 +6,10 @@ local augroup = vim.api.nvim_create_augroup('UserConfig', {  clear = true })
 local autocmd = vim.api.nvim_create_autocmd
 
 
-if not vim.g.neovide then
-  autocmd({'FocusGained', 'FocusLost'}, {
-    group = augroup,
-    callback = function()
-      colorscheme.toggle_bg()
-    end
-  })
-end
+autocmd({ 'VimEnter', 'FocusGained', 'FocusLost'}, {
+  group = augroup,
+  callback = colorscheme.toggle_bg
+})
 
 autocmd({'FileType'}, {
   group = augroup,
