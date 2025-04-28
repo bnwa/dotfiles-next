@@ -26,6 +26,9 @@ if status is-interactive
     test -x "$(which eza)"; and function ll
         eza --icons --long --git --git-repos --group-directories-first $argv
     end
+    test -x "$(which bat)"; and function cat
+        bat $argv
+    end
 
     # Load secret environment variables
     test -f ~/.secret.env; and load_env_file ~/.secret.env
