@@ -45,8 +45,8 @@ keybinds clear-defaults=true {
         }
     }
     pane {
-        bind "-" { NewPane "Down"; SwitchToMode "locked"; }
-        bind "%" { NewPane "Left"; SwitchToMode "locked"; }
+        bind "s" { NewPane "Down"; SwitchToMode "locked"; }
+        bind "v" { NewPane "Left"; SwitchToMode "locked"; }
         bind "p" { SwitchFocus; }
         bind "$" { NextSwapLayout; }
         bind "x" { CloseFocus; SwitchToMode "locked"; }
