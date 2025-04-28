@@ -37,13 +37,13 @@ tools=(
   "zoxide"
 )
 taps=(
-  "mdogan/zulu"
   "oven-sh/bun"
 )
 casks=(
   "font-fira-code-nerd-font"
   "ghostty"
-  "zulu-jdk17"
+  "zulu@17"
+  "zulu@21"
   "adoptopenjdk8"
 )
 
