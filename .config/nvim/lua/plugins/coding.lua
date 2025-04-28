@@ -2,6 +2,9 @@
 local disabled_filetypes = {
   "copilot-chat",
   "snacks_picker_input",
+  "AvanteInput",
+  "AvanteSelectedFiles",
+  "Avante",
 }
 
 ---@module 'lazy'
