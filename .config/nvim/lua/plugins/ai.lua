@@ -4,6 +4,7 @@ return {
   -- All this to spec the model
   {
     "CopilotC-Nvim/CopilotChat.nvim",
+    enabled = function() return not vim.env.ANTHROPIC_API_KEY end,
     version = '*',
     cmd = "CopilotChat",
     opts = function()
