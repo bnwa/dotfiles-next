@@ -10,7 +10,7 @@ font-style-bold = Bold
 
 font-size = 18
 
-font-synthetic-style = no-bold
+font-synthetic-style = no-bold,italic
 
 shell-integration-features = no-cursor
 
