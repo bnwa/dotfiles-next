@@ -25,12 +25,12 @@ function config
         case git
           nvim --cmd 'cd ~/.config/git' ~/.config/git/{*,**/*}
         case mvim
-          env NVIM_APPNAME=mvim nvim --cmd 'cd ~/.config/mvim' ~/.config/mvim/{*,**/*}.lua
+            env NVIM_APPNAME=mvim nvim --cmd 'cd ~/.config/mvim' ~/.config/mvim/{*,**/*}.lua
         case '*'
-          echo "Unknown argument to 'e' encountered:" $target
-          return 1
-      end
+            echo "Unknown argument to 'e' encountered:" $target
+            return 1
+        end
     case '*'
-		  git --git-dir=$HOME/.dotfiles --work-tree=$HOME $argv
-  end
+        git --git-dir=$HOME/.dotfiles --work-tree=$HOME $argv
+    end
 end
