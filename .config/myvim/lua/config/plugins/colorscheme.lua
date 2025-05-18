@@ -2,6 +2,11 @@
 ---@type LazySpec[]
 return {
   {
+    'echasnovski/mini.colors',
+    version = '*',
+    config = true,
+  },
+  {
     'ramojus/mellifluous.nvim',
     lazy = false,
     priority = 100,
@@ -11,5 +16,5 @@ return {
     'savq/melange-nvim',
     lazy = false,
     priority = 100,
-  }
+  },
 }

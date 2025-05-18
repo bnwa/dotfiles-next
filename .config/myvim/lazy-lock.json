@@ -19,6 +19,7 @@
   "mason.nvim": { "branch": "main", "commit": "fc98833b6da5de5a9c5b1446ac541577059555be" },
   "melange-nvim": { "branch": "master", "commit": "2db5407f2f6d6d6286f50f2f7365728d66f6f3ae" },
   "mellifluous.nvim": { "branch": "main", "commit": "d603db6c8fc34f4d30d3c10bc67b2331af544f5f" },
+  "mini.colors": { "branch": "main", "commit": "d64b1c0f520579d905f97208eca85329e664ab88" },
   "mini.icons": { "branch": "main", "commit": "397ed3807e96b59709ef3292f0a3e253d5c1dc0a" },
   "neogit": { "branch": "master", "commit": "7a3daecbfdd4b6338a94dea49ad7802b3ca5fd9b" },
   "noice.nvim": { "branch": "main", "commit": "0427460c2d7f673ad60eb02b35f5e9926cf67c59" },
