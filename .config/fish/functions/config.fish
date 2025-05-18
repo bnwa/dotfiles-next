@@ -24,6 +24,8 @@ function config
           nvim --cmd 'cd ~/.config/tmux' ~/.config/tmux/*
         case git
           nvim --cmd 'cd ~/.config/git' ~/.config/git/{*,**/*}
+        case mvim
+          env NVIM_APPNAME=mvim nvim --cmd 'cd ~/.config/mvim' ~/.config/mvim/{*,**/*}.lua
         case '*'
           echo "Unknown argument to 'e' encountered:" $target
           return 1
