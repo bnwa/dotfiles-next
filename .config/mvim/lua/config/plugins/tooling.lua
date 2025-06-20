@@ -89,7 +89,12 @@ return {
         end
       })
       for server_name, server_config in pairs(opts.servers) do
-        lsp.setup(server_name, server_config)
+        vim.api.nvim_create_autocmd({'FileType'}, {
+          pattern = server_config.filetypes,
+          callback = function(_)
+            lsp.setup(server_name, server_config)
+          end,
+        })
       end
     end
   }
