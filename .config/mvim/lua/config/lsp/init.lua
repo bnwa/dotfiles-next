@@ -1,3 +1,5 @@
+local tbl = require 'config.utils.tbl'
+
 local M = {}
 
 M.diagnostics = {
@@ -62,7 +64,7 @@ function M.setup(server_name, server_config)
   local capabilities = vim.tbl_deep_extend('force', {},
     vim.lsp.protocol.make_client_capabilities(),
     server_config.capabilities or {})
-  local config = vim.tbl_extend('force', {},
+  local setup, config = tbl.destruct(vim.tbl_extend('force', {},
     server_config,
     { capabilities = cmp.get_lsp_capabilities(capabilities) },
     {
@@ -76,12 +78,11 @@ function M.setup(server_name, server_config)
           didDelete = true,
         },
       },
-    })
+    }), {'setup'})
 
-  if type(config.setup) ~= 'function' then
-    lsp[server_name].setup(config)
-  elseif config.setup(config) then
-    lsp[server_name].setup(config)
+  if type(setup) ~= 'function' or setup(config) then
+    vim.lsp.config(server_name, config)
+    vim.lsp.enable(server_name)
   end
 end
 

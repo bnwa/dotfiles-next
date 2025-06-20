@@ -108,6 +108,7 @@ local ts = {
   },
 }
 
+
 return {
   {
     'neovim/nvim-lspconfig',
@@ -122,8 +123,8 @@ return {
             'typescriptreact',
           },
           setup = function(config)
-            local lsp = require 'lspconfig'
-            require('lspconfig.configs').vtsls = require('vtsls').lspconfig
+            local vtsls_config = require('vtsls').lspconfig
+            vim.tbl_deep_extend('force', config, vtsls_config)
             return true
           end,
           settings = {
