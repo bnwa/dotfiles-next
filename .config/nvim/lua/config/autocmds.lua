@@ -19,3 +19,11 @@ autocmd({'FileType'}, {
   end,
   pattern = { "html", "java", "markdown", "sql", "xml", "fish" }
 })
+
+autocmd({'FileType'}, {
+  group = augroup,
+  callback = function()
+    vim.bo.formatoptions = 'tcgq'
+  end,
+  pattern = { "markdown" }
+})
