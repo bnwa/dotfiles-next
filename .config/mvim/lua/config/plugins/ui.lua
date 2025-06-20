@@ -132,6 +132,11 @@ return {
     'saghen/blink.cmp',
     version = '*',
     dependencies = { 'Kaiser-Yang/blink-cmp-avante' },
+    opts_extend = {
+      "sources.completion.enabled_providers",
+      "sources.compat",
+      "sources.default",
+    },
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
