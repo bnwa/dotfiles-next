@@ -124,7 +124,7 @@ return {
           setup = function(config)
             local lsp = require 'lspconfig'
             require('lspconfig.configs').vtsls = require('vtsls').lspconfig
-            lsp.vtsls.setup(config)
+            return true
           end,
           settings = {
             javascript = shared,
