@@ -76,6 +76,10 @@ return {
             return vim.notify('No LSP Client Configured')
           end
           local server_config = opts.servers[server_name]
+          if not server_config then
+            vim.health.warn('Failed to find LSP params for server "' .. server_name .. '"')
+            return
+          end
           local server_on_attach = server_config.on_attach
           if server_on_attach ~= nil and server_on_attach(client, buf) then
             lsp.on_attach(client, buf)
