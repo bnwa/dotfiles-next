@@ -78,9 +78,9 @@ function M.setup(server_name, server_config)
       },
     })
 
-  if type(config.setup) == 'function' and config.setup(config) then
+  if type(config.setup) ~= 'function' then
     lsp[server_name].setup(config)
-  else
+  elseif config.setup(config) then
     lsp[server_name].setup(config)
   end
 end
