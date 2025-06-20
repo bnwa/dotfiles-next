@@ -4,6 +4,9 @@ return {
     opts = {
       servers = {
         lemminx = {
+          filetypes = {
+            'xml',
+          },
           settings = {
             xml = {
               trace = {

@@ -9,6 +9,11 @@ return {
         ---@type vim.lsp.ClientConfig
         ---@diagnostic disable-next-line:missing-fields
         jsonls = {
+          filetypes = {
+            'json',
+            'jsonc',
+            'json5',
+          },
           settings = {
             json = {
               allowComments = { enable = true },

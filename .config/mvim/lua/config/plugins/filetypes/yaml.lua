@@ -8,6 +8,9 @@ return {
       return vim.tbl_deep_extend('force', opts, {
         servers = {
           yamlls = {
+            filetypes = {
+              'yaml',
+            },
             settings =  {
               yaml = {
                 completion = true,

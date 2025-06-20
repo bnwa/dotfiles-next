@@ -115,6 +115,12 @@ return {
     opts = {
       servers = {
         vtsls = {
+          filetypes = {
+            'javascript',
+            'javascriptreact',
+            'typescript',
+            'typescriptreact',
+          },
           setup = function(config)
             local lsp = require 'lspconfig'
             require('lspconfig.configs').vtsls = require('vtsls').lspconfig
