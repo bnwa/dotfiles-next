@@ -13,9 +13,11 @@ return {
     ---@diagnostic disable-next-line:missing-fields
     opts = {
       provider = 'claude',
-      claude = {
-        max_tokens = 8192,
-        model = 'claude-3-5-sonnet-20241022',
+      providers = {
+        claudes = {
+          max_tokens = 8192,
+          model = 'claude-3-5-sonnet-20241022',
+        }
       },
       file_selector = {
         file_selector = 'fzf'
