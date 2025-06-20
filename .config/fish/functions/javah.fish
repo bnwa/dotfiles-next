@@ -13,6 +13,9 @@ function javah --argument-names java_version --description "List and set the Jav
     case 17
         test (/usr/libexec/java_home -F -v 17 2> /dev/null) && set -gx JAVA_HOME (/usr/libexec/java_home -v 17)
         return 0
+    case 21
+        test (/usr/libexec/java_home -F -v 21 2> /dev/null) && set -gx JAVA_HOME (/usr/libexec/java_home -v 21)
+        return 0
     end
     echo "No matching JDK distribution"
     return 1
