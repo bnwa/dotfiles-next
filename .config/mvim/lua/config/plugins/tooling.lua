@@ -12,7 +12,6 @@ return {
     ---@type MasonSettings
     opts = {
       registries = {
-        'github:bnwa/mason-registry',
         'github:mason-org/mason-registry',
       },
       ui = {
