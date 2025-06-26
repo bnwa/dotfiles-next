@@ -13,6 +13,27 @@ return {
     end
   },
   {
+    dir = 'user.filetypes',
+    virtual = true,
+    opts = {},
+    config = function()
+      local autocmd = require 'config.utils.autocmd'
+      local fts = {
+        'dockerfile',
+        'fish',
+        'html',
+        'java',
+        'sh',
+        'xml',
+        'zsh',
+      }
+      autocmd.filetype(fts, function()
+          vim.bo.ts = 4
+          vim.bo.sw = 4
+      end)
+    end
+  },
+  {
     dir = 'user.colorscheme',
     virtual = true,
     event = 'VeryLazy',
