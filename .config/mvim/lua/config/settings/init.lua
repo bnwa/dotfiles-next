@@ -107,6 +107,18 @@ return {
           })
         end
       })
+
+      -- Fix bizarre avante default behavior with weird operator pending mode issue
+      -- https://github.com/yetone/avante.nvim/issues/902#issuecomment-2994345221
+      vim.api.nvim_create_autocmd("WinEnter", {
+        pattern = "*",
+        callback = function()
+          if vim.bo.filetype == "AvanteInput" then
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, true, true), "n", false)
+            vim.cmd("startinsert")
+          end
+        end,
+      })
     end
   },
 }

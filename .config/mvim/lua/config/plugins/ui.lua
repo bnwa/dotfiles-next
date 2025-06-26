@@ -264,7 +264,8 @@ return {
     },
   },
   {
-    "lukas-reineke/virt-column.nvim",
+
+s   "lukas-reineke/virt-column.nvim",
     opts = {
       char = "▕",
       virtcolumn = '66'
@@ -301,6 +302,7 @@ return {
           },
         },
         lualine_x = {
+          'searchcount',
           function ()
             local status = require 'lazy.status'
             if status.has_updates() then
