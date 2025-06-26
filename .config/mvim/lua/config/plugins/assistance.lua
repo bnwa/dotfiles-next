@@ -15,6 +15,7 @@ return {
       local has_claude = type(vim.env.ANTHROPIC_API_KEY) == 'string'
       local provider = has_claude and 'claude' or 'copilot'
       return {
+        mode = 'legacy',
         provider = provider,
         auto_suggestions_provider = provider,
         providers = {
