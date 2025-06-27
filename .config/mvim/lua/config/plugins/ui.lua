@@ -290,7 +290,9 @@ return {
           'mode'
         },
         lualine_b = {
-          'branch',
+          {'branch', fmt = function(str, ctx)
+            return string.sub(str, 1, 25)
+          end},
           'diff',
           { 'diagnostics', colored = true, sources = { 'nvim_lsp' } }
         },
