@@ -191,7 +191,7 @@ return {
     lazy = false,
     opts_extend = {'preview.filetypes'},
     ---@module 'markview.nvim'
-    ---@type mkv.config
+    ---@type markview.config
     opts = {
       preview = {
         -- plugin default

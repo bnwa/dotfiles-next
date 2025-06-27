@@ -19,6 +19,12 @@ return {
     opts = {},
   },
   {
+    'nvim-treesitter/nvim-treesitter',
+    dependencies = {
+      "OXY2DEV/markview.nvim",
+    },
+  },
+  {
     'windwp/nvim-autopairs',
     dependencies = {
       'nvim-treesitter/nvim-treesitter'
