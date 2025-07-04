@@ -122,4 +122,17 @@ function M.sort(ls, f)
   return vim.fn.sort(vim.fn.copy(ls), f)
 end
 
+---@generic T
+---@param tbl T[][]
+---@return T[]
+function M.flatten(tbl)
+  local result = {}
+  for _, ls in ipairs(tbl) do
+    for _, elem in pairs(ls) do
+      M.append(result, elem)
+    end
+  end
+  return result
+end
+
 return M

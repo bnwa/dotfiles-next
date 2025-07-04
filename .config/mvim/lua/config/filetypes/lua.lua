@@ -1,3 +1,5 @@
+---@module 'lazy'
+---@type LazySpec[]
 return {
   {
     'neovim/nvim-lspconfig',
@@ -101,12 +103,12 @@ return {
               }
             },
             setup = function(config)
---              local lazydev = require 'lazydev'
---              lazydev.setup {
---                library = {
---                  { path = "${3rd}/luv/library", words = { "vim%.uv" } },
---                }
---              }
+              --              local lazydev = require 'lazydev'
+              --              lazydev.setup {
+              --                library = {
+              --                  { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+              --                }
+              --              }
               config.root_dir = vim.fs.root(0, 'lazy-lock.json')
               return true
             end

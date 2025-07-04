@@ -422,7 +422,34 @@ return {
   {
     "yarospace/lua-console.nvim",
     lazy = true,
-    opts = {},
-    keys = {'`', '<Leader>`'},
+    opts = {
+      mappings = {
+        toggle = [[<leader>ce]]
+      }
+    },
   },
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    ---@module 'which-key.config'
+    ---@type wk.Opts
+    opts = {
+      plugins = {
+        spelling = {
+          enabled = false,
+        }
+      },
+      preset = 'modern',
+      spec = {}
+    },
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show({ global = false })
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
+  }
 }

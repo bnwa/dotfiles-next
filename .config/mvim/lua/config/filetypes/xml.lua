@@ -1,4 +1,17 @@
+---@module 'lazy'
+---@type LazySpec[]
 return {
+  {
+    dir = 'user.filetype.xml',
+    virtual = true,
+    config = function()
+      local autocmd = require 'config.utils.autocmd'
+      autocmd.filetype({'xml'}, function()
+        vim.bo.ts = 4
+        vim.bo.sw = 4
+      end)
+    end
+  },
   {
     'neovim/nvim-lspconfig',
     opts = {

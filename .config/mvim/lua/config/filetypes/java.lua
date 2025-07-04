@@ -1,9 +1,17 @@
-local util = require 'config.utils.java'
-local autocmd = require 'config.utils.autocmd'
-
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
+  {
+    dir = 'user.filetype.java',
+    virtual = true,
+    config = function()
+      local autocmd = require 'config.utils.autocmd'
+      autocmd.filetype({'java'}, function()
+        vim.bo.ts = 4
+        vim.bo.sw = 4
+      end)
+    end
+  },
   {
     'JavaHello/spring-boot.nvim',
     ft = { 'java', 'jproperties' },
@@ -47,6 +55,7 @@ return {
       local registry = require 'mason-registry'
       local jdtls = require 'jdtls'
       local platform = require 'config.utils.platform'
+      local util = require 'config.utils.java'
       -- local dap = require 'jdtls.dap'
 
       local jdtls_pkg = registry.get_package('jdtls')
@@ -214,6 +223,7 @@ return {
               },
             },
             setup = function(config)
+              local autocmd = require 'config.utils.autocmd'
               autocmd.filetype({'java'}, function()
                 --local spring_nvim = require 'springboot-nvim'
                 local project_path = vim.fn.fnamemodify(vim.fs.find({
