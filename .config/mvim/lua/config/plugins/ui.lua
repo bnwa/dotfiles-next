@@ -1,3 +1,5 @@
+local path = require 'config.utils.path'
+
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
@@ -103,6 +105,7 @@ return {
     "ibhagwan/fzf-lua",
     dependencies = { "echasnovski/mini.icons" },
     opts = {
+      -- Keeps fzf process running in bg on UI close
       'hide',
       defaults = {
         file_icons = 'mini',
@@ -114,18 +117,73 @@ return {
       },
     },
     keys = {
-      { '<leader>ff', function() require('fzf-lua').git_files {} end, desc = "Find files tracked by Git" },
-      { '<leader>fF', function() require('fzf-lua').files {} end, desc = "Find any file beneath CWD" },
-      { '<leader>fl', function() require('fzf-lua').buffers {} end, desc = "Find open buffers" },
-      { '<leader>fh', function() require('fzf-lua').helptags {} end, desc = "Search Vim help" },
-      { '<leader>sg', function() require('fzf-lua').live_grep {} end, desc = "Grep search at project scope" },
-      { '<leader>ss', function()
+      {
+        '<leader>fa',
+        function() require('fzf-lua').args {} end,
+        desc = "Find files in arguments list"
+      },
+      { '<leader>ff',
+        function()
+          if path.is_directory '.git' then
+            require('fzf-lua').git_files {}
+          else
+            require('fzf-lua').files {}
+          end
+        end,
+        desc = "Find files tracked by Git or beneath CWD if no Git"
+      },
+      { '<leader>fF',
+        function() require('fzf-lua').files {} end,
+        desc = "Find any file beneath CWD"
+      },
+      { '<leader>fl',
+        function() require('fzf-lua').buffers {} end,
+        desc = "Find open buffers"
+      },
+      { '<leader>fh',
+        function() require('fzf-lua').helptags {} end,
+        desc = "Search Vim help files"
+      },
+      { '<leader>sg',
+        function() require('fzf-lua').live_grep { multiprocess = true } end,
+        desc = "Live grep at project scope"
+      },
+      { '<leader>ss',
+        function()
           local buf = vim.api.nvim_get_current_buf()
           local lsp_clients = vim.lsp.get_clients { bufnr = buf }
           if #lsp_clients > 0 then require('fzf-lua').lsp_document_symbols {}
           else require('fzf-lua').treesitter {} end
-        end, desc = "Search document symbols"
-      }
+        end,
+        desc = "Search document symbols"
+      },
+      {
+        '<leader>sb',
+        function() require('fzf-lua').git_blame {} end,
+        desc = "Query 'git blame' output for current buffer"
+      },
+      {
+        '<leader>sO',
+        function() require('fzf-lua').jumps {} end,
+        desc = "Search jump list and jump to selected on <Enter>"
+      },
+      {
+        '<leader>fr',
+        function()
+          require('fzf-lua').resume {}
+        end,
+        desc = "Resume most recent fzf invocation"
+      },
+      {
+        '<leader>"',
+        function() require('fzf-lua').registers {} end,
+        desc = "Search registers and insert via <Enter> on selected"
+      },
+      {
+        '<leader>,',
+        function() require('fzf-lua').marks {} end,
+        desc = "Search marks and jump to selected via <Enter>"
+      },
     },
   },
   {
@@ -158,6 +216,9 @@ return {
         documentation = {
           auto_show = true,
           auto_show_delay_ms = 250,
+        },
+        keyword = {
+          range = 'full',
         },
         menu = {
           draw = {

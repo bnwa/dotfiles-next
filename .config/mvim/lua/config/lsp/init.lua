@@ -89,11 +89,12 @@ end
 function M.attach_keymaps(_, buf)
   local fzf = require 'fzf-lua'
   local keymaps = {
-    { '<leader>ca',  vim.lsp.buf.code_action, { buffer = buf, desc = "Select code action on cursor or range" }},
-    { '<leader>cc',  vim.lsp.codelens.run, { buffer = buf, desc = "Execute codelens on cursor" }},
-    { '<leader>cC',  vim.lsp.codelens.refresh, { buffer = buf, desc = "Refresh codelens on cursor" }},
+    { '<leader>ca',  vim.lsp.codelens.run, { buffer = buf, desc = "Select code action on cursor or range" }},
+    { '<leader>cc',  fzf.lsp_code_actions, { buffer = buf, desc = "Execute codelens on cursor" }},
+    { '<leader>sci', fzf.lsp_incoming_calls, { buffer = buf, desc = "Search for all call sites for symbol under cursor" } },
+    { '<leader>sco', fzf.lsp_outgoing_calls, { buffer = buf, desc = "Search for all call sites for symbol under cursor" } },
     { '<leader>cr',  vim.lsp.buf.rename, { buffer = buf, desc = "Rename symbol at cursor" }},
-    { '<leader>gd',  vim.lsp.buf.definition, { buffer = buf, desc = "Jump to declaration of the symbol under the cursor" } },
+    { '<leader>gd',  fzf.lsp_definitions, { buffer = buf, desc = "Jump to declaration of the symbol under the cursor" } },
     { '<leader>sr',  fzf.lsp_references, { buffer = buf, desc = "List all the references for the symbol under the cursor" } },
     { '<leader>sS',  fzf.lsp_workspace_symbols, { buffer = buf, desc = 'List all symbols in the workspace' } },
     { '<leader>si',  fzf.lsp_implementations, { buffer = buf, desc = "List all implementations for the symbol under the cursor" } },
