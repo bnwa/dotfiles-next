@@ -3,6 +3,10 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
+    dependencies = {
+      'OXY2DEV/markview.nvim',
+    },
+    lazy = false,
     build = ":TSUpdateSync",
     main = 'nvim-treesitter.configs',
     ---@module 'nvim-treesitter'

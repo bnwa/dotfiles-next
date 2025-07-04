@@ -188,7 +188,7 @@ return {
   },
   {
     "OXY2DEV/markview.nvim",
-    lazy = false,
+    event = { 'VeryLazy' },
     opts_extend = {'preview.filetypes'},
     ---@module 'markview.nvim'
     ---@type markview.config
