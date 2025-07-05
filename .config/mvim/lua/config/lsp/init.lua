@@ -52,8 +52,6 @@ function M.on_attach(client, buf)
 
   vim.diagnostic.config(M.diagnostics)
   vim.diagnostic.enable(true, { bufnr = buf })
-
-  M.attach_keymaps(client, buf)
 end
 
 function M.setup(server_name, server_config)
@@ -83,43 +81,6 @@ function M.setup(server_name, server_config)
   if type(setup) ~= 'function' or setup(config) then
     vim.lsp.config(server_name, config)
     vim.lsp.enable(server_name)
-  end
-end
-
-function M.attach_keymaps(_, buf)
-  local fzf = require 'fzf-lua'
-  local keymaps = {
-    { '<leader>ca',  vim.lsp.codelens.run, { buffer = buf, desc = "Select code action on cursor or range" }},
-    { '<leader>cc',  fzf.lsp_code_actions, { buffer = buf, desc = "Execute codelens on cursor" }},
-    { '<leader>sci', fzf.lsp_incoming_calls, { buffer = buf, desc = "Search for all call sites for symbol under cursor" } },
-    { '<leader>sco', fzf.lsp_outgoing_calls, { buffer = buf, desc = "Search for all call sites for symbol under cursor" } },
-    { '<leader>cr',  vim.lsp.buf.rename, { buffer = buf, desc = "Rename symbol at cursor" }},
-    { '<leader>gd',  fzf.lsp_definitions, { buffer = buf, desc = "Jump to declaration of the symbol under the cursor" } },
-    { '<leader>sr',  fzf.lsp_references, { buffer = buf, desc = "List all the references for the symbol under the cursor" } },
-    { '<leader>sS',  fzf.lsp_workspace_symbols, { buffer = buf, desc = 'List all symbols in the workspace' } },
-    { '<leader>si',  fzf.lsp_implementations, { buffer = buf, desc = "List all implementations for the symbol under the cursor" } },
-    { '<leader>shk', fzf.lsp_incoming_calls, { buffer = buf, desc = 'List all call sites for the symbol under the cursor' } },
-    { '<leader>shj', fzf.lsp_outgoing_calls, { buffer = buf, desc = 'List all call sites for the symbol under the cursor' } },
-    { '<leader>xx',  function() fzf.lsp_document_diagnostics {
-        ['winopts.preview.layout'] = 'vertical',
-        ['winopts.width'] = 1,
-      } end, {
-        buffer = buf,
-        desc = "List all diagnostics in the current buffer"
-      }
-    },
-    { '<leader>xX',  function() fzf.lsp_workspace_diagnostics {
-        ['winopts.preview.layout'] = 'vertical',
-        ['winopts.width'] = 1,
-      } end, {
-        buffer = buf,
-        desc = "List all diagnostics in the current workspace"
-      }
-    },
-  }
-  for _, keymap in ipairs(keymaps) do
-    local opts = keymap[3]
-    vim.keymap.set(opts.mode or 'n', keymap[1], keymap[2], opts)
   end
 end
 

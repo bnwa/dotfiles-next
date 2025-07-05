@@ -124,17 +124,13 @@ return {
       },
       { '<leader>ff',
         function()
-          if path.is_directory '.git' then
-            require('fzf-lua').git_files {}
-          else
             require('fzf-lua').files {}
-          end
         end,
-        desc = "Find files tracked by Git or beneath CWD if no Git"
+        desc = "Find files beneath CWD"
       },
       { '<leader>fF',
         function() require('fzf-lua').files {} end,
-        desc = "Find any file beneath CWD"
+        desc = "Find files beneath CWD"
       },
       { '<leader>fl',
         function() require('fzf-lua').buffers {} end,
@@ -149,13 +145,8 @@ return {
         desc = "Live grep at project scope"
       },
       { '<leader>ss',
-        function()
-          local buf = vim.api.nvim_get_current_buf()
-          local lsp_clients = vim.lsp.get_clients { bufnr = buf }
-          if #lsp_clients > 0 then require('fzf-lua').lsp_document_symbols {}
-          else require('fzf-lua').treesitter {} end
-        end,
-        desc = "Search document symbols"
+        function() require('fzf-lua').treesitter {} end,
+        desc = "Search symbols in the current buffer via Treesitter"
       },
       {
         '<leader>sb',
@@ -168,21 +159,29 @@ return {
         desc = "Search jump list and jump to selected on <Enter>"
       },
       {
-        '<leader>fr',
-        function()
-          require('fzf-lua').resume {}
-        end,
-        desc = "Resume most recent fzf invocation"
-      },
-      {
-        '<leader>"',
-        function() require('fzf-lua').registers {} end,
-        desc = "Search registers and insert via <Enter> on selected"
-      },
-      {
         '<leader>,',
         function() require('fzf-lua').marks {} end,
-        desc = "Search marks and jump to selected via <Enter>"
+        desc = "Marks"
+      },
+      {
+        '<leader>svh',
+        function() require('fzf-lua').git_hunks {} end,
+        desc = "Git hunks",
+      },
+      {
+        '<leader>svb',
+        function() require('fzf-lua').git_branches {} end,
+        desc = "Git branches",
+      },
+      {
+        '<leader>svL',
+        function() require('fzf-lua').git_commits {} end,
+        desc = "Project Git log",
+      },
+      {
+        '<leader>svl',
+        function() require('fzf-lua').git_bcommits {} end,
+        desc = "Buffer Git log",
       },
     },
   },
@@ -439,8 +438,16 @@ return {
           enabled = false,
         }
       },
-      preset = 'modern',
-      spec = {}
+      preset = 'helix',
+      spec = {
+        { '<leader>a', icon = '', group = "Assistance", desc = 'Automated assistance' },
+        { '<leader>e', icon = '󰙅', group = "Explore FS", desc = 'Manually traverse file system' },
+        { '<leader>g', icon = '', group = "Traversals", desc = "Traverse various project relationships" },
+        { '<leader>f', icon = '󰱼', group = "Files", desc = "Text search and semantic queries"},
+        { '<leader>s', icon = '', group = "Query", desc = "Text search and semantic queries"},
+        { '<leader>sv', icon = '󰊢', group = 'Git Search', desc = "Search Git objects"},
+        { '<leader>x', icon = '', group = "Debugging", desc = "Diagnostics and debugging" },
+      }
     },
     keys = {
       {

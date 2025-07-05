@@ -13,6 +13,48 @@ return {
     end
   },
   {
+    'user.keymap.lsp',
+    virtual = true,
+    dependencies = {
+      'folke/which-key.nvim',
+    },
+    event = 'LspAttach',
+    opts = {},
+    config = function(_, opts)
+      local wk = require 'which-key'
+      for _, map in ipairs(opts) do
+        wk.add(map)
+      end
+    end
+  },
+  {
+    'user.keymap.vcs',
+    virtual = true,
+    dependencies = {
+      'folke/which-key.nvim',
+      'ibhagwan/fzf-lua',              -- optional
+    },
+    event = { 'VeryLazy' },
+    cond = function()
+      return require('config.utils.path').is_directory '.git'
+    end,
+    opts = {
+      {
+        '<leader>ff',
+        function()
+          require('fzf-lua').git_files {}
+        end,
+        desc = "Find files tracked by Git"
+      }
+    },
+    config = function(_, opts)
+      local wk = require 'which-key'
+      for _, map in ipairs(opts) do
+        wk.add(map)
+      end
+    end
+  },
+  {
     dir = 'user.autocmds',
     event = 'VeryLazy',
     virtual = true,
@@ -64,7 +106,6 @@ return {
             once = true,
             pattern = {'' .. win},
             callback = function(args)
-              vim.print(args, win)
               vim.g.is_qf_open = false
             end
           })
