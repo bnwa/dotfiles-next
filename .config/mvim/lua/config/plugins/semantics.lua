@@ -67,36 +67,36 @@ return {
     ---@type wk.Spec
     opts = function (_, opts)
       local fzf = require 'fzf-lua'
-      vim.tbl_deep_extend('force', opts, {
+      return vim.tbl_deep_extend('force', opts, {
         {
-          '<leader>acr',
+          '<leader>ce',
           vim.lsp.codelens.run,
           buffer = true,
-          desc = "Select code action on cursor or range",
+          desc = "Execute code lens on current line",
         },
         {
-          '<leader>acc',
+          '<leader>cr',
+          vim.lsp.buf.rename,
+          buffer = true,
+          desc = "Rename symbol at cursor",
+        },
+        {
+          '<leader>cc',
           fzf.lsp_code_actions,
           buffer = true,
           desc = "Select an LSP code action for the symbol under the cursor",
         },
         {
-          '<leader>sci',
+          '<leader>scc',
           fzf.lsp_incoming_calls,
           buffer = true,
           desc = "Search for all call sites for symbol under cursor",
         },
         {
-          '<leader>sco',
+          '<leader>scC',
           fzf.lsp_outgoing_calls,
           buffer = true,
           desc = "Search for all call sites for symbol under cursor",
-        },
-        {
-          '<leader>acr',
-          vim.lsp.buf.rename,
-          buffer = true,
-          desc = "Rename symbol at cursor",
         },
         {
           '<leader>scd',

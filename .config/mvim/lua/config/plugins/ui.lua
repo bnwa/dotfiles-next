@@ -159,11 +159,6 @@ return {
         desc = "Search jump list and jump to selected on <Enter>"
       },
       {
-        '<leader>,',
-        function() require('fzf-lua').marks {} end,
-        desc = "Marks"
-      },
-      {
         '<leader>svh',
         function() require('fzf-lua').git_hunks {} end,
         desc = "Git hunks",
@@ -182,6 +177,11 @@ return {
         '<leader>svl',
         function() require('fzf-lua').git_bcommits {} end,
         desc = "Buffer Git log",
+      },
+      {
+        '<leader>z',
+        function() require('fzf-lua').resume() end,
+        desc = "Resume most recent Fzf instance"
       },
     },
   },
@@ -387,43 +387,13 @@ return {
     }
   },
   {
-    'kevinhwang91/nvim-bqf',
-    opts = {
-      auto_resize_height = true,
-      wrap = true,
-    },
-    keys = {
-      {
-        '<leader>xx',
-        function()
-          if vim.g.is_qf_open then
-            vim.cmd 'cclose'
-          else
-            local buf = vim.api.nvim_get_current_buf()
-            local issues = vim.diagnostic.get(buf)
-            local qf_items = vim.diagnostic.toqflist(issues)
-            vim.fn.setqflist(qf_items, 'r')
-            vim.cmd 'copen'
-          end
-
-        end,
-        desc = "List diagnostics for buffer in quickfix via nvim-bqf",
-      },
-      {
-        '<leader>xX',
-        function()
-          vim.diagnostic.setqflist {}
-        end,
-        desc = "List workspace diagnostics in quickfix via nvim-bqf",
-      },
-    }
-  },
-  {
     "yarospace/lua-console.nvim",
-    lazy = true,
+    ft = { 'lua' },
     opts = {
       mappings = {
-        toggle = [[<leader>ce]]
+        attach = [[<leader>\a]],
+        kill_ps = [[<leader>\q]],
+        toggle = [[<leader>\\]],
       }
     },
   },
@@ -440,8 +410,9 @@ return {
       },
       preset = 'helix',
       spec = {
-        { '<leader>a', icon = '', group = "Assistance", desc = 'Automated assistance' },
-        { '<leader>e', icon = '󰙅', group = "Explore FS", desc = 'Manually traverse file system' },
+        { '<leader>a', icon = '', group = "Assistance", desc = 'LLM provided assistance' },
+        { '<leader>c', icon = '', group = "LSP Actions", desc = 'LSP provided assistance' },
+        { '<leader>e', icon = '󰙅', group = "Explorer", desc = 'Manually traverse file system' },
         { '<leader>g', icon = '', group = "Traversals", desc = "Traverse various project relationships" },
         { '<leader>f', icon = '󰱼', group = "Files", desc = "Text search and semantic queries"},
         { '<leader>s', icon = '', group = "Query", desc = "Text search and semantic queries"},
