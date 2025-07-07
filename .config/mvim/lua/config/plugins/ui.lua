@@ -390,11 +390,13 @@ return {
     "yarospace/lua-console.nvim",
     ft = { 'lua' },
     opts = {
+      clear_before_eval = true,
       mappings = {
         attach = [[<leader>\a]],
         kill_ps = [[<leader>\q]],
         toggle = [[<leader>\\]],
-      }
+      },
+      preserve_context = false,
     },
   },
   {
