@@ -62,7 +62,6 @@ return {
       'folke/which-key.nvim',
       'ibhagwan/fzf-lua',
     },
-    event = 'LspAttach',
     ---@module 'which-key.config'
     ---@type wk.Spec
     opts = function (_, opts)
@@ -71,61 +70,51 @@ return {
         {
           '<leader>ce',
           vim.lsp.codelens.run,
-          buffer = true,
           desc = "Execute code lens on current line",
         },
         {
           '<leader>cr',
           vim.lsp.buf.rename,
-          buffer = true,
           desc = "Rename symbol at cursor",
         },
         {
           '<leader>cc',
           fzf.lsp_code_actions,
-          buffer = true,
           desc = "Select an LSP code action for the symbol under the cursor",
         },
         {
           '<leader>scc',
           fzf.lsp_incoming_calls,
-          buffer = true,
           desc = "Search for all call sites for symbol under cursor",
         },
         {
           '<leader>scC',
           fzf.lsp_outgoing_calls,
-          buffer = true,
           desc = "Search for all call sites for symbol under cursor",
         },
         {
           '<leader>scd',
           fzf.lsp_definitions,
-          buffer = true,
           desc = "Jump to declaration of the symbol under the cursor"
         },
         {
           '<leader>scr',
           fzf.lsp_references,
-          buffer = true,
           desc = "List all the references for the symbol under the cursor",
         },
         {
           '<leader>scm',
           fzf.lsp_implementations,
-          buffer = true,
           desc = "List all implementations for the symbol under the cursor"
         },
         {
           '<leader>ss',
           fzf.lsp_document_symbols,
-          buffer = true,
           desc = "Search symbols in the current buffer via LSP",
         },
         {
           '<leader>sS',
           fzf.lsp_workspace_symbols,
-          buffer = true,
           desc = 'Search all symbols in the workspace'
         },
         {
@@ -136,7 +125,6 @@ return {
               ['winopts.width'] = 1,
             }
           end,
-          buffer = true,
           desc = "List all diagnostics in the current buffer",
         },
         {
@@ -147,16 +135,9 @@ return {
               ['winopts.width'] = 1,
             }
           end,
-          buffer = true,
           desc = "List all diagnostics in the current workspace"
         },
       })
-    end,
-    config = function(_, opts)
-      local wk = require 'which-key'
-      for _, map in ipairs(opts) do
-        wk.add(map)
-      end
     end
   }
 }
