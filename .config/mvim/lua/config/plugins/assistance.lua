@@ -52,6 +52,12 @@ return {
           provider = 'google'
         },
         disabled_tools = { 'python' },
+        windows = {
+          position = "right",
+          input = {
+            height = 16,
+          },
+        },
       }
     end,
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
