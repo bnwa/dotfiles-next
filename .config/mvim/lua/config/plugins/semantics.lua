@@ -60,82 +60,70 @@ return {
     dependencies = {
       'neovim/nvim-lspconfig',
       'folke/which-key.nvim',
-      'ibhagwan/fzf-lua',
+      'folke/snacks.nvim',
     },
     ---@module 'which-key.config'
     ---@type wk.Spec
     opts = function (_, opts)
-      local fzf = require 'fzf-lua'
       return vim.tbl_deep_extend('force', opts, {
         {
-          '<leader>ce',
+          '<leader>aa',
+          vim.lsp.buf.code_action,
+          desc = "List and select from LSP-provided code actions for the symbol under the cursor",
+        },
+        {
+          '<leader>ae',
           vim.lsp.codelens.run,
-          desc = "Execute code lens on current line",
+          desc = "Execute LSP-provided code lens for the current line",
         },
         {
-          '<leader>cr',
+          '<leader>ar',
           vim.lsp.buf.rename,
-          desc = "Rename symbol at cursor",
+          desc = "Rename symbol at cursor via LSP",
         },
         {
-          '<leader>cc',
-          fzf.lsp_code_actions,
-          desc = "Select an LSP code action for the symbol under the cursor",
+          '<leader>slc',
+          vim.lsp.buf.incoming_calls,
+          desc = "List and select from call sites for the symbol under the cursor",
         },
         {
-          '<leader>scc',
-          fzf.lsp_incoming_calls,
-          desc = "Search for all call sites for symbol under cursor",
+          '<leader>slC',
+          vim.lsp.buf.outgoing_calls,
+          desc = "List and select from symbols called from the symbol under the cursor",
         },
         {
-          '<leader>scC',
-          fzf.lsp_outgoing_calls,
-          desc = "Search for all call sites for symbol under cursor",
+          '<leader>sld',
+          function() Snacks.picker.lsp_type_definitions {} end,
+          desc = "List and select from type definitions for the symbol under the cursor",
         },
         {
-          '<leader>scd',
-          fzf.lsp_definitions,
-          desc = "Jump to declaration of the symbol under the cursor"
+          '<leader>slD',
+          function() Snacks.picker.lsp_implementations {} end,
+          desc = "List and select from type implementations for the symbol under the cursor",
         },
         {
-          '<leader>scr',
-          fzf.lsp_references,
+          '<leader>slr',
+          function() Snacks.picker.lsp_references {} end,
           desc = "List all the references for the symbol under the cursor",
         },
-        {
-          '<leader>scm',
-          fzf.lsp_implementations,
-          desc = "List all implementations for the symbol under the cursor"
-        },
-        {
-          '<leader>ss',
-          fzf.lsp_document_symbols,
+        { '<leader>sls',
+          function() Snacks.picker.lsp_symbols() end,
           desc = "Search symbols in the current buffer via LSP",
         },
         {
-          '<leader>sS',
-          fzf.lsp_workspace_symbols,
-          desc = 'Search all symbols in the workspace'
+          '<leader>slS',
+          function() Snacks.picker.lsp_workspace_symbols {} end,
+          desc = 'Search symbols in the workspace via LSP',
         },
         {
           '<leader>xx',
-          function()
-            fzf.lsp_document_diagnostics {
-              ['winopts.preview.layout'] = 'vertical',
-              ['winopts.width'] = 1,
-            }
-          end,
-          desc = "List all diagnostics in the current buffer",
+          function() Snacks.picker.diagnostics {} end,
+          desc =  "List all diagnostics in the current workspace",
         },
         {
           '<leader>xX',
-          function()
-            fzf.lsp_workspace_diagnostics {
-              ['winopts.preview.layout'] = 'vertical',
-              ['winopts.width'] = 1,
-            }
-          end,
-          desc = "List all diagnostics in the current workspace"
+          function() Snacks.picker.diagnostics_buffer {} end,
+          desc = "List all diagnostics in the current buffer",
         },
       })
     end

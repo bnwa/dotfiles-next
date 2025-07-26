@@ -1,5 +1,3 @@
-local path = require 'config.utils.path'
-
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
@@ -87,7 +85,7 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",         -- required
       "sindrets/diffview.nvim",        -- optional - Diff integration
-      "ibhagwan/fzf-lua",              -- optional
+      "folke/snacks.nvim",              -- optional
     },
     ---@module 'neogit'
     ---@type NeogitConfig
@@ -95,93 +93,146 @@ return {
       graph_style = 'unicode',
       integrations = {
         diffview = true,
-        fzf_lua = true,
+        fzf_lua = false,
+        snacks = true,
         mini_pick = false,
         telescope = false,
       }
     }
   },
   {
-    "ibhagwan/fzf-lua",
-    dependencies = { "echasnovski/mini.icons" },
+    "folke/snacks.nvim",
+    lazy = false,
+    ---@module 'snacks'
+    ---@type snacks.Config
     opts = {
-      -- Keeps fzf process running in bg on UI close
-      'hide',
-      defaults = {
-        file_icons = 'mini',
+      explorer = {
+        replace_netrw = true,
       },
-      fzf_colors = true,
-      fzf_opts = {
-        ['--cycle'] = true,
-        ['--keep-right'] = true,
-      },
+      picker = {
+        layout = {
+          cycle = true,
+          fullscreen = true,
+        },
+        sources = {
+          explorer = {
+            jump = {
+              close = true,
+            },
+            layout = {
+              cycle = true,
+              fullscreen = true,
+              preset = nil,
+              preview = true,
+            },
+            win = {
+              list = {
+                keys = {
+                  ["<BS>"] = "explorer_up",
+                  ["l"] = "confirm",
+                  ["h"] = "explorer_close", -- close directory
+                  ["a"] = "explorer_add",
+                  ["d"] = "explorer_del",
+                  ["r"] = "explorer_rename",
+                  ["c"] = "explorer_copy",
+                  ["m"] = "explorer_move",
+                  ["o"] = "explorer_open", -- open with system application
+                  ["P"] = "toggle_preview",
+                  ["y"] = { "explorer_yank", mode = { "n", "x" } },
+                  ["p"] = "explorer_paste",
+                  ["u"] = "explorer_update",
+                  ["<c-c>"] = "tcd",
+                  ["<leader>/"] = "picker_grep",
+                  ["<c-t>"] = "terminal",
+                  ["."] = "explorer_focus",
+                  ["I"] = "toggle_ignored",
+                  ["H"] = "toggle_hidden",
+                  ["Z"] = "explorer_close_all",
+                  ["]g"] = "explorer_git_next",
+                  ["[g"] = "explorer_git_prev",
+                  ["]d"] = "explorer_diagnostic_next",
+                  ["[d"] = "explorer_diagnostic_prev",
+                  ["]w"] = "explorer_warn_next",
+                  ["[w"] = "explorer_warn_prev",
+                  ["]e"] = "explorer_error_next",
+                  ["[e"] = "explorer_error_prev",
+                },
+              },
+            },
+          }
+        },
+        ui_select = true,
+      }
     },
     keys = {
-      {
-        '<leader>fa',
-        function() require('fzf-lua').args {} end,
-        desc = "Find files in arguments list"
-      },
       { '<leader>ff',
-        function()
-            require('fzf-lua').files {}
-        end,
-        desc = "Find files beneath CWD"
+        function() Snacks.picker.files() end,
+        desc = "Find a file beneath CWD"
       },
       { '<leader>fF',
-        function() require('fzf-lua').files {} end,
-        desc = "Find files beneath CWD"
+        function() Snacks.picker.files() end,
+        desc = "Find a file beneath CWD"
       },
       { '<leader>fl',
-        function() require('fzf-lua').buffers {} end,
-        desc = "Find open buffers"
+        function()
+          Snacks.picker.buffers {
+            win = {
+              input = {
+                keys = {
+                  ["<c-x>"] = { "bufdelete", mode = { "n", "i" } },
+                },
+              },
+              list = { keys = { ["dd"] = "bufdelete" } },
+            },
+          }
+        end,
+        desc = "Find a visible buffer"
       },
-      { '<leader>fh',
-        function() require('fzf-lua').helptags {} end,
-        desc = "Search Vim help files"
+      { '<leader>e',
+
       },
-      { '<leader>sg',
-        function() require('fzf-lua').live_grep { multiprocess = true } end,
-        desc = "Live grep at project scope"
+      { '<leader>l`',
+        function() Snacks.picker.marks() end,
+        desc = "List and select from marks"
       },
-      { '<leader>ss',
-        function() require('fzf-lua').treesitter {} end,
-        desc = "Search symbols in the current buffer via Treesitter"
+      { '<leader>l:',
+        function() Snacks.picker.command_history {} end,
+        desc = "List and select from command history"
+      },
+      { '<leader>l"',
+        function() Snacks.picker.registers {} end,
+        desc = "List and select from registers"
+      },
+      { '<leader>l/',
+        function() Snacks.picker.search_history {} end,
+        desc = "List and select from search history"
+      },
+      { '<leader>lc',
+        function() Snacks.picker.colorschemes() end,
+        desc = "List and select from colorschemes"
+      },
+      { '<leader>lh',
+        function() Snacks.picker.help() end,
+        desc = "List and select from help files"
       },
       {
-        '<leader>sb',
-        function() require('fzf-lua').git_blame {} end,
-        desc = "Query 'git blame' output for current buffer"
-      },
-      {
-        '<leader>sO',
-        function() require('fzf-lua').jumps {} end,
+        '<leader>lo',
+        function() Snacks.picker.jumps() end,
         desc = "Search jump list and jump to selected on <Enter>"
       },
       {
-        '<leader>svh',
-        function() require('fzf-lua').git_hunks {} end,
-        desc = "Git hunks",
+        '<leader>lu',
+        function() Snacks.picker.undo() end,
+        desc = "List and select from undo history"
       },
-      {
-        '<leader>svb',
-        function() require('fzf-lua').git_branches {} end,
-        desc = "Git branches",
-      },
-      {
-        '<leader>svL',
-        function() require('fzf-lua').git_commits {} end,
-        desc = "Project Git log",
-      },
-      {
-        '<leader>svl',
-        function() require('fzf-lua').git_bcommits {} end,
-        desc = "Buffer Git log",
+      { '<leader>ss',
+        function() Snacks.picker.grep() end,
+        desc = "Live grep at project scope"
       },
       {
         '<leader>z',
-        function() require('fzf-lua').resume() end,
-        desc = "Resume most recent Fzf instance"
+        function() Snacks.picker.resume() end,
+        desc = "Resume most recent picker instance"
       },
     },
   },
@@ -262,56 +313,6 @@ return {
     },
   },
   {
-    'stevearc/oil.nvim',
-    lazy = false,
-    dependencies = { 'echasnovski/mini.icons' },
-    ---@module 'oil'
-    ---@type oil.SetupOpts
-    opts = {
-      columns = {
-        'icon',
-        -- "permissions",
-        -- "size",
-        -- "mtime",
-      },
-      default_file_explorer = true,
-      delete_to_trash = true,
-      git = {
-        add = function(path) return true end,
-        mv = function(src_path, dest_path) return true end,
-        rm = function(path) return true end,
-      },
-      lsp_file_methods = {
-        autosave_changes = true,
-      },
-      preview_win = {
-        disable_preview = function(filename)
-          local is_log = string.match(filename, 'log') ~= nil
-          if is_log then return false
-          else return true end
-        end,
-      },
-    },
-    keys = {
-      {
-        '<leader>ee',
-        function()
-          require('oil').toggle_float(vim.fn.getcwd())
-        end,
-        desc = "Open Oil file explorer on CWD"
-      },
-      {
-        '<leader>eb',
-        function()
-          local buf = vim.api.nvim_get_current_buf()
-          local path = vim.api.nvim_buf_get_name(buf)
-          require('oil').toggle_float(vim.fn.fnamemodify(path, ':p:h'))
-        end,
-        desc = "Open Oil file explorer on CWD"
-      }
-    },
-  },
-  {
     'akinsho/toggleterm.nvim',
     version = "*",
     opts = {
@@ -350,15 +351,19 @@ return {
           'mode'
         },
         lualine_b = {
-          {'branch', fmt = function(str, ctx)
-            return string.sub(str, 1, 25)
-          end},
+          {'branch',
+            fmt = function(str, _)
+              return string.sub(str, 1, 25)
+            end
+          },
           'diff',
-          { 'diagnostics', colored = true, sources = { 'nvim_lsp' } }
+          { 'diagnostics',
+            colored = true,
+            sources = { 'nvim_lsp' }
+          }
         },
         lualine_c = {
-          {
-            'filename',
+          { 'filename',
             newfile_status = true, -- Display 'new file status
             path = 1, -- relative path
           },

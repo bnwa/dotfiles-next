@@ -32,20 +32,43 @@ return {
     virtual = true,
     dependencies = {
       'folke/which-key.nvim',
-      'ibhagwan/fzf-lua',              -- optional
+      'folke/snacks.nvim',
     },
     event = { 'VeryLazy' },
     cond = function()
+      -- Relative to CWD
       return require('config.utils.path').is_directory '.git'
     end,
     opts = {
+      { '<leader>ff',
+        function() Snacks.picker.git_files {} end,
+        desc = "Find files tracked by Git beneath CWD",
+      },
       {
-        '<leader>ff',
-        function()
-          require('fzf-lua').git_files {}
-        end,
-        desc = "Find files tracked by Git"
-      }
+        '<leader>sgd',
+        function() Snacks.picker.git_diff() end,
+        desc = "Git hunks",
+      },
+      {
+        '<leader>sgb',
+        function() Snacks.picker.git_branches() end,
+        desc = "Git branches",
+      },
+      {
+        '<leader>sgL',
+        function() Snacks.picker.git_log() end,
+        desc = "Project Git log",
+      },
+      {
+        '<leader>sgl',
+        function() Snacks.picker.git_log_file() end,
+        desc = "Buffer Git log",
+      },
+      {
+        '<leader>sgs',
+        function() Snacks.picker.git_stash() end,
+        desc = "Git stash",
+      },
     },
     config = function(_, opts)
       local wk = require 'which-key'

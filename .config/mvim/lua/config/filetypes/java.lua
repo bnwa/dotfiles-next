@@ -16,7 +16,6 @@ return {
     'JavaHello/spring-boot.nvim',
     ft = { 'java', 'jproperties' },
     dependencies = {
-      'ibhagwan/fzf-lua',
       'williamboman/mason.nvim',
     },
     config = function()

@@ -39,7 +39,7 @@ return {
                   -- Disable certain diagnostics globally.
                   disable = {},
                   -- An array of variable names that will be declared as global.
-                  globals = { "MiniIcons", "vim" },
+                  globals = { "MiniIcons", "vim", "Snacks" },
                 },
                 format = {
                   -- https://github.com/CppCXY/EmmyLuaCodeStyle/blob/master/docs/format_config_EN.md

@@ -43,10 +43,13 @@ return {
           },
         },
         file_selector = {
-          file_selector = 'fzf_lua'
+          file_selector = 'snacks'
         },
         selector = {
-          provider = 'fzf_lua',
+          provider = 'snacks',
+        },
+        input = {
+          provider = 'snacks',
         },
         web_search_engine = {
           provider = 'google'
@@ -67,7 +70,7 @@ return {
       "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
-      "ibhagwan/fzf-lua", -- for file_selector provider fzf
+      "folke/snacks.nvim",
       'zbirenbaum/copilot.lua',
       {
         -- support for image pasting
