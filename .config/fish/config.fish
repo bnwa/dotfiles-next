@@ -29,6 +29,20 @@ if status is-interactive
     test -x "$(which bat)"; and function cat
         bat $argv
     end
+    test -x "$(which trash)"; and function rm
+        set -l files
+        for arg in $argv
+            # Skip -rf, -r -f, -fr flags
+            if test "$arg" = "-rf" -o "$arg" = "-fr" -o "$arg" = "-r" -o "$arg" = "-f"
+                continue
+            end
+            # Add non-flag arguments to result
+            set files $files $arg
+        end
+        # Flags: verbose output; use Finder to trash files so that
+        # 'Put Back' from Trash is supported
+        trash -vF $files
+    end
 
     # Load secret environment variables
     test -f ~/.secret.env; and load_env_file ~/.secret.env
