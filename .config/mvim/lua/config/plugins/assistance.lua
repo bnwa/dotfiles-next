@@ -8,16 +8,22 @@ return {
     -- enabled = function()
     --   return type(vim.env.ANTHROPIC_API_KEY) == 'string'
     -- end,
-    ---@module 'avante'
-    ---@type avante.Config
-    ---@diagnostic disable-next-line:missing-fields
     opts = function()
       local has_claude = type(vim.env.ANTHROPIC_API_KEY) == 'string'
       local provider = has_claude and 'claude' or 'copilot'
+      ---@module 'avante'
+      ---@type avante.Config
       return {
+        auto_suggestions_provider = provider,
+        disabled_tools = { 'python' },
+        file_selector = {
+          file_selector = 'snacks'
+        },
+        input = {
+          provider = 'snacks',
+        },
         mode = 'legacy',
         provider = provider,
-        auto_suggestions_provider = provider,
         providers = {
           claude = {
             endpoint = "https://api.anthropic.com",
@@ -42,19 +48,16 @@ return {
             },
           },
         },
-        file_selector = {
-          file_selector = 'snacks'
+        rules = {
+          global_dir = '~/.config/nvim/avante/rules',
+          project_dir = '.avante/rules',
         },
         selector = {
-          provider = 'snacks',
-        },
-        input = {
           provider = 'snacks',
         },
         web_search_engine = {
           provider = 'google'
         },
-        disabled_tools = { 'python' },
         windows = {
           position = "right",
           input = {
