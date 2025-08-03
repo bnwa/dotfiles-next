@@ -67,7 +67,7 @@ return {
     opts = function (_, opts)
       return vim.tbl_deep_extend('force', opts, {
         {
-          '<leader>aa',
+          '<leader>al',
           vim.lsp.buf.code_action,
           desc = "List and select from LSP-provided code actions for the symbol under the cursor",
         },
