@@ -29,7 +29,44 @@ return {
     },
     config = function(_, opts)
       local lsp = require 'config.lsp'
-      vim.api.nvim_create_autocmd({'LspAttach' }, {
+      local autocmd = require 'config.utils.autocmd'
+      -- Track initialized servers to avoid duplicates
+      local initialized_servers = {}
+      -- Build filetype to servers mapping
+      local filetype_to_servers = {}
+
+      for server_name, server_config in pairs(opts.servers) do
+        local filetypes = server_config.filetypes or {}
+
+        for _, filetype in ipairs(filetypes) do
+          if not filetype_to_servers[filetype] then
+            filetype_to_servers[filetype] = {}
+          end
+          table.insert(filetype_to_servers[filetype], {
+            name = server_name,
+            config = server_config
+          })
+        end
+      end
+
+      -- Create FileType autocommands for each supported filetype
+      for filetype, servers in pairs(filetype_to_servers) do
+        autocmd.filetype({ filetype }, function()
+          -- Initialize all servers that support this filetype
+          for _, server_info in ipairs(servers) do
+            local server_name = server_info.name
+            local server_config = server_info.config
+            -- Only initialize each server once
+            if not initialized_servers[server_name] then
+              initialized_servers[server_name] = true
+              lsp.setup(server_name, server_config)
+            end
+          end
+        end)
+      end
+
+      -- Set up LspAttach for on_attach functionality
+      vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
           local buf = args.buf
           local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -49,9 +86,6 @@ return {
           end
         end
       })
-      for server_name, server_config in pairs(opts.servers) do
-        lsp.setup(server_name, server_config)
-      end
     end
   },
   {

@@ -6,6 +6,7 @@ return {
     opts = {
       servers = {
         cssls = {
+          filetypes = { 'css', 'scss', 'less' },
           settings = {
             css = {
               completion = true,

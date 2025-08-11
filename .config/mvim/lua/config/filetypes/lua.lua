@@ -93,23 +93,34 @@ return {
                   viewString = true, -- For example, hovering "\x48" will display "H".
                 },
                 runtime = {
-                  path = path,
+                  path = {},
                   version = 'LuaJIT',
                 },
                 workspace = {
                   checkThirdParty = 'Disable',
-                  library = library
+                  library = {}
                 },
               }
             },
             setup = function(config)
-              --              local lazydev = require 'lazydev'
-              --              lazydev.setup {
-              --                library = {
-              --                  { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-              --                }
-              --              }
-              config.root_dir = vim.fs.root(0, 'lazy-lock.json')
+              local can_read_file = require('config.utils.path').can_read_file
+              local root_markers = {
+                 '.luarc.json',
+                 'lazy-lock.json',
+                 'main.lua',
+                 'lua/'
+              }
+              local root_dir = vim.fs.root(0, root_markers)
+              local is_nvim = can_read_file(root_dir .. '/lazy-lock.json')
+              if is_nvim then
+                local library = vim.api.nvim_get_runtime_file('lua', true)
+                local path = vim.split(package.path, ';')
+                table.insert(path, 1, 'lua/?/init.lua')
+                table.insert(path, 1, 'lua/?.lua')
+                config.settings.Lua.runtime.path = path
+                config.settings.Lua.workspace.library = library
+              end
+              config.root_dir = root_dir
               return true
             end
           },

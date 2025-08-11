@@ -78,10 +78,43 @@ function M.setup(server_name, server_config)
       },
     }), {'setup'})
 
-  if type(setup) ~= 'function' or setup(config) then
-    vim.lsp.config(server_name, config)
-    vim.lsp.enable(server_name)
+  local function do_setup()
+    local success, result = pcall(function()
+      if type(setup) == 'function' then
+        return setup(config)
+      end
+      return true
+    end)
+
+    if not success then
+      vim.notify('LSP setup failed for ' .. server_name .. ': ' .. tostring(result), vim.log.levels.WARN)
+      -- Retry after a short delay to allow plugins to load
+      vim.defer_fn(function()
+        local retry_success, retry_result = pcall(function()
+          if type(setup) == 'function' then
+            return setup(config)
+          end
+          return true
+        end)
+
+        if retry_success and retry_result then
+          vim.lsp.config(server_name, config)
+          vim.lsp.enable(server_name)
+        else
+          vim.notify('LSP setup retry failed for ' .. server_name .. ': ' .. tostring(retry_result), vim.log.levels.ERROR)
+        end
+      end, 100)  -- 100ms delay
+      return
+    end
+
+    if result then
+      vim.lsp.config(server_name, config)
+      vim.lsp.enable(server_name)
+    end
   end
+
+  -- Schedule setup to allow lazy-loaded plugins to initialize
+  vim.schedule(do_setup)
 end
 
 function M.get_clients(buf)
