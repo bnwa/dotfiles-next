@@ -49,7 +49,7 @@ return {
           },
         },
         rules = {
-          global_dir = '~/.config/nvim/avante/rules',
+          global_dir = vim.fn.expand '~/.config/mvim/avante/rules',
           project_dir = '.avante/rules',
         },
         selector = {

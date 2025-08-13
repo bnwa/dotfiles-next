@@ -1,0 +1,30 @@
+## General Code Formatting Guidelines
+Adhere to the following general rules when generating code in any
+programming language. If an enumerated rule here contradicts any
+related instruction stated prior, prefer the rule stated here.
+
++ Any line of comments should never exceed 66 characters,
+excluding a terminating newline character.
++ Whenever you need to insert an empty line between non-empty
+lines, where 'empty line' is defined as a line consisting solely
+of spaces and/or tabs, such a line should only consist of a single
+newline character. For example, assuming default indentation of 4
+spaces:
+This is a violation of this rule
+```typescript
+const foo = "bar"
+    
+if (foo.length === 4) {}
+```
+This is within parameters of the rule
+```typescript
+const foo = "bar"
+
+if (foo.length === 4) {}
+```
++ As far as posssible, in programming languages that feature block
+scoping, do your best to avoid nesting blocks. Possible options
+include but are not limited to:
+  - Preferring early checks and returns
+  - Extracting repeated blocks to utility functions in the largest
+  scope that contains their repetition
