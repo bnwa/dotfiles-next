@@ -2,104 +2,115 @@
 ---@type LazySpec[]
 return {
   {
-    "yetone/avante.nvim",
-    event = "VeryLazy",
-    version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
-    -- enabled = function()
-    --   return type(vim.env.ANTHROPIC_API_KEY) == 'string'
-    -- end,
+    "olimorris/codecompanion.nvim",
     opts = function()
       local has_claude = type(vim.env.ANTHROPIC_API_KEY) == 'string'
-      local provider = has_claude and 'claude' or 'copilot'
-      ---@module 'avante'
-      ---@type avante.Config
+      local provider = has_claude and 'anthropic' or 'copilot'
+      local max_tokens = 200000
       return {
-        auto_suggestions_provider = provider,
-        disabled_tools = { 'python' },
-        file_selector = {
-          file_selector = 'snacks'
+        adapters = {
+          anthropic = require('codecompanion.adapters').extend('anthropic', {
+            schema = {
+              max_tokens = {
+                default = max_tokens
+              },
+              model = {
+                default = 'claude-sonnet-4-20250514'
+              },
+            }
+          }),
+          copilot = require('codecompanion.adapters').extend('copilot', {
+            schema = {
+              max_tokens = {
+                default = max_tokens
+              },
+              model = {
+                default = 'claude-sonnet-4'
+              },
+            }
+          }),
         },
-        input = {
-          provider = 'snacks',
+        display = {
+          chat = {
+            fold_context = true,
+            icons = {
+              chat_context = ''
+            }
+          },
+          provider = 'snacks'
         },
-        mode = 'legacy',
-        provider = provider,
-        providers = {
-          claude = {
-            endpoint = "https://api.anthropic.com",
-            model = "claude-sonnet-4-20250514",
-            timeout = 30000, -- Timeout in milliseconds
-            context_window = 200000,
-            extra_request_body = {
-              temperature = 0.75,
-              max_tokens = 64000,
+        opts = {
+          log_level = 'DEBUG',
+        },
+        strategies = {
+          chat = {
+            adapter = provider,
+            variables = {
+              ["buffer"] = {
+                opts = {
+                  default_params = 'watch', -- or 'pin'
+                },
+              },
             },
           },
-          copilot = {
-            endpoint = "https://api.githubcopilot.com",
-            model = "gpt-4o-2024-11-20",
-            proxy = nil, -- [protocol://]host[:port] Use this proxy
-            allow_insecure = false, -- Allow insecure server connections
-            timeout = 30000, -- Timeout in milliseconds
-            context_window = 128000, -- Number of tokens to send to the model for context
-            extra_request_body = {
-              temperature = 0.75,
-              max_tokens = 20480,
-            },
+          cmd = {
+            adapter = provider,
           },
-        },
-        rules = {
-          global_dir = vim.fn.expand '~/.config/mvim/avante/rules',
-          project_dir = '.avante/rules',
-        },
-        selector = {
-          provider = 'snacks',
-        },
-        web_search_engine = {
-          provider = 'google'
-        },
-        windows = {
-          position = "right",
-          input = {
-            height = 16,
+          inline = {
+            adapter = provider,
           },
         },
       }
     end,
-    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-    build = "make",
     dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "stevearc/dressing.nvim",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      "folke/snacks.nvim",
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
       'zbirenbaum/copilot.lua',
       {
-        -- support for image pasting
-        "HakonHarnes/img-clip.nvim",
-        event = "VeryLazy",
+        'HakonHarnes/img-clip.nvim',
         opts = {
-          -- recommended settings
-          default = {
-            embed_image_as_base64 = false,
-            prompt_for_file_name = false,
-            drag_and_drop = {
-              insert_mode = true,
+          filetypes = {
+            codecompanion = {
+              prompt_for_file_name = false,
+              template = "[Image]($FILE_PATH)",
+              use_absolute_path = true,
             },
-            -- required for Windows users
-            use_absolute_path = true,
           },
         },
       },
       {
         'OXY2DEV/markview.nvim',
-        opts = {
-          preview = {
-            filetypes = { "Avante" }
-          }
-        },
-      },
+        opts = function(_, opts)
+          local function conceal_tag(icon, hl_group)
+            return {
+              on_node = { hl_group = hl_group },
+              on_closing_tag = { conceal = '' },
+              on_opening_tag = {
+                conceal = '',
+                virt_text_pos = 'inline',
+                virt_text = {{ icon .. ' ', hl_group }},
+              },
+            }
+          end
+
+          return vim.tbl_deep_extend('force', opts, {
+            html = {
+              container_elements = {
+                ['^buf$']         = conceal_tag('', 'CodeCompanionChatVariable'),
+                ['^file$']        = conceal_tag('', 'CodeCompanionChatVariable'),
+                ['^help$']        = conceal_tag('󰘥', 'CodeCompanionChatVariable'),
+                ['^image$']       = conceal_tag('', 'CodeCompanionChatVariable'),
+                ['^symbols$']     = conceal_tag('', 'CodeCompanionChatVariable'),
+                ['^url$']         = conceal_tag('󰖟', 'CodeCompanionChatVariable'),
+                ['^var$']         = conceal_tag('', 'CodeCompanionChatVariable'),
+                ['^tool$']        = conceal_tag('', 'CodeCompanionChatTool'),
+                ['^user_prompt$'] = conceal_tag('', 'CodeCompanionChatTool'),
+                ['^group$']       = conceal_tag('', 'CodeCompanionChatToolGroup'),
+              },
+            },
+          })
+        end,
+      }
     },
   },
 }

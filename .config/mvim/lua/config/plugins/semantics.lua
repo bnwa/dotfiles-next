@@ -28,64 +28,35 @@ return {
       servers = {},
     },
     config = function(_, opts)
+      local cmp = require 'blink.cmp'
       local lsp = require 'config.lsp'
-      local autocmd = require 'config.utils.autocmd'
-      -- Track initialized servers to avoid duplicates
-      local initialized_servers = {}
-      -- Build filetype to servers mapping
-      local filetype_to_servers = {}
 
       for server_name, server_config in pairs(opts.servers) do
-        local filetypes = server_config.filetypes or {}
+        local server_setup = server_config.setup
+        local server_on_attach = server_config.on_attach
+        local server_capabilities = server_config.capabilities or {}
 
-        for _, filetype in ipairs(filetypes) do
-          if not filetype_to_servers[filetype] then
-            filetype_to_servers[filetype] = {}
-          end
-          table.insert(filetype_to_servers[filetype], {
-            name = server_name,
-            config = server_config
-          })
-        end
-      end
-
-      -- Create FileType autocommands for each supported filetype
-      for filetype, servers in pairs(filetype_to_servers) do
-        autocmd.filetype({ filetype }, function()
-          -- Initialize all servers that support this filetype
-          for _, server_info in ipairs(servers) do
-            local server_name = server_info.name
-            local server_config = server_info.config
-            -- Only initialize each server once
-            if not initialized_servers[server_name] then
-              initialized_servers[server_name] = true
-              lsp.setup(server_name, server_config)
-            end
-          end
-        end)
-      end
-
-      -- Set up LspAttach for on_attach functionality
-      vim.api.nvim_create_autocmd('LspAttach', {
-        callback = function(args)
-          local buf = args.buf
-          local client = vim.lsp.get_client_by_id(args.data.client_id)
-          local server_name = client and client.name
-          if not server_name then
-            return vim.notify('No LSP Client Configured')
-          end
-          local server_config = opts.servers[server_name]
-          if not server_config then
-            vim.health.warn('Failed to find LSP params for server "' .. server_name .. '"')
-            return
-          end
-          local server_on_attach = server_config.on_attach
-
-          if type(server_on_attach) ~= "function" or server_on_attach(client, buf) then
-            lsp.on_attach(client, buf)
+        if type(server_setup) == 'function' then
+          local success, result = pcall(server_setup, server_config)
+          -- TODO if `not success` log error and do not proceed
+          if not success or result == false then
+            goto continue
           end
         end
-      })
+
+        server_config.setup = nil
+        server_config.on_attach = nil
+
+        local config = vim.tbl_extend('force',
+          server_config,
+          { capabilities = cmp.get_lsp_capabilities(server_capabilities, true) },
+          { on_attach = lsp.on_attach(server_on_attach) })
+
+        vim.lsp.config(server_name, config)
+        vim.lsp.enable(server_name)
+
+        ::continue::
+      end
     end
   },
   {
