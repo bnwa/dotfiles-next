@@ -34,13 +34,17 @@ return {
         local server_setup = server_config.setup
         local server_on_attach = server_config.on_attach
         local server_capabilities = server_config.capabilities or {}
+        local has_own_setup = type(server_setup) == 'function'
 
-        if type(server_setup) == 'function' then
-          local success, result = pcall(server_setup, server_config)
-          -- TODO if `not success` log error and do not proceed
-          if not success or result == false then
-            goto continue
-          end
+        if not has_own_setup or server_setup(server_config) then
+          local config = vim.tbl_extend('force',
+            server_config,
+            { capabilities = nil, on_attach = nil, setup = nil },
+            { capabilities = cmp.get_lsp_capabilities(server_capabilities, true) },
+            { on_attach = lsp.on_attach(server_on_attach) })
+
+          vim.lsp.config(server_name, config)
+          vim.lsp.enable(server_name)
         end
 
         server_config.setup = nil
@@ -53,8 +57,6 @@ return {
 
         vim.lsp.config(server_name, config)
         vim.lsp.enable(server_name)
-
-        ::continue::
       end
     end
   },
@@ -66,9 +68,9 @@ return {
       'folke/which-key.nvim',
       'folke/snacks.nvim',
     },
-    ---@module 'which-key.config'
-    ---@type wk.Spec
     opts = function (_, opts)
+      ---@module 'which-key.config'
+      ---@type wk.Spec
       return vim.tbl_deep_extend('force', opts, {
         {
           '<leader>al',
