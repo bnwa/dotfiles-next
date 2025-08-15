@@ -41,24 +41,19 @@ return {
     'mfussenegger/nvim-jdtls',
     dependencies = {
       'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
       -- 'rcarriga/nvim-dap-ui',
       -- 'mfussenegger/nvim-dap',
     },
-    config = false,
-  },
-  {
-    'neovim/nvim-lspconfig',
-    opts = function()
+    config = function()
       local bundles = {}
-      local registry = require 'mason-registry'
       local jdtls = require 'jdtls'
       local platform = require 'config.utils.platform'
       local util = require 'config.utils.java'
+      local cmp = require 'blink.cmp'
+      local autocmd = require 'config.utils.autocmd'
       -- local dap = require 'jdtls.dap'
 
-      local jdtls_pkg = registry.get_package('jdtls')
-      local jdtls_path = jdtls_pkg:get_install_path()
+      local jdtls_path = vim.fn.expand("$MASON/packages" .. "jdtls")
       local plugins_path = jdtls_path .. '/plugins'
       --local agent_path = jdtls_path .. '/lombok.jar'
       local launcher_path = vim.fn.glob(plugins_path .. '/org.eclipse.equinox.launcher_*.jar')
@@ -76,8 +71,7 @@ return {
       --   vim.list_extend(bundles, java_test_bundle)
       -- end
 
-      local spring_boot_pkg = registry.get_package('vscode-spring-boot-tools')
-      local spring_boot_path = spring_boot_pkg:get_install_path()
+      local spring_boot_path = vim.fn.expand("$MASON/packages" .. 'vscode-spring-boot-tools')
       local spring_boot_exts = spring_boot_path .. '/extension/jars/*.jar'
       local spring_boot_bundle = vim.split(vim.fn.glob(spring_boot_exts), '\n')
       vim.list_extend(bundles, spring_boot_bundle)
@@ -96,178 +90,167 @@ return {
         jdtls.extendedClientCapabilities,
         { resolveAdditionalTextEditsSupport = true })
 
-      return {
-        servers = {
-          jdtls = {
-            filetypes = {
-              'java',
+      local capabilities = cmp.get_lsp_capabilities({}, true)
+
+      autocmd.filetype({'java'}, function()
+        --local spring_nvim = require 'springboot-nvim'
+        local project_path = vim.fn.fnamemodify(vim.fs.find({
+          '.git',
+          'mvnw',
+          'gradlew',
+          'pom.xml',
+          'build.gradle',
+        }, { upward = true })[1], ':h')
+        local workspace_path = vim.fn.stdpath('cache') .. '/' .. vim.fn.fnamemodify(project_path, ':t')
+        jdtls.start_or_attach({
+        capabilities = capabilities,
+        cmd = {
+          'java',
+          '-Declipse.application=org.eclipse.jdt.ls.core.id1',
+          '-Dosgi.bundles.defaultStartLevel=4',
+          '-Declipse.product=org.eclipse.jdt.ls.core.product',
+          '-Dlog.protocol=true',
+          '-Dlog.level=ALL',
+          --        '-javaagent:' ..agent_path,
+          '-Xms1g', -- Set initial Java process heap size
+          '-Xmx2g', -- Set max Java process heap size
+          '--add-modules=ALL-SYSTEM',
+          '--add-opens', 'java.base/java.util=ALL-UNNAMED',
+          '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+          '-jar', launcher_path,
+          '-configuration', platform_path,
+          '-data', workspace_path,
+        },
+        flags = {
+          allow_incremental_sync = true
+        },
+        init_options = {
+          bundles = bundles,
+          extendedClientCapabilities = extended_capabilities,
+        },
+        on_attach = require('config.lsp').on_attach(),
+        root_dir = project_path,
+        settings = {
+          flags = {
+            allow_incremental_sync = true,
+          },
+          java = {
+            autobuild = { enabled = true }, -- default: true
+            configuration = {
+              runtimes = util.get_jdk_paths(),
             },
-            settings = {
-              flags = {
-                allow_incremental_sync = true,
+            codeGeneration = {
+              generateComments = false, -- default: false,
+              hashCodeEquals = {
+                useInstanceOf = false, -- default: false
+                useJava7Objects = false, -- default: false
               },
-              java = {
-                autobuild = { enabled = true }, -- default: true
-                configuration = {
-                  runtimes = util.get_jdk_paths(),
+              toString = {
+                listArrayContents = true, -- default: true
+                skipNullValues = false, -- default: false
+              },
+              useBlocks = false, -- default: false
+            },
+            completion = {
+              chain = { enabled = true },
+              collapseCompletionItems = false, -- default: false
+              enabled = true, -- default: true
+              favoriteStaticMembers = {
+                "org.hamcrest.MatcherAssert.assertThat",
+                "org.hamcrest.Matchers.*",
+                "org.hamcrest.CoreMatchers.*",
+                "org.junit.jupiter.api.Assertions.*",
+                "org.junit.jupiter.api.Assumptions.*",
+                "org.junit.jupiter.api.DynamicContainer.*",
+                "org.junit.jupiter.api.DynamicTest.*",
+                "org.mockito.Mockito.*",
+              },
+              -- when true, guessing in-scope vals to pass; false, insert param names
+              guessMethodArguments = true,
+              lazyResolveTextEdit = { enabled = false }, -- default: false
+              -- 'FIRSTLETTER' | 'OFF'
+              matchCase = "OFF", -- default: 'OFF'
+              maxResults = 50, -- default: 50
+              overwrite = true, -- default: true
+              postfix = { enabled = true }, -- default: true
+            },
+            foldingRange = { enabled = true }, -- default: true
+            eclipse = {
+              downloadSources = false, --default: false
+            },
+            edit = {
+              smartSemicolonDetection = { enabled = true }, -- default: false
+              validateAllOpenBuffersOnChanges = true, -- default: true
+            },
+            executeCommand = { enabled = true }, -- default: true
+            format = {
+              comments = true, -- default: true
+              enabled = true, -- default: true
+              insertSpaces = true, -- default: true
+              onType = { enabled = false }, -- default: false
+              tabSize = 4, -- default: 4
+            },
+            implementationsCodeLens = { enabled = true }, -- default: false
+            inlayHints = {
+              -- Disabling until JDTLS bug in neovim is fixed
+              -- 'none' | 'literals' | 'all'
+              parameterNames = { enabled = "none" }, -- default: 'all'
+            },
+            maxConcurrentBuilds = 1, -- default: 1
+            maven = {
+              downloadSources = true, -- default: false
+              updateSnapshots = true, -- default: false
+            },
+            -- How member elements are ordered by code actions
+            memberSortOrder = {
+              "T", -- Types
+              "F", -- Fields
+              "SF", -- Static Fields
+              "C", -- Constructors
+              "I", -- Initializers
+              "SI", -- Static Initializers
+              "SM", -- Static Methods
+              "M", -- Methods
+            },
+            project = {
+              encoding = "UTF-8",
+            },
+            refactoring = {
+              extract = {
+                interface = {
+                  replace = false, -- default: false
                 },
-                codeGeneration = {
-                  generateComments = false, -- default: false,
-                  hashCodeEquals = {
-                    useInstanceOf = false, -- default: false
-                    useJava7Objects = false, -- default: false
-                  },
-                  toString = {
-                    listArrayContents = true, -- default: true
-                    skipNullValues = false, -- default: false
-                  },
-                  useBlocks = false, -- default: false
-                },
-                completion = {
-                  chain = { enabled = true },
-                  collapseCompletionItems = false, -- default: false
-                  enabled = true, -- default: true
-                  favoriteStaticMembers = {
-                    "org.hamcrest.MatcherAssert.assertThat",
-                    "org.hamcrest.Matchers.*",
-                    "org.hamcrest.CoreMatchers.*",
-                    "org.junit.jupiter.api.Assertions.*",
-                    "org.junit.jupiter.api.Assumptions.*",
-                    "org.junit.jupiter.api.DynamicContainer.*",
-                    "org.junit.jupiter.api.DynamicTest.*",
-                    "org.mockito.Mockito.*",
-                  },
-                  -- when true, guessing in-scope vals to pass; false, insert param names
-                  guessMethodArguments = true,
-                  lazyResolveTextEdit = { enabled = false }, -- default: false
-                  -- 'FIRSTLETTER' | 'OFF'
-                  matchCase = "OFF", -- default: 'OFF'
-                  maxResults = 50, -- default: 50
-                  overwrite = true, -- default: true
-                  postfix = { enabled = true }, -- default: true
-                },
-                foldingRange = { enabled = true }, -- default: true
-                eclipse = {
-                  downloadSources = false, --default: false
-                },
-                edit = {
-                  smartSemicolonDetection = { enabled = true }, -- default: false
-                  validateAllOpenBuffersOnChanges = true, -- default: true
-                },
-                executeCommand = { enabled = true }, -- default: true
-                format = {
-                  comments = true, -- default: true
-                  enabled = true, -- default: true
-                  insertSpaces = true, -- default: true
-                  onType = { enabled = false }, -- default: false
-                  tabSize = 4, -- default: 4
-                },
-                implementationsCodeLens = { enabled = true }, -- default: false
-                inlayHints = {
-                  -- Disabling until JDTLS bug in neovim is fixed
-                  -- 'none' | 'literals' | 'all'
-                  parameterNames = { enabled = "none" }, -- default: 'all'
-                },
-                maxConcurrentBuilds = 1, -- default: 1
-                maven = {
-                  downloadSources = true, -- default: false
-                  updateSnapshots = true, -- default: false
-                },
-                -- How member elements are ordered by code actions
-                memberSortOrder = {
-                  "T", -- Types
-                  "F", -- Fields
-                  "SF", -- Static Fields
-                  "C", -- Constructors
-                  "I", -- Initializers
-                  "SI", -- Static Initializers
-                  "SM", -- Static Methods
-                  "M", -- Methods
-                },
-                project = {
-                  encoding = "UTF-8",
-                },
-                refactoring = {
-                  extract = {
-                    interface = {
-                      replace = false, -- default: false
-                    },
-                  },
-                },
-                references = {
-                  includeAccessors = true, -- default: true
-                  includeDecompiledSources = true, -- default: true
-                },
-                referencesCodeLens = { enabled = true }, -- default: true
-                rename = { enabled = true }, -- default: true
-                saveActions = {
-                  organizeImports = true, -- default: false
-                },
-                selectionRange = { enabled = true }, -- default: true
-                signatureHelp = {
-                  description = { enabled = true }, -- default: false
-                  enabled = true, -- default: true
-                },
-                sources = {
-                  organizeImports = {
-                    -- number of imports added before a star-import declaration is used.
-                    starThreshold = 99, -- default: 99
-                    staticStarThreshold = 10, -- default: 99
-                  },
-                },
-                symbols = {
-                  includeSourceMethodDeclarations = true, -- default: false
-                },
-                telemetry = { enabled = false },
               },
             },
-            setup = function(config)
-              local autocmd = require 'config.utils.autocmd'
-              autocmd.filetype({'java'}, function()
-                --local spring_nvim = require 'springboot-nvim'
-                local project_path = vim.fn.fnamemodify(vim.fs.find({
-                  '.git',
-                  'mvnw',
-                  'gradlew',
-                  'pom.xml',
-                  'build.gradle',
-                }, { upward = true })[1], ':h')
-                local workspace_path = vim.fn.stdpath('cache') .. '/' .. vim.fn.fnamemodify(project_path, ':t')
-                jdtls.start_or_attach({
-                  capabilities = config.capabilities,
-                  cmd = {
-                    'java',
-                    '-Declipse.application=org.eclipse.jdt.ls.core.id1',
-                    '-Dosgi.bundles.defaultStartLevel=4',
-                    '-Declipse.product=org.eclipse.jdt.ls.core.product',
-                    '-Dlog.protocol=true',
-                    '-Dlog.level=ALL',
-                    --        '-javaagent:' ..agent_path,
-                    '-Xms1g', -- Set initial Java process heap size
-                    '-Xmx2g', -- Set max Java process heap size
-                    '--add-modules=ALL-SYSTEM',
-                    '--add-opens', 'java.base/java.util=ALL-UNNAMED',
-                    '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-                    '-jar', launcher_path,
-                    '-configuration', platform_path,
-                    '-data', workspace_path,
-                  },
-                  flags = {
-                    allow_incremental_sync = true
-                  },
-                  init_options = {
-                    bundles = bundles,
-                    extendedClientCapabilities = extended_capabilities,
-                  },
-                  on_attach = config.on_attach,
-                  root_dir = project_path,
-                  settings = config.settings,
-                })
-              end)
-            end,
-          }
-        }
-      }
+            references = {
+              includeAccessors = true, -- default: true
+              includeDecompiledSources = true, -- default: true
+            },
+            referencesCodeLens = { enabled = true }, -- default: true
+            rename = { enabled = true }, -- default: true
+            saveActions = {
+              organizeImports = true, -- default: false
+            },
+            selectionRange = { enabled = true }, -- default: true
+            signatureHelp = {
+              description = { enabled = true }, -- default: false
+              enabled = true, -- default: true
+            },
+            sources = {
+              organizeImports = {
+                -- number of imports added before a star-import declaration is used.
+                starThreshold = 99, -- default: 99
+                staticStarThreshold = 10, -- default: 99
+              },
+            },
+            symbols = {
+              includeSourceMethodDeclarations = true, -- default: false
+            },
+            telemetry = { enabled = false },
+          },
+        },
+      })
+      end)
     end
-  }
+  },
 }

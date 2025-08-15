@@ -3,7 +3,7 @@
 return {
   {
     'williamboman/mason.nvim',
-    version = "1.x",
+    version = "2.x",
     build = ':MasonUpdate',
     dependencies = {
       { "Zeioth/mason-extra-cmds", opts = {} },
@@ -26,15 +26,13 @@ return {
   },
   {
     'williamboman/mason-lspconfig.nvim',
-    version = "1.x",
+    version = "2.x",
     dependencies = {
-      'williamboman/mason.nvim'
+      'williamboman/mason.nvim',
+      'neovim/nvim-lspconfig',
     },
     ---@module 'mason-lspconfig'
     ---@type MasonLspconfigSettings
-    opts = {
-      ensure_installed = {},
-      automatic_installation = true
-    },
+    opts = {},
   },
 }
