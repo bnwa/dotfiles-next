@@ -6,13 +6,12 @@ return {
     opts = function()
       local has_claude = type(vim.env.ANTHROPIC_API_KEY) == 'string'
       local provider = has_claude and 'anthropic' or 'copilot'
-      local max_tokens = 200000
       return {
         adapters = {
           anthropic = require('codecompanion.adapters').extend('anthropic', {
             schema = {
               max_tokens = {
-                default = max_tokens
+                default = 64000
               },
               model = {
                 default = 'claude-sonnet-4-20250514'
@@ -22,7 +21,7 @@ return {
           copilot = require('codecompanion.adapters').extend('copilot', {
             schema = {
               max_tokens = {
-                default = max_tokens
+                default = 200000
               },
               model = {
                 default = 'claude-sonnet-4'
