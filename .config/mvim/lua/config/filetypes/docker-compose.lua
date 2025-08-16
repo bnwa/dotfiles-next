@@ -18,7 +18,7 @@ return {
     ---@type MasonLspconfigSettings
     opts = {
       ensure_installed = {
-        'docker_compose_language_server',
+        'docker_compose_language_service',
       },
     },
   },
@@ -26,7 +26,7 @@ return {
     'neovim/nvim-lspconfig',
     opts = {
       servers = {
-        docker_compose_language_server = {
+        docker_compose_language_service = {
           filetypes = {
             'yaml.docker-compose',
             'yml.docker-compose'
