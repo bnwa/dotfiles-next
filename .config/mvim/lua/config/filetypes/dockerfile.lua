@@ -11,5 +11,15 @@ return {
         vim.bo.sw = 4
       end)
     end
-  }
+  },
+  {
+    'williamboman/mason-lspconfig.nvim',
+    ---@module 'mason-lspconfig'
+    ---@type MasonLspconfigSettings
+    opts = {
+      ensure_installed = {
+        'docker_language_server',
+      },
+    },
+  },
 }

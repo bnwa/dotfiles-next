@@ -31,8 +31,11 @@ return {
       'williamboman/mason.nvim',
       'neovim/nvim-lspconfig',
     },
+    opts_extend = { 'ensure_installed' },
     ---@module 'mason-lspconfig'
     ---@type MasonLspconfigSettings
-    opts = {},
+    opts = {
+      ensure_installed = {},
+    },
   },
 }
