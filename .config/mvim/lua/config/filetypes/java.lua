@@ -35,10 +35,13 @@ return {
   {
     'elmcgill/springboot-nvim',
     ft = 'java',
-    depenedencies = {},
+    dependencies = {
+      'williamboman/mason.nvim',
+    },
   },
   {
     'mfussenegger/nvim-jdtls',
+    ft = 'java',
     dependencies = {
       'williamboman/mason.nvim',
       -- 'rcarriga/nvim-dap-ui',
@@ -53,7 +56,7 @@ return {
       local autocmd = require 'config.utils.autocmd'
       -- local dap = require 'jdtls.dap'
 
-      local jdtls_path = vim.fn.expand("$MASON/packages" .. "jdtls")
+      local jdtls_path = vim.fn.expand("$MASON/packages" .. "/jdtls")
       local plugins_path = jdtls_path .. '/plugins'
       --local agent_path = jdtls_path .. '/lombok.jar'
       local launcher_path = vim.fn.glob(plugins_path .. '/org.eclipse.equinox.launcher_*.jar')

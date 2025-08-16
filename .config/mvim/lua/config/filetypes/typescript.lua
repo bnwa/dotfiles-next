@@ -108,35 +108,36 @@ local ts = {
   },
 }
 
-
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
   {
+    'yioneko/nvim-vtsls',
+    ---@diagnostic disable-next-line
+    config = false
+  },
+  {
     'neovim/nvim-lspconfig',
     dependencies = { 'yioneko/nvim-vtsls' },
-    opts = {
-      servers = {
-        vtsls = {
-          filetypes = {
-            'javascript',
-            'javascriptreact',
-            'typescript',
-            'typescriptreact',
-          },
-          setup = function(config)
-            local vtsls_config = require('vtsls').lspconfig
-            vim.tbl_deep_extend('force', config, vtsls_config)
-            return true
-          end,
-          settings = {
-            javascript = shared,
-            typescript = vim.tbl_extend('force', {}, ts, shared),
-            vtsls = vtsls,
-          },
-        },
-      }
-    }
+    opts = function (_, opts)
+      local vtsls_config = require('vtsls').lspconfig
+      return vim.tbl_deep_extend('force', opts, {
+        servers = {
+          vtsls = vim.tbl_deep_extend('force', vtsls_config, {
+            filetypes = {
+              'javascript',
+              'javascriptreact',
+              'typescript',
+              'typescriptreact',
+            },
+            settings = {
+              javascript = shared,
+              typescript = vim.tbl_extend('force', {}, ts, shared),
+              vtsls = vtsls,
+            },
+          }),
+        }
+      })
+    end
   },
-  { 'yioneko/nvim-vtsls', config = false },
 }

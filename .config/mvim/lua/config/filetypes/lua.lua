@@ -4,10 +4,6 @@ return {
   {
     'neovim/nvim-lspconfig',
     opts = function(_, opts)
-      local library = vim.api.nvim_get_runtime_file('lua', true)
-      local path = vim.split(package.path, ';')
-      table.insert(path, 1, 'lua/?/init.lua')
-      table.insert(path, 1, 'lua/?.lua')
       return vim.tbl_deep_extend('force', opts, {
         servers = {
           lua_ls = {
@@ -102,26 +98,26 @@ return {
                 },
               }
             },
-            setup = function(config)
-              local can_read_file = require('config.utils.path').can_read_file
+            on_attach = function(client, bufnr)
+              local path = require('config.utils.path')
               local root_markers = {
-                 '.luarc.json',
-                 'lazy-lock.json',
-                 'main.lua',
-                 'lua/'
+                '.luarc.json',
+                'lazy-lock.json',
+                'main.lua',
+                'lua/'
               }
-              local root_dir = vim.fs.root(0, root_markers)
-              local is_nvim = can_read_file(root_dir .. '/lazy-lock.json')
+              local root_dir = vim.fs.root(bufnr, root_markers)
+              local is_nvim = path.can_read_file(root_dir .. '/lazy-lock.json')
               if is_nvim then
-                local library = vim.api.nvim_get_runtime_file('lua', true)
-                local path = vim.split(package.path, ';')
-                table.insert(path, 1, 'lua/?/init.lua')
-                table.insert(path, 1, 'lua/?.lua')
-                config.settings.Lua.runtime.path = path
-                config.settings.Lua.workspace.library = library
+                local nvim_lib = vim.api.nvim_get_runtime_file('lua', true)
+                local nvim_path = vim.split(package.path, ';')
+                table.insert(nvim_path, 1, 'lua/?/init.lua')
+                table.insert(nvim_path, 1, 'lua/?.lua')
+                client.config.settings.Lua.runtime.path = nvim_path
+                client.config.settings.Lua.workspace.library = nvim_lib
+                -- Notify the server of the updated settings
+                client.notify('workspace/didChangeConfiguration', { settings = client.config.settings })
               end
-              config.root_dir = root_dir
-              return true
             end
           },
         }

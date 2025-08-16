@@ -27,37 +27,9 @@ return {
       servers = {},
     },
     config = function(_, opts)
-      local cmp = require 'blink.cmp'
       local lsp = require 'config.lsp'
 
-      for server_name, server_config in pairs(opts.servers) do
-        local server_setup = server_config.setup
-        local server_on_attach = server_config.on_attach
-        local server_capabilities = server_config.capabilities or {}
-        local has_own_setup = type(server_setup) == 'function'
-
-        if not has_own_setup or server_setup(server_config) then
-          local config = vim.tbl_extend('force',
-            server_config,
-            { capabilities = nil, on_attach = nil, setup = nil },
-            { capabilities = cmp.get_lsp_capabilities(server_capabilities, true) },
-            { on_attach = lsp.on_attach(server_on_attach) })
-
-          vim.lsp.config(server_name, config)
-          vim.lsp.enable(server_name)
-        end
-
-        server_config.setup = nil
-        server_config.on_attach = nil
-
-        local config = vim.tbl_extend('force',
-          server_config,
-          { capabilities = cmp.get_lsp_capabilities(server_capabilities, true) },
-          { on_attach = lsp.on_attach(server_on_attach) })
-
-        vim.lsp.config(server_name, config)
-        vim.lsp.enable(server_name)
-      end
+      lsp.config(opts.servers)
     end
   },
   {
