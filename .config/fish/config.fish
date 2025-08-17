@@ -41,7 +41,7 @@ if status is-interactive
         end
         # Flags: verbose output; use Finder to trash files so that
         # 'Put Back' from Trash is supported
-        trash -vF $files
+        /opt/homebrew/Cellar/trash/0.9.2/bin/trash -vF $files
     end
 
     # Load secret environment variables
