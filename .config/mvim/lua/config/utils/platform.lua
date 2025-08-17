@@ -26,16 +26,11 @@ function M.exec(cmd)
   local stderr = done.stderr
   local stdout = done.stdout
   if not success then
-    if stderr == nil then
-      return false, ""
-    else
-      local err_msg, _ = str.from_term(stderr)
-      return false, err_msg
-    end
+    local msg = stderr and str.from_term(stderr) or ""
+    return false, msg
   end
-  if stdout == nil then return true, "" end
-  local output, _ = str.from_term(stdout)
-  return true, output
+  local result = stdout and str.from_term(stdout) or ""
+  return true, result
 end
 
 return M
