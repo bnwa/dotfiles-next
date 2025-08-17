@@ -1,11 +1,11 @@
 [[ -d $HOME/.dotfiles ]] && alias config="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
-[[ -x $(command -v bat) ]] && alias cat=bat
-[[ -x $(command -v eza) ]] && alias ls=eza
-[[ -x $(command -v trash) ]] && alias rm="trash -vF"
-[[ -x $(command -v delta) ]] && alias diff=delta
+[[ -x $(command -v bat > /dev/null 2>&1) ]] && alias cat=bat
+[[ -x $(command -v eza > /dev/null 2>&1) ]] && alias ls=eza
+[[ -x $(command -v trash > /dev/null 2>&1) ]] && alias rm="trash -vF"
+[[ -x $(command -v delta > /dev/null 2>&1) ]] && alias diff=delta
 alias l="ls -A --color=always"
 
-if [[ -x $(command -v bat) ]]; then export MANPAGER="sh -c 'col -bx | bat -l man -p'" ; fi
+if [[ -x $(command -v bat > /dev/null 2>&1) ]]; then export MANPAGER="sh -c 'col -bx | bat -l man -p'" ; fi
 export PS1="%F{blue}%1~%f%F{green} λ%f "
 # Load environment variables from .secrets.env file if it exists
 if [[ -f "$HOME/.secret.env" ]]; then
