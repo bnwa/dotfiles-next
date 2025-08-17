@@ -239,7 +239,9 @@ return {
   {
     'saghen/blink.cmp',
     version = '*',
-    dependencies = { 'Kaiser-Yang/blink-cmp-avante' },
+    dependencies = {
+      'Kaiser-Yang/blink-cmp-avante',
+    },
     opts_extend = {
       "sources.completion.enabled_providers",
       "sources.compat",
@@ -280,14 +282,7 @@ return {
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { 'avante','lsp', 'path', 'snippets' },
-        providers = {
-          avante = {
-            module = 'blink-cmp-avante',
-            name = 'Avante',
-            opts = {}
-          }
-        },
+        default = { 'lsp', 'path', 'snippets' },
       },
       keymap = {
         preset = 'enter',
