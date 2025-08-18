@@ -7,7 +7,9 @@ return {
       'b0o/schemastore.nvim'
     },
     opts = function(_, opts)
-      return vim.tbl_deep_extend('force', opts, {
+      local tbl = require 'config.utils.tbl'
+
+      return tbl.wild_deep_merge({'servers.*.filetypes'}, opts, {
         servers = {
           yamlls = {
             filetypes = {

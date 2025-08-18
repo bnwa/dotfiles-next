@@ -58,6 +58,8 @@ function M.on_attach(server_on_attach)
     vim.diagnostic.config(M.diagnostics)
     vim.diagnostic.enable(true, { bufnr = buf })
 
+    vim.bo.formatexpr = 'v:lua.vim.lsp.formatexpr()'
+
     if type(server_on_attach) == 'function' then
       server_on_attach(client, buf)
     end
