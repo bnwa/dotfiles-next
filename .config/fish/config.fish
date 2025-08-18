@@ -17,19 +17,16 @@ if status is-interactive
     # NB. test behavior no worky with flag and possibly empty
     # value, must quote possibly empty value or test returns 0
     # See https://github.com/fish-shell/fish-shell/issues/2037
-    test -x "$(which eza)"; and function ls
+    test -x "$(command -v eza)"; and function ls
         eza $argv
     end
-    test -x "$(which eza)"; and function l
-        eza --icons --group-directories-first $argv
-    end
-    test -x "$(which eza)"; and function ll
+    test -x "$(command -v eza)"; and function l
         eza --icons --long --git --git-repos --group-directories-first $argv
     end
-    test -x "$(which bat)"; and function cat
+    test -x "$(command -v bat)"; and function cat
         bat $argv
     end
-    test -x "$(which trash)"; and function rm
+    test -x /opt/homebrew/bin/trash; and function rm
         set -l files
         for arg in $argv
             # Skip -rf, -r -f, -fr flags

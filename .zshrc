@@ -1,12 +1,11 @@
 [[ -d $HOME/.dotfiles ]] && alias config="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
-[[ -x $(command -v bat > /dev/null 2>&1) ]] && alias cat=bat
-[[ -x $(command -v eza > /dev/null 2>&1) ]] && alias ls=eza
-[[ -x $(command -v trash > /dev/null 2>&1) ]] && alias rm="trash -vF"
-[[ -x $(command -v delta > /dev/null 2>&1) ]] && alias diff=delta
-alias l="ls -A --color=always"
+[[ -x $(command -v bat 2> /dev/null) ]] && alias cat=bat
+[[ -x $(command -v eza 2> /dev/null) ]] && alias ls=eza
+[[ -x $(command -v delta 2> /dev/null) ]] && alias diff=delta
+[[ -x /opt/homebrew/bin/trash ]] && alias rm=trash -vF
 
-if [[ -x $(command -v bat > /dev/null 2>&1) ]]; then export MANPAGER="sh -c 'col -bx | bat -l man -p'" ; fi
-export PS1="%F{blue}%1~%f%F{green} λ%f "
+[[ -x $(command -v eza 2> /dev/null) ]] && alias l=eza --icons --long --git --git-repos --group-directories-first
+
 # Load environment variables from .secrets.env file if it exists
 if [[ -f "$HOME/.secret.env" ]]; then
   while IFS= read -r line || [[ -n "$line" ]]; do
@@ -29,3 +28,9 @@ if [[ -f "$HOME/.secret.env" ]]; then
     fi
   done < "$HOME/.secret.env"
 fi
+
+if [[ -x $(command -v bat 2> /dev/null) ]]; then
+    export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+fi
+
+export PS1="%F{blue}%1~%f%F{green} λ%f "
