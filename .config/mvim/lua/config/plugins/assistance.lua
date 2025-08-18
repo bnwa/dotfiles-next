@@ -79,6 +79,21 @@ return {
               }
             },
           },
+          mcphub = {
+            callback = "mcphub.extensions.codecompanion",
+            opts = {
+              -- MCP Tools
+              make_tools = true,              -- Make individual tools (@server__tool) and server groups (@server) from MCP servers
+              show_server_tools_in_chat = true, -- Show individual tools in chat completion (when make_tools=true)
+              add_mcp_prefix_to_tool_names = false, -- Add mcp__ prefix (e.g `@mcp__github`, `@mcp__neovim__list_issues`)
+              show_result_in_chat = true,      -- Show tool results directly in chat buffer
+              format_tool = nil,               -- function(tool_name:string, tool: CodeCompanion.Agent.Tool) : string Function to format tool names to show in the chat buffer
+              -- MCP Resources
+              make_vars = true,                -- Convert MCP resources to #variables for prompts
+              -- MCP Prompts
+              make_slash_commands = true,      -- Add MCP prompts as /slash commands
+            }
+          },
         },
         opts = {
           log_level = 'INFO',
@@ -88,6 +103,87 @@ return {
             adapter = provider,
             opts = {
               completion_provider = 'blink',
+            },
+            ---@module 'codecompanion'
+            ---@type table<string,CodeCompanion.Tools.Tool>
+            tools = {
+              create_vector_index = {
+                description = "Initialize a vector index for a directory path",
+                name = "create_vector_index",
+                cmds = {
+                  function(_, args)
+                    local platform = require 'config.utils.platform'
+                    local bin = vim.env.MASON .. '/bin/vectorcode'
+                    local path = args.abs_path
+                    local glob = args.glob
+                    local init = { bin, 'init', '--project_root', path, }
+                    local index = { bin, 'vectorise', path .. '/' .. glob }
+
+                    local init_ok, init_msg = platform.exec(init)
+                    if not init_ok then
+                      return { status = 'error', data = init_msg }
+                    end
+
+                    local index_ok, index_msg = platform.exec(index)
+                    if not index_ok then
+                      return { status = 'error', data = index_msg }
+                    end
+
+                    return { status = 'success' }
+                  end
+                },
+                schema = {
+                  type = 'function',
+                  ['function'] = {
+                    description = "Initialize a vector index for a directory path",
+                    name = "create_vector_index",
+                    parameters = {
+                      type = 'object',
+                      properties = {
+                        path =  {
+                          type = 'string',
+                          description = 'An absolute path to a direcory to create a vector index for'
+                        },
+                        glob = {
+                          type = 'string',
+                          description =  'A valid glob representing files to vector index',
+                        },
+                      },
+                      required = {
+                        'path',
+                        'glob',
+                      },
+                      additionalProperties = false,
+                    }
+                  },
+                  strict = true,
+                },
+              },
+              has_vector_index = {
+                description = "Check if the current working directory has a vector index to query",
+                name = "has_vector_index",
+                cmds = {
+                  function()
+                    local db = require 'vectorcode'
+                    local result = db.check('config')
+                    return { status = 'success', data = result }
+                  end
+                },
+                schema = {
+                  type = 'function',
+                  ['function'] = {
+                    description = "Check if the current working directory has a vector index to query",
+                    name = "has_vector_index",
+                    parameters = {
+                      type = 'object',
+                      properties = vim.empty_dict(),
+                      required = {},
+                      additionalProperties = false,
+                    }
+                  },
+                  strict = true,
+                }
+              }
             },
             variables = {
               ["buffer"] = {
@@ -111,6 +207,7 @@ return {
       'nvim-treesitter/nvim-treesitter',
       'zbirenbaum/copilot.lua',
       'Davidyz/VectorCode',
+      'ravitemer/mcphub.nvim',
       {
         'HakonHarnes/img-clip.nvim',
         opts = {
@@ -175,4 +272,16 @@ return {
     main = 'vectorcode.config',
     opts = {},
   },
+  {
+    "ravitemer/mcphub.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    build = "bundled_build.lua",  -- Bundles `mcp-hub` binary along with the neovim plugin
+    config = function()
+      require("mcphub").setup({
+        use_bundled_binary = true,  -- Use local `mcp-hub` binary
+      })
+    end,
+  }
 }
