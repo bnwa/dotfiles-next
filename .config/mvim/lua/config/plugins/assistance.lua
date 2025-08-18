@@ -40,6 +40,7 @@ return {
         },
         extensions = {
           vectorcode = {
+            ---@module "vectorcode"
             ---@type VectorCode.CodeCompanion.ExtensionOpts
             opts = {
               tool_group = {
