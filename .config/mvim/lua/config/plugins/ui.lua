@@ -115,6 +115,15 @@ return {
           fullscreen = true,
         },
         sources = {
+          diagnostics = {
+            win = {
+              list = {
+                wo = {
+                  wrap = true,
+                }
+              }
+            }
+          },
           explorer = {
             jump = {
               close = true,
@@ -159,7 +168,7 @@ return {
                 },
               },
             },
-          }
+          },
         },
         ui_select = true,
       }
