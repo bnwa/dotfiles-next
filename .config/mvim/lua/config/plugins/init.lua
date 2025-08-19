@@ -25,7 +25,6 @@ require("lazy").setup({
     notify = false,
   },
   install = {
-    colorscheme = { vim.g.colorscheme },
     missing = true,
   },
   spec = {

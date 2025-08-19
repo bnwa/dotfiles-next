@@ -47,7 +47,13 @@ return {
     'ramojus/mellifluous.nvim',
     lazy = false,
     priority = 100,
-    opts = {}
+    opts = {
+      highlight_overrides = {
+        light = function(hl, _)
+          hl.set('@property', { link = '@keyword.directive' })
+        end
+      }
+    }
   },
   {
     'savq/melange-nvim',
