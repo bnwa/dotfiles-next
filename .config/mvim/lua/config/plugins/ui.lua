@@ -309,6 +309,7 @@ return {
         -- plugin default
         filetypes = { "markdown", "rmd", "quarto", "typst" },
         icon_provider = 'mini',
+        ignore_buftypes = {},
         max_buf_lines = 10000,
       },
     },

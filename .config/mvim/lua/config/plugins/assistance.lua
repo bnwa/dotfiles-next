@@ -237,6 +237,9 @@ return {
           end
 
           return vim.tbl_deep_extend('force', opts, {
+            preview = {
+              filetypes = { 'codecompanion' },
+            },
             html = {
               container_elements = {
                 ['^buf$']         = conceal_tag('', 'CodeCompanionChatVariable'),
