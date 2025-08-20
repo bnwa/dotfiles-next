@@ -25,14 +25,6 @@ return {
     },
   },
   {
-    'windwp/nvim-autopairs',
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter'
-    },
-    event = "InsertEnter",
-    opts = {}
-  },
-  {
     'windwp/nvim-ts-autotag',
     opts = {},
   },
