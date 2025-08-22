@@ -3,6 +3,22 @@
 return {
   {
     'olimorris/codecompanion.nvim',
+    keys = function (_, rest)
+      local chat = require 'codecompanion'
+      local keys = {
+        { '<leader>aa',
+          chat.toggle ,
+          mode = 'n',
+          desc = "Toggle Chat"
+        },
+        { '<leader>aa',
+          function() chat.inline {} end,
+          mode = 'v',
+          desc = "Toggle Inline Prompt"
+        },
+      }
+      return vim.list_extend(rest, keys)
+    end,
     opts = function()
       local has_claude = type(vim.env.ANTHROPIC_API_KEY) == 'string'
       local provider = has_claude and 'anthropic' or 'copilot'
@@ -39,6 +55,31 @@ return {
           provider = 'snacks'
         },
         extensions = {
+          history = {
+            continue_last_chat = false,
+            dir_to_save = vim.fn.stdpath('data') .. '/chats',
+            memory = {
+              index_on_startup = true,
+              vectorcode_exe = 'vectorcode',
+            },
+            picker = 'snacks',
+          },
+          mcphub = {
+            callback = "mcphub.extensions.codecompanion",
+            opts = {
+              -- MCP Tools
+              make_tools = true,              -- Make individual tools (@server__tool) and server groups (@server) from MCP servers
+              show_server_tools_in_chat = true, -- Show individual tools in chat completion (when make_tools=true)
+              add_mcp_prefix_to_tool_names = false, -- Add mcp__ prefix (e.g `@mcp__github`, `@mcp__neovim__list_issues`)
+              show_result_in_chat = true,      -- Show tool results directly in chat buffer
+              format_tool = nil,               -- function(tool_name:string, tool: CodeCompanion.Agent.Tool) : string Function to format tool names to show in the chat buffer
+              -- MCP Resources
+              make_vars = true,                -- Convert MCP resources to #variables for prompts
+              -- MCP Prompts
+              make_slash_commands = true,      -- Add MCP prompts as /slash commands
+            }
+          },
+          spinner = {},
           vectorcode = {
             ---@module "vectorcode"
             ---@type VectorCode.CodeCompanion.ExtensionOpts
@@ -79,21 +120,6 @@ return {
                 files_rm = {}
               }
             },
-          },
-          mcphub = {
-            callback = "mcphub.extensions.codecompanion",
-            opts = {
-              -- MCP Tools
-              make_tools = true,              -- Make individual tools (@server__tool) and server groups (@server) from MCP servers
-              show_server_tools_in_chat = true, -- Show individual tools in chat completion (when make_tools=true)
-              add_mcp_prefix_to_tool_names = false, -- Add mcp__ prefix (e.g `@mcp__github`, `@mcp__neovim__list_issues`)
-              show_result_in_chat = true,      -- Show tool results directly in chat buffer
-              format_tool = nil,               -- function(tool_name:string, tool: CodeCompanion.Agent.Tool) : string Function to format tool names to show in the chat buffer
-              -- MCP Resources
-              make_vars = true,                -- Convert MCP resources to #variables for prompts
-              -- MCP Prompts
-              make_slash_commands = true,      -- Add MCP prompts as /slash commands
-            }
           },
         },
         opts = {
@@ -209,6 +235,8 @@ return {
       'zbirenbaum/copilot.lua',
       'Davidyz/VectorCode',
       'ravitemer/mcphub.nvim',
+      "franco-ruggeri/codecompanion-spinner.nvim",
+      "ravitemer/codecompanion-history.nvim",
       {
         'HakonHarnes/img-clip.nvim',
         opts = {
@@ -287,5 +315,5 @@ return {
         use_bundled_binary = true,  -- Use local `mcp-hub` binary
       })
     end,
-  }
+  },
 }

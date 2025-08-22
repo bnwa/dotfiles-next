@@ -95,13 +95,13 @@ return {
         },
         {
           '<leader>xx',
-          function() Snacks.picker.diagnostics {} end,
-          desc =  "List all diagnostics in the current workspace",
+          function() Snacks.picker.diagnostics_buffer {} end,
+          desc =  "List all diagnostics in the current buffer",
         },
         {
           '<leader>xX',
-          function() Snacks.picker.diagnostics_buffer {} end,
-          desc = "List all diagnostics in the current buffer",
+          function() Snacks.picker.diagnostics {} end,
+          desc = "List all diagnostics in the current workspace",
         },
       })
     end

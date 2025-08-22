@@ -124,6 +124,15 @@ return {
               }
             }
           },
+          diagnostics_buffer = {
+            win = {
+              list = {
+                wo = {
+                  wrap = true,
+                }
+              }
+            }
+          },
           explorer = {
             jump = {
               close = true,
@@ -309,7 +318,9 @@ return {
         -- plugin default
         filetypes = { "markdown", "rmd", "quarto", "typst" },
         icon_provider = 'mini',
-        ignore_buftypes = {},
+        -- TODO Update mellifluous highlights so that codecompanion
+        -- doesn't look ridiculous when bg=light
+        ignore_buftypes = { 'nofile' },
         max_buf_lines = 10000,
       },
     },
